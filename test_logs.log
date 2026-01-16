@@ -1,113 +1,135 @@
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: λόγος in JHN.1.1 (greek)
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 8 occurrences of 'λόγος'
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 5 semantic meanings
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: שָׁמַיִם in GEN.1.1 (hebrew)
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 0 occurrences of 'שָׁמַיִם'
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 1 semantic meanings
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: λόγος in JHN.1.1 (greek)
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 8 occurrences of 'λόγος'
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 5 semantic meanings
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:332 - Cache hit for resolution: רוּחַ:GEN.1.2:hebrew
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
-2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:1441 - OmniContextualResolver cleaned up
-2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
-2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: λόγος in JHN.1.1 (greek)
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 8 occurrences of 'λόγος'
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 5 semantic meanings
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: שָׁמַיִם in GEN.1.1 (hebrew)
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 0 occurrences of 'שָׁמַיִם'
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 1 semantic meanings
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: λόγος in JHN.1.1 (greek)
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 8 occurrences of 'λόγος'
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 5 semantic meanings
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:332 - Cache hit for resolution: רוּחַ:GEN.1.2:hebrew
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:35:30 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:1441 - OmniContextualResolver cleaned up
+2026-01-16 02:35:30 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:35:30 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized

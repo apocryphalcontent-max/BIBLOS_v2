@@ -5,7 +5,8 @@
 **Objective**: Implement the `LXXChristologicalExtractor` engine that discovers Christological content uniquely present in the Septuagint but absent from or muted in the Masoretic Text. This is the third of the Five Impossible Oracles.
 
 **Prerequisites**:
-- Access to parallel LXX and MT corpus data
+- Review implementation of parts 1-4 for all 84 canonical books (if book count is relevant)
+- Access to parallel LXX and MT corpus data, as well as original transcription data from "C:\Users\Edwin Boston\Desktop\MASTER_LINGUISTIC_CORPUS\RESTRUCTURED_CORPUS\Output\master_corpus.db"
 - Access to oldest manuscript transcriptions (sources in `MASTER_LINGUISTIC_CORPUS/RESTRUCTURED_CORPUS`)
 - Understanding of Greek/Hebrew textual criticism basics
 - Familiarity with messianic prophecy traditions
