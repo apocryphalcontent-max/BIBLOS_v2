@@ -2,6 +2,7 @@
 BIBLOS v2 - PROSECUTOR Agent
 
 Challenge agent for testing extraction robustness.
+Integrates theological constraint validation for patristic challenges.
 """
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
@@ -16,15 +17,29 @@ from agents.base import (
     ProcessingStatus
 )
 
+from ml.validators import (
+    ConstraintType,
+    ConstraintViolationSeverity,
+)
+
 
 class ChallengeType(Enum):
     """Types of challenges to pose."""
+    # Original challenge types
     EVIDENCE = "evidence"  # Challenge evidence basis
     METHODOLOGY = "methodology"  # Challenge approach
     INTERPRETATION = "interpretation"  # Challenge interpretation
     COMPLETENESS = "completeness"  # Challenge coverage
     CONFIDENCE = "confidence"  # Challenge confidence level
     CONSISTENCY = "consistency"  # Challenge internal consistency
+
+    # Theological constraint-based challenges
+    CHRONOLOGICAL_PRIORITY = "chronological_priority"  # Type must precede antitype
+    TYPOLOGICAL_ESCALATION = "typological_escalation"  # Antitype must exceed type
+    PROPHETIC_COHERENCE = "prophetic_coherence"  # Fulfillment extends promise
+    CHRISTOLOGICAL_WARRANT = "christological_warrant"  # Requires patristic support
+    LITURGICAL_AMPLIFICATION = "liturgical_amplification"  # Liturgical usage issues
+    FOURFOLD_FOUNDATION = "fourfold_foundation"  # Allegorical needs literal base
 
 
 class ChallengeSeverity(Enum):
@@ -101,6 +116,37 @@ class ProsecutorAgent(BaseExtractionAgent):
             "How does {value1} reconcile with {value2}?",
             "Why do {agent1} and {agent2} disagree on {field}?",
             "Is there an explanation for the discrepancy in {area}?"
+        ],
+        # Theological constraint challenge templates
+        ChallengeType.CHRONOLOGICAL_PRIORITY: [
+            "Does {type_ref} historically precede {antitype_ref}?",
+            "Is the claimed type-antitype ordering chronologically valid?",
+            "How can {target} be antitype to {source} if it predates it?"
+        ],
+        ChallengeType.TYPOLOGICAL_ESCALATION: [
+            "Does {antitype} exceed {type} in scope and magnitude?",
+            "Is the escalation from {scope1} to {scope2} sufficient?",
+            "Why is antitype not greater than type in this connection?"
+        ],
+        ChallengeType.PROPHETIC_COHERENCE: [
+            "Does the fulfillment extend the promise without contradiction?",
+            "How does {fulfillment} coherently fulfill {prophecy}?",
+            "Is there semantic drift between promise and fulfillment?"
+        ],
+        ChallengeType.CHRISTOLOGICAL_WARRANT: [
+            "What patristic witness supports this Christological reading?",
+            "Is there apostolic precedent for this connection?",
+            "Does this interpretation have consensus among the Fathers?"
+        ],
+        ChallengeType.LITURGICAL_AMPLIFICATION: [
+            "Is this connection used liturgically?",
+            "How does liturgical practice validate this reading?",
+            "Should liturgical absence weaken confidence?"
+        ],
+        ChallengeType.FOURFOLD_FOUNDATION: [
+            "Is there a literal foundation for this allegorical reading?",
+            "What historical event grounds this typological claim?",
+            "Does the spiritual sense rest on literal meaning?"
         ]
     }
 
@@ -145,6 +191,9 @@ class ProsecutorAgent(BaseExtractionAgent):
 
         # Challenge consistency
         challenges.extend(self._challenge_consistency(consistency_report))
+
+        # Challenge theological constraints
+        challenges.extend(self._challenge_theological_constraints(context))
 
         # Prioritize challenges
         prioritized = self._prioritize_challenges(challenges)
@@ -356,6 +405,89 @@ class ProsecutorAgent(BaseExtractionAgent):
 
         return challenges
 
+    def _challenge_theological_constraints(
+        self,
+        context: Dict[str, Any]
+    ) -> List[Challenge]:
+        """
+        Challenge based on theological constraint validation results.
+
+        Examines constraint_results from postprocessor and generates
+        challenges for any violations or warnings.
+        """
+        challenges = []
+
+        # Get inference results that contain constraint validations
+        inference_results = context.get("inference_results", [])
+
+        for result in inference_results:
+            constraint_results = result.get("constraint_results", [])
+            source = result.get("source_verse", "unknown")
+            target = result.get("target_verse", "unknown")
+
+            for cr in constraint_results:
+                if not cr.get("passed", True):
+                    # Map constraint type to challenge type
+                    constraint_type = cr.get("constraint_type", "")
+                    challenge_type = self._map_constraint_to_challenge(constraint_type)
+
+                    if challenge_type:
+                        # Determine severity based on violation severity
+                        severity = self._map_constraint_severity(cr.get("severity"))
+
+                        challenges.append(Challenge(
+                            challenge_type=challenge_type,
+                            severity=severity,
+                            target_agent="inference_pipeline",
+                            target_field=f"{source}->{target}",
+                            challenge_text=cr.get("message", f"Constraint {constraint_type} violated"),
+                            evidence=[
+                                f"Source: {source}",
+                                f"Target: {target}",
+                                f"Confidence modifier: {cr.get('confidence_modifier', 1.0)}"
+                            ],
+                            suggested_action=self._get_constraint_action(constraint_type)
+                        ))
+
+        return challenges
+
+    def _map_constraint_to_challenge(self, constraint_type: str) -> Optional[ChallengeType]:
+        """Map constraint type string to ChallengeType enum."""
+        mapping = {
+            "CHRONOLOGICAL_PRIORITY": ChallengeType.CHRONOLOGICAL_PRIORITY,
+            "TYPOLOGICAL_ESCALATION": ChallengeType.TYPOLOGICAL_ESCALATION,
+            "PROPHETIC_COHERENCE": ChallengeType.PROPHETIC_COHERENCE,
+            "CHRISTOLOGICAL_WARRANT": ChallengeType.CHRISTOLOGICAL_WARRANT,
+            "LITURGICAL_AMPLIFICATION": ChallengeType.LITURGICAL_AMPLIFICATION,
+            "FOURFOLD_FOUNDATION": ChallengeType.FOURFOLD_FOUNDATION,
+        }
+        return mapping.get(constraint_type)
+
+    def _map_constraint_severity(self, severity: Optional[str]) -> ChallengeSeverity:
+        """Map constraint violation severity to challenge severity."""
+        if severity == "IMPOSSIBLE":
+            return ChallengeSeverity.CRITICAL
+        elif severity == "CRITICAL":
+            return ChallengeSeverity.CRITICAL
+        elif severity == "SOFT":
+            return ChallengeSeverity.MAJOR
+        elif severity == "WARNING":
+            return ChallengeSeverity.MINOR
+        else:
+            return ChallengeSeverity.OBSERVATION
+
+    def _get_constraint_action(self, constraint_type: str) -> str:
+        """Get suggested action for a constraint violation."""
+        actions = {
+            "CHRONOLOGICAL_PRIORITY": "Verify historical ordering of type and antitype",
+            "TYPOLOGICAL_ESCALATION": "Assess scope/magnitude relationship between type and antitype",
+            "PROPHETIC_COHERENCE": "Check semantic alignment between prophecy and fulfillment",
+            "CHRISTOLOGICAL_WARRANT": "Locate patristic witness supporting this interpretation",
+            "LITURGICAL_AMPLIFICATION": "Research liturgical usage of this connection",
+            "FOURFOLD_FOUNDATION": "Identify literal/historical foundation for allegorical reading",
+        }
+        return actions.get(constraint_type, "Review theological constraint validation")
+
     def _lacks_evidence(self, field: str, value: Any) -> bool:
         """Check if a field value lacks evidence."""
         # Simple heuristic checks
@@ -417,7 +549,7 @@ class ProsecutorAgent(BaseExtractionAgent):
         for a in agents:
             agent_counts[a] = agent_counts.get(a, 0) + 1
 
-        return max(agent_counts, key=agent_counts.get) if agent_counts else None
+        return max(agent_counts, key=lambda k: agent_counts[k]) if agent_counts else None
 
     def _calculate_confidence(
         self,

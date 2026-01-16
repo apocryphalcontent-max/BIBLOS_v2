@@ -185,7 +185,7 @@ Fields:
 - `manuscript_confidence: float` - Confidence from manuscript priority
 - `scholarly_notes: str` - Academic discussion points
 
-#### 6. `LXXAnalysisResult` (Dataclass)
+#### 7. `LXXAnalysisResult` (Dataclass)
 Fields:
 - `verse_id: str` - Analyzed verse
 - `divergences: List[LXXDivergence]` - All detected divergences
@@ -270,6 +270,21 @@ Main entry point:
 - Extract Father's interpretation
 - Note preference for LXX vs MT reading
 - Return witness list
+
+##### `async def gather_manuscript_witnesses(self, verse_id: str) -> List[ManuscriptWitness]`
+- Query all available manuscript sources for this verse
+- Include DSS fragments if available
+- Include oldest LXX uncials (Vaticanus, Sinaiticus, Alexandrinus)
+- Include any other ancient witnesses (Hexapla, Old Latin, etc.)
+- Sort by age (oldest first)
+- Calculate reliability scores
+- Return chronologically ordered witness list
+
+##### `async def determine_oldest_reading(self, witnesses: List[ManuscriptWitness]) -> Tuple[ManuscriptWitness, str]`
+- Sort witnesses by century_numeric (oldest first)
+- Identify the oldest complete witness
+- Determine if it supports LXX, MT, or has unique reading
+- Return (oldest_witness, "lxx"/"mt"/"unique")
 
 ##### `async def calculate_nt_support(self, quotations: List[NTQuotation]) -> float`
 - Count quotations following LXX

@@ -7,7 +7,7 @@
 **Estimated Duration**: 1 Claude session (60-90 minutes of focused implementation)
 
 **Prerequisites**:
-- Access to Greek/Hebrew corpus data (macula-hebrew, macula-greek, BHSA)
+- Access to Greek/Hebrew corpus data (macula-hebrew, macula-greek, BHSA, other configured earliest transcripts)
 - Understanding of lemma-based word searching
 - Familiarity with semantic range analysis
 

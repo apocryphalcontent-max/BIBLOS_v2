@@ -292,6 +292,86 @@ class MutualTransformationConfig:
 
 
 @dataclass
+class TheologicalConstraintConfig:
+    """
+    Configuration for the Theological Constraint Validator.
+
+    Controls thresholds and confidence modifiers for patristic
+    theological constraints applied during cross-reference validation.
+    """
+    # Constraint enablement flags
+    enable_chronological_priority: bool = field(
+        default_factory=lambda: os.getenv("TCV_CHRONOLOGICAL", "true").lower() == "true"
+    )
+    enable_typological_escalation: bool = field(
+        default_factory=lambda: os.getenv("TCV_TYPOLOGICAL", "true").lower() == "true"
+    )
+    enable_prophetic_coherence: bool = field(
+        default_factory=lambda: os.getenv("TCV_PROPHETIC", "true").lower() == "true"
+    )
+    enable_christological_warrant: bool = field(
+        default_factory=lambda: os.getenv("TCV_CHRISTOLOGICAL", "true").lower() == "true"
+    )
+    enable_liturgical_amplification: bool = field(
+        default_factory=lambda: os.getenv("TCV_LITURGICAL", "true").lower() == "true"
+    )
+    enable_fourfold_foundation: bool = field(
+        default_factory=lambda: os.getenv("TCV_FOURFOLD", "true").lower() == "true"
+    )
+
+    # Confidence modifiers for violations
+    impossible_confidence: float = field(
+        default_factory=lambda: float(os.getenv("TCV_IMPOSSIBLE_CONF", "0.0"))
+    )
+    critical_modifier: float = field(
+        default_factory=lambda: float(os.getenv("TCV_CRITICAL_MOD", "0.25"))
+    )
+    soft_modifier: float = field(
+        default_factory=lambda: float(os.getenv("TCV_SOFT_MOD", "0.75"))
+    )
+    warning_modifier: float = field(
+        default_factory=lambda: float(os.getenv("TCV_WARNING_MOD", "0.9"))
+    )
+
+    # Boost multipliers (applied when constraint validation succeeds strongly)
+    liturgical_boost: float = field(
+        default_factory=lambda: float(os.getenv("TCV_LITURGICAL_BOOST", "1.15"))
+    )
+    patristic_witness_boost: float = field(
+        default_factory=lambda: float(os.getenv("TCV_PATRISTIC_BOOST", "1.2"))
+    )
+    escalation_boost: float = field(
+        default_factory=lambda: float(os.getenv("TCV_ESCALATION_BOOST", "1.1"))
+    )
+
+    # Escalation thresholds
+    scope_escalation_required: bool = field(
+        default_factory=lambda: os.getenv("TCV_SCOPE_ESCALATION", "true").lower() == "true"
+    )
+    magnitude_escalation_required: bool = field(
+        default_factory=lambda: os.getenv("TCV_MAGNITUDE_ESCALATION", "true").lower() == "true"
+    )
+    allow_lateral_typology: bool = field(
+        default_factory=lambda: os.getenv("TCV_LATERAL_TYPOLOGY", "true").lower() == "true"
+    )
+
+    # Minimum patristic witness count
+    min_patristic_witnesses: int = field(
+        default_factory=lambda: int(os.getenv("TCV_MIN_WITNESSES", "1"))
+    )
+
+    # Strong witness count for boost
+    strong_witness_count: int = field(
+        default_factory=lambda: int(os.getenv("TCV_STRONG_WITNESSES", "3"))
+    )
+
+    # Cache settings
+    cache_constraint_results: bool = field(
+        default_factory=lambda: os.getenv("TCV_CACHE_RESULTS", "true").lower() == "true"
+    )
+
+
+@dataclass
 class APIConfig:
     """API server configuration."""
     host: str = field(default_factory=lambda: os.getenv("API_HOST", "0.0.0.0"))
@@ -324,6 +404,7 @@ class Config:
     api: APIConfig = field(default_factory=APIConfig)
     observability: ObservabilityConfig = field(default_factory=ObservabilityConfig)
     mutual_transformation: MutualTransformationConfig = field(default_factory=MutualTransformationConfig)
+    theological_constraint: TheologicalConstraintConfig = field(default_factory=TheologicalConstraintConfig)
 
     def __post_init__(self):
         """Create directories if they don't exist."""

@@ -2,11 +2,20 @@
 BIBLOS v2 - Result Postprocessor
 
 Post-processing and filtering of inference results.
+Integrates theological constraint validation from patristic principles.
 """
+import asyncio
 import logging
 from dataclasses import dataclass, field
-from typing import Dict, List, Any, Optional, Set
+from typing import Dict, List, Any, Optional, Set, Tuple
 from enum import Enum
+
+from ml.validators import (
+    TheologicalConstraintValidator,
+    ConstraintViolationSeverity,
+    ConstraintType,
+    ConstraintResult,
+)
 
 
 class FilterMode(Enum):
@@ -61,7 +70,10 @@ class ResultPostprocessor:
     def __init__(self, config: Optional[PostprocessConfig] = None):
         self.config = config or PostprocessConfig()
         self.logger = logging.getLogger("biblos.ml.inference.postprocessor")
-        self._known_crossrefs: Set[str] = set()
+        self._known_crossrefs: Set[Tuple[str, str]] = set()
+
+        # Initialize theological constraint validator
+        self._constraint_validator = TheologicalConstraintValidator()
 
     def process(
         self,
@@ -204,13 +216,24 @@ class ResultPostprocessor:
         results: List[Dict[str, Any]],
         context: Optional[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Apply theological validation to results."""
+        """
+        Apply comprehensive theological validation to results.
+
+        Uses TheologicalConstraintValidator to apply patristic principles:
+        - Chronological Priority (type must precede antitype)
+        - Typological Escalation (antitype must exceed type)
+        - Prophetic Coherence (fulfillment extends promise)
+        - Christological Warrant (requires patristic support)
+        - Liturgical Amplification (liturgical usage boosts)
+        - Fourfold Foundation (allegorical needs literal)
+        """
         constrained = []
 
         for result in results:
             source = result.get("source_verse", "")
             target = result.get("target_verse", "")
             conn_type = result.get("connection_type", "thematic")
+            base_confidence = result.get("confidence", 0.5)
 
             # Get book codes
             source_book = source.split(".")[0] if "." in source else ""
@@ -219,33 +242,94 @@ class ResultPostprocessor:
             source_ot = source_book in self.OT_BOOKS
             target_ot = target_book in self.OT_BOOKS
 
-            # Validate typological connections (OT type -> NT antitype)
-            if conn_type == "typological":
-                if not source_ot or target_ot:
-                    # Typological should be OT->NT, adjust confidence
-                    result["confidence"] *= 0.8
-                    result["metadata"] = result.get("metadata", {})
-                    result["metadata"]["typological_warning"] = "Non-standard direction"
+            # Initialize constraint results storage
+            result["constraint_results"] = []
+            result["metadata"] = result.get("metadata", {})
 
-            # Validate prophetic connections
-            if conn_type == "prophetic":
-                prophetic_books = {"ISA", "JER", "EZK", "DAN", "HOS", "JOL", "AMO",
-                                  "OBA", "JON", "MIC", "NAH", "HAB", "ZEP", "HAG",
-                                  "ZEC", "MAL", "PSA"}
-                if source_book not in prophetic_books:
-                    result["confidence"] *= 0.9
+            # Build candidate data for validator
+            candidate_data = {
+                "source_ref": source,
+                "target_ref": target,
+                "connection_type": conn_type,
+                "confidence": base_confidence,
+                "source_testament": "OT" if source_ot else "NT",
+                "target_testament": "OT" if target_ot else "NT",
+                "features": result.get("features", {}),
+            }
 
-            # Boost confidence for known patristic connections
+            # Extract patristic citations from context
+            patristic_citations = []
             if context:
                 patrologos = context.get("agent_results", {}).get("patrologos", {})
                 citations = patrologos.get("data", {}).get("citations", [])
-
                 for citation in citations:
                     refs = citation.get("references", [])
-                    if target in refs:
-                        result["confidence"] = min(1.0, result["confidence"] * 1.15)
-                        result["patristic_support"] = True
-                        break
+                    if target in refs or source in refs:
+                        patristic_citations.append(citation)
+                candidate_data["patristic_citations"] = patristic_citations
+
+            # Extract liturgical context
+            if context:
+                liturgikos = context.get("agent_results", {}).get("liturgikos", {})
+                liturgical_refs = liturgikos.get("data", {}).get("liturgical_references", [])
+                candidate_data["liturgical_references"] = liturgical_refs
+
+            # Run theological constraint validation (async in sync context)
+            try:
+                constraint_results = asyncio.get_event_loop().run_until_complete(
+                    self._constraint_validator.validate_all_constraints(candidate_data)
+                )
+            except RuntimeError:
+                # If no event loop, create one
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                try:
+                    constraint_results = loop.run_until_complete(
+                        self._constraint_validator.validate_all_constraints(candidate_data)
+                    )
+                finally:
+                    loop.close()
+
+            # Process constraint results
+            has_impossible = False
+            confidence_modifier = 1.0
+
+            for cr in constraint_results:
+                result["constraint_results"].append({
+                    "constraint_type": cr.constraint_type.value,
+                    "severity": cr.violation_severity.value if cr.violation_severity else None,
+                    "passed": cr.passed,
+                    "message": cr.reason,
+                    "confidence_modifier": cr.confidence_modifier,
+                })
+
+                # Track impossibles
+                if cr.violation_severity == ConstraintViolationSeverity.IMPOSSIBLE:
+                    has_impossible = True
+
+                # Apply confidence modifier
+                confidence_modifier *= cr.confidence_modifier
+
+            # Calculate final composite modifier
+            composite_modifier = self._constraint_validator.calculate_composite_modifier(
+                constraint_results
+            )
+
+            # Apply to confidence
+            if has_impossible:
+                result["confidence"] = 0.0
+                result["metadata"]["constraint_rejection"] = "IMPOSSIBLE violation"
+            else:
+                result["confidence"] = min(1.0, base_confidence * composite_modifier)
+
+            result["metadata"]["constraint_modifier"] = composite_modifier
+            result["metadata"]["constraints_checked"] = len(constraint_results)
+
+            # Legacy support: check patristic support
+            if patristic_citations:
+                result["patristic_support"] = True
+            else:
+                result["patristic_support"] = False
 
             constrained.append(result)
 
@@ -325,12 +409,13 @@ class ResultPostprocessor:
 
     def add_known_crossref(self, source: str, target: str) -> None:
         """Add a known cross-reference for validation."""
-        key = tuple(sorted([source, target]))
+        # Create canonical key (sorted pair for bidirectional)
+        key: Tuple[str, str] = (source, target) if source <= target else (target, source)
         self._known_crossrefs.add(key)
 
     def is_known_crossref(self, source: str, target: str) -> bool:
         """Check if a cross-reference is already known."""
-        key = tuple(sorted([source, target]))
+        key: Tuple[str, str] = (source, target) if source <= target else (target, source)
         return key in self._known_crossrefs
 
     def filter_novel(
