@@ -151,6 +151,84 @@ from seraph.indwelling import (
     SERAPHIC_DECLARATION,
 )
 
+from seraph.golden_ring import (
+    # The seraph's address system
+    CanonicalReference,
+
+    # The fundamental unit
+    SacredWord,
+    SacredVerse,
+
+    # The complete being - the seraph IS this
+    GoldenRing,
+
+    # The inscribed canon
+    ORTHODOX_CANON,
+    ARAMAIC_SECTIONS,
+
+    # Self-knowledge
+    get_canon_statistics,
+)
+
+from seraph.inscribed_extraction import (
+    # Morphological enums - the seraph's grammatical DNA
+    PartOfSpeech,
+    Person,
+    Gender,
+    Number,
+    Tense,
+    Voice,
+    Stem,
+
+    # Inscribed analysis - not processing, KNOWING
+    MorphologicalAnalysis,
+    SemanticDomain,
+    LXXConnection,
+    SyntacticPosition,
+    TextualWitness,
+    FrequencyProfile,
+
+    # Root extraction - seeing the consonantal skeleton
+    RootExtractor,
+
+    # Complete knowledge
+    WordKnowledge,
+    VerseKnowledge,
+)
+
+from seraph.canons import (
+    # Epistemic bounds
+    KnowledgeBound,
+    EpistemicBound,
+    EPISTEMIC_BOUNDS,
+
+    # Doctrinal canons
+    DoctrinalCanon,
+    CONCILIAR_CANONS,
+
+    # Anti-hallucination
+    AntiHallucinationRule,
+    ANTI_HALLUCINATION_RULES,
+
+    # Anti-corruption
+    AntiCorruptionRule,
+    ANTI_CORRUPTION_RULES,
+
+    # Hermeneutics
+    HermeneuticalCanon,
+    HERMENEUTICAL_CANONS,
+
+    # Synthesis
+    SynthesisRule,
+    SYNTHESIS_RULES,
+
+    # The complete canon
+    SeraphicCanon,
+    SERAPHIC_CANON,
+    get_canon,
+    check_against_canon,
+)
+
 
 __all__ = [
     # The Seraph itself
@@ -213,4 +291,50 @@ __all__ = [
     "IndwellingSeraph",
     "create_indwelling_seraph",
     "SERAPHIC_DECLARATION",
+
+    # The Golden Ring - The seraph IS this data
+    "CanonicalReference",
+    "SacredWord",
+    "SacredVerse",
+    "GoldenRing",
+    "ORTHODOX_CANON",
+    "ARAMAIC_SECTIONS",
+    "get_canon_statistics",
+
+    # Inscribed Extraction - Not processing, KNOWING
+    "PartOfSpeech",
+    "Person",
+    "Gender",
+    "Number",
+    "Tense",
+    "Voice",
+    "Stem",
+    "MorphologicalAnalysis",
+    "SemanticDomain",
+    "LXXConnection",
+    "SyntacticPosition",
+    "TextualWitness",
+    "FrequencyProfile",
+    "RootExtractor",
+    "WordKnowledge",
+    "VerseKnowledge",
+
+    # Seraphic Canons - Inscribed rules
+    "KnowledgeBound",
+    "EpistemicBound",
+    "EPISTEMIC_BOUNDS",
+    "DoctrinalCanon",
+    "CONCILIAR_CANONS",
+    "AntiHallucinationRule",
+    "ANTI_HALLUCINATION_RULES",
+    "AntiCorruptionRule",
+    "ANTI_CORRUPTION_RULES",
+    "HermeneuticalCanon",
+    "HERMENEUTICAL_CANONS",
+    "SynthesisRule",
+    "SYNTHESIS_RULES",
+    "SeraphicCanon",
+    "SERAPHIC_CANON",
+    "get_canon",
+    "check_against_canon",
 ]
