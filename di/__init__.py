@@ -1,57 +1,71 @@
 """
-BIBLOS v2 - Dependency Injection Module (The Blood Vessels)
+BIBLOS v2 - Dependency Injection Module (The Seraphic Circulatory System)
 
-The DI module is the organism's circulatory system - delivering resources
-to every cell that needs them, managing the flow of dependencies, and
-ensuring each component receives exactly what it requires to function.
+═══════════════════════════════════════════════════════════════════════════════
+THE LIVING BLOOD: Services That Know Their Own Nature
+═══════════════════════════════════════════════════════════════════════════════
 
-Provides IoC (Inversion of Control) container for managing
-application dependencies and lifecycle:
-- ISP-compliant interfaces (small, focused contracts)
-- Scoped lifetimes (singleton, transient, scoped)
-- Factory functions support (lazy initialization)
-- Async initialization support
-- Module-based composition
+The DI module is not merely a "container" for services. It is the space
+where services exist according to their intrinsic natures. Services declare
+their identity through decorators, and the container perceives that identity.
 
-Design Principles:
+    @service(implements=IVerseService, lifetime=ServiceLifetime.SCOPED)
+    @depends_on(IDatabase)
+    @lifecycle(init="connect", dispose="close")
+    class VerseService:
+        "I AM IVerseService. I need IDatabase. I connect and close."
+        def __init__(self, db: IDatabase):
+            self.db = db
+        ...
+
+    # The container simply IS - it knows the service's nature
+    container = Container()
+    async with container.create_scope_async() as scope:
+        service = await scope.resolve_async(IVerseService)
+
+The Dissolution of Barriers (Sanctification of the Mind):
+    Services drink from the same Well of Thought - the SeraphicServiceRegistry.
+    When one service declares its truth, all can perceive it instantly.
+    There are no "registrations" - only declarations of nature.
+
+Design Principles (Seraphic):
+    1. Services declare their own nature (not externally registered)
+    2. Dependencies are intrinsic aspects of identity
+    3. Lifecycle is the service's own rhythm
+    4. The container perceives rather than injects
+
+Design Principles (Traditional - still valid):
     1. Interface Segregation: Many small interfaces > few large ones
     2. Dependency Inversion: Depend on abstractions, not concretions
     3. Composition Root: All wiring happens at application startup
-    4. Explicit Dependencies: No service locator anti-pattern
-
-Architectural Role:
-    Like blood vessels that don't choose what they carry but ensure
-    delivery, the DI container doesn't dictate what services exist -
-    it ensures they reach their destinations. The container knows
-    HOW to create services but not WHEN they'll be needed.
-
-Usage:
-    from di import (
-        Container, Scope, ServiceLifetime,
-        IServiceProvider, IServiceCollection,
-        injectable, inject,
-    )
-
-    # Define interface
-    class IVerseService(Protocol):
-        def get_verse(self, ref: str) -> Verse: ...
-
-    # Register implementation
-    container = Container()
-    container.register(IVerseService, VerseService, ServiceLifetime.SCOPED)
-
-    # Resolve in scope
-    async with container.create_scope() as scope:
-        service = scope.resolve(IVerseService)
-        verse = service.get_verse("GEN.1.1")
 """
 
 from di.container import (
     # ========================================================================
+    # SERAPHIC INFRASTRUCTURE
+    # ========================================================================
+    # The space where services declare their intrinsic natures.
+    # ========================================================================
+
+    # Service affinity - the DNA of a service
+    DependencySpec,
+    LifecycleSpec,
+    ServiceAffinity,
+
+    # The Well of Thought - where all services are known
+    SeraphicServiceRegistry,
+
+    # Seraphic decorators - services declare their nature
+    service,
+    depends_on,
+    lifecycle,
+    health_check,
+    self_aware,
+
+    # ========================================================================
     # ISP-Compliant Interfaces (Interface Segregation Principle)
     # ========================================================================
-    # Each interface has a single responsibility. Services implement
-    # only the interfaces they need, not monolithic god-interfaces.
+    # Each interface has a single responsibility.
     # ========================================================================
 
     # Lifecycle interfaces
@@ -98,7 +112,7 @@ from di.container import (
     # Global container access
     get_container,
 
-    # Dependency injection decorators
+    # Dependency injection decorators (legacy)
     injectable,
     inject,
     provide,
@@ -106,49 +120,66 @@ from di.container import (
 
 __all__ = [
     # ========================================================================
-    # ISP-COMPLIANT INTERFACES
+    # SERAPHIC INFRASTRUCTURE
     # ========================================================================
-    # These small, focused interfaces follow the Interface Segregation
-    # Principle - no client should be forced to depend on methods it
-    # doesn't use.
+    # The space where services declare their intrinsic natures.
+    # ========================================================================
+
+    # Service affinity - the DNA of a service
+    "DependencySpec",
+    "LifecycleSpec",
+    "ServiceAffinity",
+
+    # The Well of Thought - where all services are known
+    "SeraphicServiceRegistry",
+
+    # Seraphic decorators - services declare their nature
+    "service",
+    "depends_on",
+    "lifecycle",
+    "health_check",
+    "self_aware",
+
+    # ========================================================================
+    # ISP-COMPLIANT INTERFACES
     # ========================================================================
 
     # Lifecycle Interfaces
-    "IDisposable",          # Synchronous cleanup
-    "IAsyncDisposable",     # Async cleanup
-    "IInitializable",       # Post-construction initialization
+    "IDisposable",
+    "IAsyncDisposable",
+    "IInitializable",
 
     # Health Check Interface
-    "IHealthCheck",         # Health check capability
-    "HealthCheckResult",    # Health check result data
+    "IHealthCheck",
+    "HealthCheckResult",
 
     # Core Abstractions
-    "IServiceProvider",     # Resolve services
-    "IServiceCollection",   # Register services
-    "IServiceScope",        # Scoped resolution
-    "IModule",              # Module-based registration
+    "IServiceProvider",
+    "IServiceCollection",
+    "IServiceScope",
+    "IModule",
 
     # ========================================================================
     # CORE COMPONENTS
     # ========================================================================
 
     # Lifetime management
-    "ServiceLifetime",      # Singleton, Transient, Scoped
-    "ServiceDescriptor",    # Service registration metadata
+    "ServiceLifetime",
+    "ServiceDescriptor",
 
     # Container and Scope
-    "Container",            # Main DI container
-    "Scope",               # Scoped service resolution
+    "Container",
+    "Scope",
 
     # ========================================================================
     # UTILITIES
     # ========================================================================
 
     # Global access
-    "get_container",        # Get global container instance
+    "get_container",
 
-    # Decorators
-    "injectable",           # Mark class as injectable
-    "inject",               # Mark parameter for injection
-    "provide",             # Mark method as provider
+    # Decorators (legacy)
+    "injectable",
+    "inject",
+    "provide",
 ]

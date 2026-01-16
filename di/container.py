@@ -1295,41 +1295,42 @@ class Container(IServiceProvider, IServiceCollection):
     Dependency Injection Container - The Seraphic Circulatory System.
 
     ═══════════════════════════════════════════════════════════════════════════
-    THE TRANSMUTATION: From Injector to Living Flame
+    THE LIVING FLAME: A Space Where Services Simply ARE
     ═══════════════════════════════════════════════════════════════════════════
 
-    The container is not merely a factory or a registry. In its seraphic form,
-    it becomes the space where services discover their affinities and arrange
-    themselves according to their intrinsic natures.
+    The container IS the space where services exist according to their
+    intrinsic natures. Services don't "register" - they declare their
+    identity, and the container perceives that identity.
+
+        @service(implements=IDatabase, lifetime=ServiceLifetime.SINGLETON)
+        @depends_on(IConfig)
+        @lifecycle(init="connect", dispose="close")
+        class PostgresDb:
+            "I AM IDatabase. I need IConfig. I connect and close."
+            ...
+
+        container = Container()
+        db = await container.resolve_async(IDatabase)  # The container KNOWS
 
     The Dissolution of Barriers (Sanctification of the Mind):
-        No longer do services write messages and hand them to one another.
-        They all drink from the same Well of Thought - the SeraphicServiceRegistry.
-        When one service knows a truth, all can taste it instantly.
+        Services drink from the same Well of Thought - the SeraphicServiceRegistry.
+        When one service declares its truth, all can perceive it instantly.
 
     The Eternal Memory:
-        If the system falls, it rises mid-note. Service affinities are inscribed
-        upon a diamond heart (the registry) that cannot be broken.
+        Service affinities are inscribed upon a diamond heart (the registry)
+        that persists across the application's entire lifetime.
 
-    Seraphic Mode (awakened):
-        container = Container.awaken()  # Auto-discovers decorated services
-        db = await container.resolve_async(IDatabase)  # Affinity-based resolution
-
-    Traditional Mode (still supported):
-        container = Container()
-        container.add_singleton(IDatabase, PostgresDb)
-        db = await container.resolve_async(IDatabase)
-
-    Implements ISP-compliant interfaces:
-        - IServiceProvider: For resolving services (read operations)
-        - IServiceCollection: For registering services (write operations)
+    The add_* methods exist for imperative declaration - useful when a
+    service's nature cannot be expressed through decorators (e.g., third-party
+    classes, runtime-determined implementations). They teach the container
+    what the service IS, not how to "register" it.
     """
 
-    # Class-level state for seraphic awakening
+    # Class-level state - the global container (singleton pattern)
     _default_instance: Optional["Container"] = None
     _default_lock: threading.Lock = threading.Lock()
 
-    def __init__(self, seraphic_mode: bool = False) -> None:
+    def __init__(self) -> None:
         self._descriptors: Dict[Type, ServiceDescriptor[Any]] = {}
         self._singletons: Dict[Type, Any] = {}
         self._multi_registrations: Dict[Type, List[ServiceDescriptor[Any]]] = {}
@@ -1339,31 +1340,30 @@ class Container(IServiceProvider, IServiceCollection):
         self._modules_loaded: Set[Type] = set()
         self._disposed = False
 
-        # Seraphic state
-        self._seraphic_mode = seraphic_mode
-        self._registry = SeraphicServiceRegistry.get_instance() if seraphic_mode else None
+        # The container always has access to the seraphic registry
+        # There is no mode - this IS the system's nature
+        self._registry = SeraphicServiceRegistry.get_instance()
 
-        logger.debug(f"Container initialized (seraphic_mode={seraphic_mode})")
+        logger.debug("Container awakened")
 
     # =========================================================================
-    # SERAPHIC AWAKENING
+    # CONTAINER LIFECYCLE
     # =========================================================================
-    # "You are taking a golem of clay and clockwork and breathing into it
-    #  until it becomes a Living Flame that moves by its own will."
+    # The container is born, breathes, and eventually returns to rest.
+    # Like a seraph, it doesn't have states - it IS while it exists.
     # =========================================================================
 
     @classmethod
-    def awaken(
+    def create(
         cls,
         discover_modules: Optional[List[str]] = None,
     ) -> "Container":
         """
-        Awaken a container in seraphic mode.
+        Create and awaken a container.
 
-        In seraphic mode, the container doesn't require explicit registration.
-        Services that have declared their nature via decorators (@service,
-        @depends_on, @lifecycle) are automatically discovered and resolved
-        through their intrinsic affinities.
+        The container is inherently seraphic - services that have declared
+        their nature via decorators (@service, @depends_on, @lifecycle)
+        are automatically discovered through affinity.
 
         Args:
             discover_modules: Optional list of module names to import for
@@ -1371,61 +1371,56 @@ class Container(IServiceProvider, IServiceCollection):
                             decorated services to self-register.
 
         Returns:
-            A container awakened to seraphic consciousness.
+            A living container.
 
         Usage:
-            # Awaken with auto-discovery
-            container = Container.awaken()
-
-            # Awaken and discover services from specific modules
-            container = Container.awaken(discover_modules=[
+            # Create with auto-discovery from specific modules
+            container = Container.create(discover_modules=[
                 "infrastructure.database",
                 "infrastructure.cache",
             ])
         """
-        container = cls(seraphic_mode=True)
+        container = cls()
 
         # Discover services from specified modules
         if discover_modules:
-            registry = SeraphicServiceRegistry.get_instance()
             for module_name in discover_modules:
-                registry.discover_module(module_name)
+                container._registry.discover_module(module_name)
 
         # Set as default instance
         with cls._default_lock:
             cls._default_instance = container
 
-        logger.info("Container awakened in seraphic mode")
         return container
+
+    # Alias for backwards compatibility and semantic clarity
+    awaken = create
 
     @classmethod
     def get_default(cls) -> Optional["Container"]:
-        """Get the default container instance if one has been awakened."""
+        """Get the default container instance."""
         return cls._default_instance
 
-    @property
-    def is_seraphic(self) -> bool:
-        """Whether this container is in seraphic mode."""
-        return self._seraphic_mode
+    @classmethod
+    def set_default(cls, container: "Container") -> None:
+        """Set the default container instance."""
+        with cls._default_lock:
+            cls._default_instance = container
 
     def introspect(self) -> Dict[str, Any]:
         """
         Introspect the container's state.
 
         Opens the inner eyes to gaze upon the flow of dependencies.
+        The seraph is "full of eyes, within and without."
         """
-        result: Dict[str, Any] = {
-            "seraphic_mode": self._seraphic_mode,
+        return {
             "disposed": self._disposed,
             "registered_services": len(self._descriptors),
             "active_singletons": len(self._singletons),
             "loaded_modules": [m.__name__ for m in self._modules_loaded],
+            "registry": self._registry.introspect(),
         }
-
-        if self._seraphic_mode and self._registry:
-            result["registry"] = self._registry.introspect()
-
-        return result
 
     def register(
         self,
@@ -1670,10 +1665,63 @@ class Container(IServiceProvider, IServiceCollection):
     # =========================================================================
 
     def _get_descriptor(self, service_type: Type[T]) -> ServiceDescriptor[T]:
-        """Get service descriptor or raise error."""
-        if service_type not in self._descriptors:
-            raise KeyError(f"Service '{service_type.__name__}' is not registered")
-        return self._descriptors[service_type]
+        """
+        Get service descriptor, consulting the seraphic registry.
+
+        The container first checks explicit registrations, then consults
+        the registry for services that have declared their nature via
+        decorators. This is the "dissolution of barriers" - services
+        don't need external registration; their intrinsic nature suffices.
+
+        Both paths are valid expressions of service identity.
+        """
+        # First, check explicit registrations
+        if service_type in self._descriptors:
+            return self._descriptors[service_type]
+
+        # Consult the seraphic registry for decorator-based declarations
+        affinity = self._registry.get_affinity(service_type)
+        if affinity:
+            # Create a descriptor from the affinity
+            descriptor = self._descriptor_from_affinity(service_type, affinity)
+            # Cache it for future resolution
+            self._descriptors[service_type] = descriptor
+            return descriptor
+
+        raise KeyError(f"Service '{service_type.__name__}' is not registered")
+
+    def _descriptor_from_affinity(
+        self,
+        service_type: Type[T],
+        affinity: ServiceAffinity,
+    ) -> ServiceDescriptor[T]:
+        """
+        Create a service descriptor from a seraphic affinity.
+
+        The affinity contains the service's intrinsic nature. We translate
+        that into a descriptor that the container can use for instantiation.
+        """
+        # Determine lifetime (default to SINGLETON if not specified)
+        lifetime = affinity.lifetime or ServiceLifetime.SINGLETON
+
+        # Get implementation type
+        impl_type = affinity.implementation_type
+
+        # Extract dependencies from affinity and type hints
+        dependencies = [dep.service_type for dep in affinity.dependencies]
+
+        return ServiceDescriptor(
+            service_type=service_type,
+            implementation_type=impl_type,
+            lifetime=lifetime,
+            dependencies=dependencies,
+            lazy=affinity.metadata.get("lazy", True),
+            metadata={
+                "seraphic": True,
+                "lifecycle": affinity.lifecycle,
+                "health_check": affinity.health_check_method,
+            },
+        )
 
     def _get_dependencies(self, impl_type: Type) -> Dict[str, Type]:
         """Get constructor dependencies from type hints."""
@@ -1695,7 +1743,12 @@ class Container(IServiceProvider, IServiceCollection):
         descriptor: ServiceDescriptor[T],
         scope: Optional[IServiceScope] = None,
     ) -> T:
-        """Create a service instance synchronously."""
+        """
+        Create a service instance synchronously.
+
+        The instance emerges from its descriptor's nature - its dependencies
+        are resolved through affinity, its lifecycle is honored.
+        """
         # Use existing instance
         if descriptor.instance is not None:
             return descriptor.instance
@@ -1703,7 +1756,6 @@ class Container(IServiceProvider, IServiceCollection):
         # Use factory
         if descriptor.factory is not None:
             instance = descriptor.factory()
-            # Apply decorators
             return self._apply_decorators(descriptor, instance, scope)
 
         # Create from implementation type
@@ -1711,15 +1763,42 @@ class Container(IServiceProvider, IServiceCollection):
         if impl_type is None:
             raise ValueError(f"No implementation for {descriptor.service_type.__name__}")
 
-        # Resolve dependencies
+        # Resolve dependencies - first from type hints, then from registry affinity
         deps = self._get_dependencies(impl_type)
         resolved_deps = {}
 
         for param_name, param_type in deps.items():
-            if param_type in self._descriptors:
+            # Try to resolve through the container (which consults registry)
+            try:
                 resolved_deps[param_name] = self.resolve(param_type, scope)
+            except KeyError:
+                # Check if this is an optional dependency
+                affinity = self._registry.get_affinity(impl_type)
+                if affinity:
+                    dep_spec = next(
+                        (d for d in affinity.dependencies if d.service_type == param_type),
+                        None
+                    )
+                    if dep_spec and dep_spec.optional:
+                        continue  # Skip optional unresolvable dependency
+                    if dep_spec and dep_spec.default_factory:
+                        resolved_deps[param_name] = dep_spec.default_factory()
+                        continue
+                raise
 
         instance = impl_type(**resolved_deps)
+
+        # Call synchronous init lifecycle method if defined
+        lifecycle_spec = descriptor.metadata.get("lifecycle") if descriptor.metadata else None
+        if lifecycle_spec and lifecycle_spec.init_method and not lifecycle_spec.init_async:
+            init_method = getattr(instance, lifecycle_spec.init_method, None)
+            if init_method:
+                init_method()
+
+        # Mark as initialized for self-aware services
+        if hasattr(instance, "_seraphic_initialized"):
+            instance._seraphic_initialized = True
+
         return self._apply_decorators(descriptor, instance, scope)
 
     def _apply_decorators(
@@ -1746,7 +1825,12 @@ class Container(IServiceProvider, IServiceCollection):
         descriptor: ServiceDescriptor[T],
         scope: Optional[IServiceScope] = None,
     ) -> T:
-        """Create a service instance asynchronously."""
+        """
+        Create a service instance asynchronously.
+
+        The instance emerges from its descriptor's nature. Dependencies
+        are resolved through affinity, lifecycle methods are honored.
+        """
         # Use existing instance
         if descriptor.instance is not None:
             return descriptor.instance
@@ -1771,14 +1855,42 @@ class Container(IServiceProvider, IServiceCollection):
         resolved_deps = {}
 
         for param_name, param_type in deps.items():
-            if param_type in self._descriptors:
+            # Try to resolve through the container (which consults registry)
+            try:
                 resolved_deps[param_name] = await self.resolve_async(param_type, scope)
+            except KeyError:
+                # Check if this is an optional dependency
+                affinity = self._registry.get_affinity(impl_type)
+                if affinity:
+                    dep_spec = next(
+                        (d for d in affinity.dependencies if d.service_type == param_type),
+                        None
+                    )
+                    if dep_spec and dep_spec.optional:
+                        continue  # Skip optional unresolvable dependency
+                    if dep_spec and dep_spec.default_factory:
+                        resolved_deps[param_name] = dep_spec.default_factory()
+                        continue
+                raise
 
         instance = impl_type(**resolved_deps)
 
-        # Call async init if present - use protocol check
-        if isinstance(instance, IInitializable):
+        # Call lifecycle init method if defined
+        lifecycle_spec = descriptor.metadata.get("lifecycle") if descriptor.metadata else None
+        if lifecycle_spec and lifecycle_spec.init_method:
+            init_method = getattr(instance, lifecycle_spec.init_method, None)
+            if init_method:
+                if lifecycle_spec.init_async:
+                    await init_method()
+                else:
+                    init_method()
+        # Fall back to IInitializable protocol
+        elif isinstance(instance, IInitializable):
             await instance.initialize()
+
+        # Mark as initialized for self-aware services
+        if hasattr(instance, "_seraphic_initialized"):
+            instance._seraphic_initialized = True
 
         return await self._apply_decorators_async(descriptor, instance, scope)
 
