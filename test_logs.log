@@ -1,39 +1,54 @@
-2026-01-16 01:49:07 [    INFO] biblos.ml.metrics.mutual_transformation:174 - MutualTransformationMetric initialized with radical_threshold=0.4, moderate_threshold=0.2
-2026-01-16 01:49:07 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 01:49:07 [   DEBUG] biblos.ml.metrics.mutual_transformation:249 - Measured transformation GEN.1.1 <-> JHN.1.1: mutual_influence=0.0000, type=MINIMAL
-2026-01-16 01:49:07 [    INFO] biblos.ml.metrics.mutual_transformation:174 - MutualTransformationMetric initialized with radical_threshold=0.4, moderate_threshold=0.2
-2026-01-16 01:49:07 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 01:49:07 [   DEBUG] biblos.ml.metrics.mutual_transformation:249 - Measured transformation GEN.22.2 <-> JHN.3.16: mutual_influence=1.0000, type=RADICAL
-2026-01-16 01:49:07 [    INFO] biblos.ml.metrics.mutual_transformation:174 - MutualTransformationMetric initialized with radical_threshold=0.4, moderate_threshold=0.2
-2026-01-16 01:49:07 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 01:49:07 [   DEBUG] biblos.ml.metrics.mutual_transformation:249 - Measured transformation EXO.3.2 <-> LUK.1.35: mutual_influence=0.0000, type=MINIMAL
-2026-01-16 01:49:07 [    INFO] biblos.ml.metrics.mutual_transformation:174 - MutualTransformationMetric initialized with radical_threshold=0.4, moderate_threshold=0.2
-2026-01-16 01:49:07 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 01:49:07 [   DEBUG] biblos.ml.metrics.mutual_transformation:249 - Measured transformation TEST.1.1 <-> TEST.1.2: mutual_influence=0.5000, type=RADICAL
-2026-01-16 01:49:07 [   DEBUG] biblos.ml.metrics.mutual_transformation:249 - Measured transformation TEST.1.1 <-> TEST.1.2: mutual_influence=0.3000, type=MODERATE
-2026-01-16 01:49:07 [   DEBUG] biblos.ml.metrics.mutual_transformation:249 - Measured transformation TEST.1.1 <-> TEST.1.2: mutual_influence=0.1000, type=MINIMAL
-2026-01-16 01:49:07 [    INFO] biblos.ml.metrics.mutual_transformation:174 - MutualTransformationMetric initialized with radical_threshold=0.4, moderate_threshold=0.2
-2026-01-16 01:49:07 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 01:49:07 [    INFO] biblos.ml.metrics.mutual_transformation:468 - Batch processed 100 pairs
-2026-01-16 01:49:07 [   DEBUG] biblos.ml.metrics.mutual_transformation:249 - Measured transformation GEN.0.1 <-> JHN.0.1: mutual_influence=0.9988, type=RADICAL
-2026-01-16 01:49:07 [   DEBUG] biblos.ml.metrics.mutual_transformation:249 - Measured transformation GEN.1.1 <-> JHN.1.1: mutual_influence=1.0000, type=RADICAL
-2026-01-16 01:49:07 [   DEBUG] biblos.ml.metrics.mutual_transformation:249 - Measured transformation GEN.2.1 <-> JHN.2.1: mutual_influence=0.9506, type=RADICAL
-2026-01-16 01:49:07 [   DEBUG] biblos.ml.metrics.mutual_transformation:249 - Measured transformation GEN.3.1 <-> JHN.3.1: mutual_influence=0.9641, type=RADICAL
-2026-01-16 01:49:07 [   DEBUG] biblos.ml.metrics.mutual_transformation:249 - Measured transformation GEN.4.1 <-> JHN.4.1: mutual_influence=0.9923, type=RADICAL
-2026-01-16 01:49:07 [    INFO] biblos.ml.metrics.mutual_transformation:174 - MutualTransformationMetric initialized with radical_threshold=0.4, moderate_threshold=0.2
-2026-01-16 01:49:07 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 01:49:07 [   DEBUG] biblos.ml.metrics.mutual_transformation:249 - Measured transformation GEN.22.2 <-> JHN.3.16: mutual_influence=0.4531, type=RADICAL
-2026-01-16 01:49:07 [    INFO] biblos.ml.metrics.mutual_transformation:174 - MutualTransformationMetric initialized with radical_threshold=0.5, moderate_threshold=0.3
-2026-01-16 01:49:07 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 01:49:07 [   DEBUG] biblos.ml.metrics.mutual_transformation:249 - Measured transformation TEST.1.1 <-> TEST.1.2: mutual_influence=0.3500, type=MODERATE
-2026-01-16 01:49:07 [    INFO] biblos.ml.metrics.mutual_transformation:174 - MutualTransformationMetric initialized with radical_threshold=0.4, moderate_threshold=0.2
-2026-01-16 01:49:07 [    INFO] biblos.ml.metrics.mutual_transformation:174 - MutualTransformationMetric initialized with radical_threshold=0.4, moderate_threshold=0.2
-2026-01-16 01:49:07 [    INFO] biblos.ml.metrics.mutual_transformation:174 - MutualTransformationMetric initialized with radical_threshold=0.4, moderate_threshold=0.2
-2026-01-16 01:49:07 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 01:49:07 [   DEBUG] biblos.ml.metrics.mutual_transformation:249 - Measured transformation TEST.1.1 <-> TEST.1.2: mutual_influence=0.0000, type=MINIMAL
-2026-01-16 01:49:07 [    INFO] biblos.ml.metrics.mutual_transformation:174 - MutualTransformationMetric initialized with radical_threshold=0.4, moderate_threshold=0.2
-2026-01-16 01:49:07 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 01:49:07 [   DEBUG] biblos.ml.metrics.mutual_transformation:249 - Measured transformation GEN.1.1 <-> JHN.1.1: mutual_influence=0.9988, type=RADICAL
-2026-01-16 01:49:07 [    INFO] biblos.ml.metrics.mutual_transformation:174 - MutualTransformationMetric initialized with radical_threshold=0.4, moderate_threshold=0.2
-2026-01-16 01:49:07 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 01:49:07 [    INFO] biblos.ml.metrics.mutual_transformation:468 - Batch processed 100 pairs
+2026-01-16 02:02:35 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:35 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:35 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:35 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:35 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:35 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:35 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:35 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:35 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:35 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] biblos.ml.validators.theological_constraints:1251 - Composite modifier from 3 constraints: 1.265
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:1240 - IMPOSSIBLE constraint violation - returning 0.0
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] biblos.ml.validators.theological_constraints:1251 - Composite modifier from 2 constraints: 0.900
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:02:36 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
+2026-01-16 02:02:36 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
