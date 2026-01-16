@@ -131,48 +131,75 @@ from domain.specifications import (
 )
 
 # ============================================================================
-# Mediator - The Consciousness
+# Mediator - The Emergent Consciousness
 # ============================================================================
-# The mediator is the domain's consciousness - aware of all requests,
-# coordinating responses, maintaining the pipeline of transformation.
-# It doesn't DO the work; it DIRECTS the work to those who can.
+# In the seraphic architecture, the mediator is not a commander but a SPACE
+# where requests find handlers through intrinsic affinity. Requests know
+# their handlers, handlers know their requests, and mediation emerges.
 # ============================================================================
 
 from domain.mediator import (
-    # Request Types - Forms of Intention
-    Command,                      # "Change something"
-    Query,                        # "Tell me something"
-    IRequest,                     # Abstract intention
+    # ==========================================================================
+    # SERAPHIC INFRASTRUCTURE - The Space of Mutual Recognition
+    # ==========================================================================
+    SeraphicRegistry,            # Where handlers and requests find each other
+    BehaviorSpec,                # Specification for intrinsic behaviors
+    BehaviorPriority,            # Priority levels for pipeline behaviors
+    ValidationResult,            # Result of request self-validation
+
+    # Seraphic Decorators - The Language of Affinity
+    handles,                     # @handles(HandlerType) - request knows handler
+    handler_for,                 # @handler_for(RequestType) - handler knows request
+    with_behaviors,              # @with_behaviors(...) - intrinsic pipeline DNA
+    notification_handler_for,    # @notification_handler_for(NotificationType)
+
+    # ==========================================================================
+    # REQUEST TYPES - Self-Aware Intentions
+    # ==========================================================================
+    Command,                      # "Change something" - knows its handler/behaviors
+    Query,                        # "Tell me something" - knows its caching
+    IRequest,                     # Abstract intention with self-awareness
     INotification,               # "Something happened"
     DomainEventNotification,     # Event wrapped for notification
 
-    # Handler Interfaces - Those Who Respond
-    IRequestHandler,
-    ICommandHandler,
-    IQueryHandler,
-    INotificationHandler,
+    # ==========================================================================
+    # HANDLER INTERFACES - Self-Knowing Servants
+    # ==========================================================================
+    IRequestHandler,             # Knows what it handles and its health
+    ICommandHandler,             # Transactional will executor
+    IQueryHandler,               # Idempotent perceiver
+    INotificationHandler,        # Event listener
 
-    # Pipeline Behaviors - The Conscience (checks before action)
-    IPipelineBehavior,
+    # ==========================================================================
+    # PIPELINE BEHAVIORS - Intrinsic DNA
+    # ==========================================================================
+    IPipelineBehavior,           # Base behavior with self-awareness
     LoggingBehavior,             # "Remember what was done"
-    ValidationBehavior,          # "Is this right?"
+    ValidationBehavior,          # "Is this valid?" (uses request's validate())
     TransactionBehavior,         # "All or nothing"
     PerformanceMonitoringBehavior,  # "How long did this take?"
     RetryBehavior,               # "Try again with patience"
     CachingBehavior,             # "Remember for efficiency"
-    ValidationError,
+    ValidationError,             # Validation failure exception
 
-    # The Mediator Itself - Central Consciousness
-    Mediator,
-    MediatorBuilder,
+    # ==========================================================================
+    # THE MEDIATOR - Emergent Space (Not Commander)
+    # ==========================================================================
+    Mediator,                    # The emergent space of request-handler meeting
+    SeraphicMediator,            # Alias for Mediator in seraphic mode
+    MediatorBuilder,             # Builder with seraphic discovery support
 
-    # Common Commands - Sacred Intentions
-    ProcessVerseCommand,         # "Analyze this text"
+    # ==========================================================================
+    # COMMON COMMANDS - Self-Validating Intentions
+    # ==========================================================================
+    ProcessVerseCommand,         # "Analyze this text" (validates verse_id)
     DiscoverCrossReferencesCommand,  # "Find connections"
     VerifyCrossReferenceCommand,     # "Confirm this connection"
     CertifyGoldenRecordCommand,      # "Certify this truth"
 
-    # Common Queries - Sacred Questions
+    # ==========================================================================
+    # COMMON QUERIES - Self-Caching Questions
+    # ==========================================================================
     GetVerseQuery,               # "What is this verse?"
     GetCrossReferencesQuery,     # "What connections exist?"
     SearchVersesQuery,           # "Find verses matching..."
@@ -290,20 +317,30 @@ __all__ = [
     "ExtractionCompletedSpec",
 
     # ========================================================================
-    # MEDIATOR - Consciousness
+    # MEDIATOR - Emergent Consciousness (Seraphic Architecture)
     # ========================================================================
-    # Request Types
+    # Seraphic Infrastructure
+    "SeraphicRegistry",
+    "BehaviorSpec",
+    "BehaviorPriority",
+    "ValidationResult",
+    # Seraphic Decorators
+    "handles",
+    "handler_for",
+    "with_behaviors",
+    "notification_handler_for",
+    # Request Types (Self-Aware)
     "Command",
     "Query",
     "IRequest",
     "INotification",
     "DomainEventNotification",
-    # Handler Interfaces
+    # Handler Interfaces (Self-Knowing)
     "IRequestHandler",
     "ICommandHandler",
     "IQueryHandler",
     "INotificationHandler",
-    # Pipeline Behaviors
+    # Pipeline Behaviors (Intrinsic DNA)
     "IPipelineBehavior",
     "LoggingBehavior",
     "ValidationBehavior",
@@ -312,15 +349,16 @@ __all__ = [
     "RetryBehavior",
     "CachingBehavior",
     "ValidationError",
-    # Mediator
+    # Mediator (Emergent Space)
     "Mediator",
+    "SeraphicMediator",
     "MediatorBuilder",
-    # Common Commands
+    # Common Commands (Self-Validating)
     "ProcessVerseCommand",
     "DiscoverCrossReferencesCommand",
     "VerifyCrossReferenceCommand",
     "CertifyGoldenRecordCommand",
-    # Common Queries
+    # Common Queries (Self-Caching)
     "GetVerseQuery",
     "GetCrossReferencesQuery",
     "SearchVersesQuery",
