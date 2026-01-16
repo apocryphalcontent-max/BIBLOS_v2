@@ -189,12 +189,78 @@ def hypothesis_settings_profile():
     return settings.default
 
 
+# Theological Test Fixtures
+@pytest.fixture
+def mock_patristic_witnesses():
+    """Mock patristic witness data for testing."""
+    return [
+        {
+            "father_name": "Basil the Great",
+            "authority": "ecumenical_father",
+            "quote": "'In the beginning' signifies the co-eternal Son through whom all was made",
+            "source_work": "Hexaemeron, Homily 1",
+            "verse_reference": "GEN.1.1"
+        },
+        {
+            "father_name": "John Chrysostom",
+            "authority": "ecumenical_father",
+            "quote": "The Word present in Genesis is the same Logos incarnate in John",
+            "source_work": "Homilies on Genesis",
+            "verse_reference": "GEN.1.1"
+        },
+        {
+            "father_name": "Justin Martyr",
+            "authority": "major_father",
+            "quote": "The virgin shall conceive refers to Mary, mother of Christ",
+            "source_work": "Dialogue with Trypho, 84",
+            "verse_reference": "ISA.7.14"
+        }
+    ]
+
+
+# Test data validation helpers
+def assert_valid_verse_id(verse_id: str):
+    """Assert that verse ID follows valid format."""
+    parts = verse_id.split('.')
+    assert len(parts) == 3, f"Invalid verse ID format: {verse_id}"
+    assert len(parts[0]) == 3, f"Invalid book code: {parts[0]}"
+    assert parts[1].isdigit(), f"Invalid chapter: {parts[1]}"
+    assert parts[2].isdigit(), f"Invalid verse: {parts[2]}"
+
+
+def assert_valid_confidence(confidence: float):
+    """Assert that confidence score is in valid range."""
+    assert 0.0 <= confidence <= 1.0, f"Confidence {confidence} out of range [0, 1]"
+
+
+def assert_valid_connection_type(connection_type: str):
+    """Assert that connection type is valid."""
+    valid_types = {
+        "typological", "prophetic", "verbal", "thematic",
+        "conceptual", "historical", "liturgical", "narrative",
+        "genealogical", "geographical"
+    }
+    assert connection_type in valid_types, f"Invalid connection type: {connection_type}"
+
+
 # Markers
 def pytest_configure(config):
     """Configure pytest markers."""
+    # Existing markers
     config.addinivalue_line("markers", "slow: marks tests as slow")
     config.addinivalue_line("markers", "integration: marks integration tests")
     config.addinivalue_line("markers", "db: marks database tests")
     config.addinivalue_line("markers", "ml: marks ML tests")
     config.addinivalue_line("markers", "property: marks property-based tests using Hypothesis")
     config.addinivalue_line("markers", "stateful: marks stateful property tests")
+
+    # Theological confidence level markers
+    config.addinivalue_line("markers", "dogmatic: Tests at DOGMATIC confidence level (100% pass rate required)")
+    config.addinivalue_line("markers", "consensus: Tests at CONSENSUS confidence level (98% pass rate required)")
+    config.addinivalue_line("markers", "traditional: Tests at TRADITIONAL confidence level (90% pass rate required)")
+    config.addinivalue_line("markers", "scholarly: Tests at SCHOLARLY confidence level (85% pass rate required)")
+    config.addinivalue_line("markers", "exploratory: Tests at EXPLORATORY confidence level (75% pass rate required)")
+
+    # Additional test category markers
+    config.addinivalue_line("markers", "e2e: End-to-end tests covering complete workflows")
+    config.addinivalue_line("markers", "performance: Performance and SLO tests")

@@ -917,3 +917,32 @@ CONNECTION_WEIGHTS = {
     "genealogical": 0.6,
     "geographical": 0.55
 }
+
+
+# ============================================================================
+# SESSION_11: Unified Orchestrator Configuration
+# ============================================================================
+
+@dataclass
+class UnifiedOrchestratorConfig:
+    """Configuration for UnifiedOrchestrator."""
+    max_concurrency: int = 10
+    chunk_size: int = 50
+    min_final_confidence: float = 0.5
+    enable_oracle_engines: bool = True
+    oracle_engines: List[str] = field(default_factory=lambda: [
+        "omni", "necessity", "lxx", "typology", "prophetic"
+    ])
+    enable_patristic_integration: bool = True
+    enable_liturgical_integration: bool = True
+    cache_golden_records: bool = True
+    cache_ttl_hours: int = 24
+    emit_all_events: bool = True
+    validation_mode: str = "strict"  # "strict", "lenient", "disabled"
+
+    def __post_init__(self):
+        """Validate configuration."""
+        if self.validation_mode not in ["strict", "lenient", "disabled"]:
+            raise ValueError(f"Invalid validation_mode: {self.validation_mode}")
+        if self.min_final_confidence < 0 or self.min_final_confidence > 1:
+            raise ValueError(f"min_final_confidence must be between 0 and 1")
