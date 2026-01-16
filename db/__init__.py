@@ -79,10 +79,23 @@ from db.connection_pool_optimized import ConnectionManager
 # and the ability to rebuild any projection from the source of truth.
 # ============================================================================
 
-# Core Events
+# Core Events - Now with Seraphic Awareness
+# Events know their own aggregate types, schema versions, and subscribers
 from db.events import (
-    # Base event
-    EventBase,
+    # Seraphic Infrastructure - Events Know Their Nature
+    SeraphicEventRegistry,
+    EventAffinity,
+    UpcastSpec,
+    SubscriptionAffinity,
+    # Seraphic Decorators
+    event,
+    subscribes,
+    upcasts_from,
+    self_aware_event,
+    # Event type enumeration
+    EventType,
+    # Base event with seraphic awareness
+    BaseEvent,
     # Verse lifecycle events
     VerseProcessingStarted,
     VerseProcessingCompleted,
@@ -91,15 +104,30 @@ from db.events import (
     CrossReferenceDiscovered,
     CrossReferenceValidated,
     CrossReferenceRejected,
-    CrossReferenceRefined,
-    # Theological analysis events
-    TypologicalConnectionIdentified,
-    ProphecyFulfillmentProved,
-    PatristicWitnessAdded,
+    # Oracle/Analysis events
     OmniResolutionComputed,
-    # Aggregate roots
-    VerseAggregate,
-    CrossReferenceAggregate,
+    NecessityCalculated,
+    LXXDivergenceDetected,
+    TypologyDiscovered,
+    PropheticProofComputed,
+    # Phase lifecycle events
+    PhaseStarted,
+    PhaseCompleted,
+    PhaseFailed,
+    # Word analysis events
+    WordAnalyzed,
+    SemanticFieldMapped,
+    # Guardrail events - anonymous wisdom, no named witnesses
+    PatristicWitnessAdded,  # DEPRECATED - use InterpretiveGuardrailApplied
+    ConsensusCalculated,
+    InterpretiveGuardrailApplied,
+    HeresyRejected,
+    # Constraint events
+    TheologicalConstraintApplied,
+    ConstraintViolationDetected,
+    # Deserialization
+    deserialize_event,
+    EVENT_REGISTRY,
 )
 
 # Event Store - The Enhanced Hippocampus
@@ -254,24 +282,53 @@ __all__ = [
     "ConnectionManager",
 
     # ========================================================================
-    # EVENT SOURCING - Memory Formation
+    # EVENT SOURCING - Memory Formation (Seraphic Awareness)
     # ========================================================================
-    # Domain Events
-    "EventBase",
+    # Seraphic Infrastructure - Events Know Their Nature
+    "SeraphicEventRegistry",
+    "EventAffinity",
+    "UpcastSpec",
+    "SubscriptionAffinity",
+    # Seraphic Decorators
+    "event",
+    "subscribes",
+    "upcasts_from",
+    "self_aware_event",
+    # Event Types
+    "EventType",
+    "BaseEvent",
+    # Verse Events
     "VerseProcessingStarted",
     "VerseProcessingCompleted",
     "VerseProcessingFailed",
+    # Cross-Reference Events
     "CrossReferenceDiscovered",
     "CrossReferenceValidated",
     "CrossReferenceRejected",
-    "CrossReferenceRefined",
-    "TypologicalConnectionIdentified",
-    "ProphecyFulfillmentProved",
-    "PatristicWitnessAdded",
+    # Oracle Events
     "OmniResolutionComputed",
-    # Aggregates
-    "VerseAggregate",
-    "CrossReferenceAggregate",
+    "NecessityCalculated",
+    "LXXDivergenceDetected",
+    "TypologyDiscovered",
+    "PropheticProofComputed",
+    # Phase Events
+    "PhaseStarted",
+    "PhaseCompleted",
+    "PhaseFailed",
+    # Word Events
+    "WordAnalyzed",
+    "SemanticFieldMapped",
+    # Guardrail Events - Anonymous Wisdom Encoded as Rules
+    "PatristicWitnessAdded",  # DEPRECATED
+    "ConsensusCalculated",
+    "InterpretiveGuardrailApplied",
+    "HeresyRejected",
+    # Constraint Events
+    "TheologicalConstraintApplied",
+    "ConstraintViolationDetected",
+    # Deserialization
+    "deserialize_event",
+    "EVENT_REGISTRY",
     # Event Store Errors
     "EventStoreError",
     "ConcurrencyError",

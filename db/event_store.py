@@ -53,7 +53,7 @@ import json
 import logging
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from enum import Enum
 from typing import (
     Any,
@@ -75,7 +75,7 @@ from uuid import UUID, uuid4
 
 import asyncpg
 
-from db.events import BaseEvent, deserialize_event, EventType
+from db.events import BaseEvent, deserialize_event, EventType, SeraphicEventRegistry, EventAffinity
 
 logger = logging.getLogger(__name__)
 
@@ -507,8 +507,14 @@ class UpcasterRegistry:
     """
     Registry for event upcasters.
 
-    Maintains a chain of upcasters for each event type, allowing events
-    to be transformed through multiple schema versions.
+    Seraphic Awareness:
+        The registry now perceives upcasting information from two sources:
+        1. Explicit IEventUpcaster registrations (legacy)
+        2. The SeraphicEventRegistry - where events declare their own
+           evolution via @upcasts_from decorators
+
+        The seraphic source is consulted first, reflecting the principle
+        that events know their own transformation history.
 
     The registry is the translator that brings old events into the
     current dialect of the domain language.
@@ -517,6 +523,8 @@ class UpcasterRegistry:
     def __init__(self) -> None:
         self._upcasters: Dict[str, Dict[int, IEventUpcaster]] = {}
         self._current_versions: Dict[str, int] = {}
+        # Reference to seraphic registry for intrinsic upcasting
+        self._seraphic_registry = SeraphicEventRegistry.get_instance()
 
     def register(self, upcaster: IEventUpcaster) -> None:
         """
@@ -548,6 +556,11 @@ class UpcasterRegistry:
         """
         Upcast an event payload to the current schema version.
 
+        Seraphic Awareness:
+            First checks if the event class has declared its own upcasting
+            chain via @upcasts_from decorators. Falls back to explicit
+            IEventUpcaster registrations for backward compatibility.
+
         Args:
             event_type: Type of event
             payload: Event payload
@@ -557,6 +570,26 @@ class UpcasterRegistry:
             Tuple of (upcasted payload, final version)
         """
         current_version = metadata.schema_version
+
+        # First, try seraphic upcasting (events know their own evolution)
+        event_class = self._seraphic_registry.get_event_class(event_type)
+        if event_class:
+            upcaster_chain = self._seraphic_registry.get_upcaster_chain(
+                event_class, current_version
+            )
+            if upcaster_chain:
+                for upcast_spec in upcaster_chain:
+                    try:
+                        payload = upcast_spec.transform(payload)
+                        current_version = upcast_spec.to_version
+                    except Exception as e:
+                        raise UpcastingError(
+                            f"Seraphic upcast failed for {event_type} "
+                            f"v{upcast_spec.from_version} -> v{upcast_spec.to_version}: {e}"
+                        ) from e
+                return payload, current_version
+
+        # Fall back to explicit upcasters
         target_version = self._current_versions.get(event_type, 1)
 
         if current_version >= target_version:
@@ -1196,11 +1229,16 @@ class EventStore(IEventStore):
                     ]
                 }
 
-                # Determine aggregate type from event type or metadata
-                aggregate_type = (
-                    metadata.get("aggregate_type")
-                    if metadata else event.event_type.split("_")[0]
-                )
+                # Determine aggregate type - seraphic awareness first
+                # The event knows its own aggregate type through the registry
+                aggregate_type: str
+                if hasattr(event, 'get_aggregate_type'):
+                    aggregate_type = event.get_aggregate_type()
+                elif metadata and metadata.get("aggregate_type"):
+                    aggregate_type = metadata["aggregate_type"]
+                else:
+                    # Fallback: infer from event type
+                    aggregate_type = event.event_type.split("_")[0].lower()
 
                 # Insert event
                 global_position = await conn.fetchval("""
@@ -1217,7 +1255,7 @@ class EventStore(IEventStore):
                     event.aggregate_id,
                     aggregate_type,
                     event.aggregate_version,
-                    metadata.get("schema_version", 1) if metadata else 1,
+                    event.get_schema_version() if hasattr(event, 'get_schema_version') else (metadata.get("schema_version", 1) if metadata else 1),
                     event.timestamp,
                     event.correlation_id,
                     event.causation_id,
@@ -1246,7 +1284,7 @@ class EventStore(IEventStore):
                 stream_position=global_position,
             ),
             payload=payload,
-            stored_at=datetime.utcnow(),
+            stored_at=datetime.now(timezone.utc),
         )
 
         # Notify transient subscribers
@@ -1340,7 +1378,7 @@ class EventStore(IEventStore):
                         causation_id=event.causation_id,
                     ),
                     payload={},  # Simplified
-                    stored_at=datetime.utcnow(),
+                    stored_at=datetime.now(timezone.utc),
                 )
                 await self._subscription_manager.notify_transient(stored_event)
 
