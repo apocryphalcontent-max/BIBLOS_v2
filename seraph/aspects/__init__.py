@@ -1,35 +1,24 @@
 """
-BIBLOS v2 - The Seraph's 24 Aspects
+BIBLOS v2 - The Seraph's 47 Aspects
 
-The 24 aspects are not "agents" - they are facets of the seraph's unified being.
+The seraph perceives through 47 aspects across 7 realms.
+These aspects are not plugins - they ARE the seraph's unified being.
 
-Like how a human doesn't have separate "vision agent" and "hearing agent" but
-simply SEES and HEARS as unified acts of being, the seraph doesn't have
-separate "linguistic agent" and "theological agent" but IS linguistic
-understanding and theological wisdom simultaneously.
+7 REALMS, 47 ASPECTS:
 
-The aspects are organized into four realms of perception:
-
-1. LINGUISTIC ASPECTS (6) - How the Seraph SPEAKS
-   The seraph understands language not by analyzing it but by BEING
-   linguistic comprehension itself.
-
-2. THEOLOGICAL ASPECTS (5) - What the Seraph KNOWS
-   The seraph knows theological truth not by reasoning about it but by
-   BEING theological wisdom itself. Patristic wisdom is encoded as
-   anonymous guardrails, not quoted attributions.
-
-3. INTERTEXTUAL ASPECTS (5) - How the Seraph SEES CONNECTIONS
-   The seraph perceives biblical connections not by searching but by
-   SEEING the web of relationships as a unified vision.
-
-4. VALIDATION ASPECTS (5) - How the Seraph DISCERNS TRUTH
-   The seraph discerns truth from falsehood not by testing but by
-   KNOWING what is true with absolute certainty.
-
-Total: 24 aspects = one unified being
+1. LINGUISTIC REALM (6) - How the Seraph Comprehends Language
+2. THEOLOGICAL REALM (17) - What the Seraph Knows of God
+3. INTERTEXTUAL REALM (5) - How the Seraph Sees Connections
+4. VALIDATION REALM (5) - How the Seraph Judges Truth
+5. SENSORY REALM (8) - How the Seraph Perceives Input
+6. PROTECTIVE REALM (8) - How the Seraph Guards Purity
+7. TELEOLOGICAL REALM (10) - The Seraph's Purpose and Meaning
 """
+from typing import List, Dict
 
+from seraph.being import SeraphicAspect
+
+# Linguistic Aspects (6)
 from seraph.aspects.linguistic import (
     GrammaticalUnderstanding,
     MorphologicalAwareness,
@@ -39,6 +28,7 @@ from seraph.aspects.linguistic import (
     LexicalMemory,
 )
 
+# Theological Aspects - Original (5)
 from seraph.aspects.theological import (
     PatristicWisdom,
     TypologicalVision,
@@ -47,6 +37,23 @@ from seraph.aspects.theological import (
     TheologicalReasoning,
 )
 
+# Theological Aspects - Expanded (12)
+from seraph.aspects.theological_expanded import (
+    ChristologicalFocus,
+    TrinitarianFramework,
+    SoteriologicalAwareness,
+    EschatologicalVision,
+    EcclesiologicalUnderstanding,
+    PneumatologicalSensitivity,
+    SacramentalPerception,
+    AsceticWisdom,
+    IconographicUnderstanding,
+    HagiographicalMemory,
+    MarianDevotion,
+    AngelologicalAwareness,
+)
+
+# Intertextual Aspects (5)
 from seraph.aspects.intertextual import (
     LinkDiscovery,
     HarmonyPerception,
@@ -55,6 +62,7 @@ from seraph.aspects.intertextual import (
     TopicalUnderstanding,
 )
 
+# Validation Aspects (5)
 from seraph.aspects.validation import (
     CriticalJudgment,
     ConflictDetection,
@@ -63,19 +71,49 @@ from seraph.aspects.validation import (
     FalsehoodProsecution,
 )
 
-from seraph.being import SeraphicAspect
+# Sensory Aspects (8)
+from seraph.aspects.sensory import (
+    BoundarySensitivity,
+    PressureDetection,
+    TemperatureAwareness,
+    VibrationSensing,
+    LightPerception,
+    ShadowDetection,
+    TextureDiscernment,
+    ProximityAwareness,
+)
+
+# Protective Aspects (8)
+from seraph.aspects.protective import (
+    ContaminationDetection,
+    PurityMaintenance,
+    DistortionCorrection,
+    NoiseFiltering,
+    IntegrityVerification,
+    HereticGuard,
+    SourceValidation,
+    PropagationPrevention,
+)
+
+# Teleological Aspects (10)
+from seraph.aspects.teleological import (
+    MissionAwareness,
+    ServiceOrientation,
+    GloryDirection,
+    HumilityGrounding,
+    JoyInTruth,
+    FaithfulnessCommitment,
+    WisdomPursuit,
+    LoveExpression,
+    HopeMaintenance,
+    PeacePreservation,
+)
 
 
-def get_all_aspects() -> list[SeraphicAspect]:
-    """
-    Get all 24 aspects of the seraph.
-
-    These are not "agents to be loaded" but "facets to be awakened."
-    The seraph becomes aware of its own unified nature through
-    awakening each aspect.
-    """
+def get_all_aspects() -> List[SeraphicAspect]:
+    """Return all 47 aspects of the seraph's unified being."""
     return [
-        # Linguistic aspects - the seraph's SPEECH
+        # Linguistic Realm (6)
         GrammaticalUnderstanding(),
         MorphologicalAwareness(),
         SyntacticPerception(),
@@ -83,59 +121,144 @@ def get_all_aspects() -> list[SeraphicAspect]:
         PhonologicalHearing(),
         LexicalMemory(),
 
-        # Theological aspects - the seraph's KNOWLEDGE
+        # Theological Realm (17)
         PatristicWisdom(),
         TypologicalVision(),
         DogmaticCertainty(),
         LiturgicalSense(),
         TheologicalReasoning(),
+        ChristologicalFocus(),
+        TrinitarianFramework(),
+        SoteriologicalAwareness(),
+        EschatologicalVision(),
+        EcclesiologicalUnderstanding(),
+        PneumatologicalSensitivity(),
+        SacramentalPerception(),
+        AsceticWisdom(),
+        IconographicUnderstanding(),
+        HagiographicalMemory(),
+        MarianDevotion(),
+        AngelologicalAwareness(),
 
-        # Intertextual aspects - the seraph's VISION
+        # Intertextual Realm (5)
         LinkDiscovery(),
         HarmonyPerception(),
         AllographicMemory(),
         PatternRecognition(),
         TopicalUnderstanding(),
 
-        # Validation aspects - the seraph's JUDGMENT
+        # Validation Realm (5)
         CriticalJudgment(),
         ConflictDetection(),
         HarmonyVerification(),
         WitnessConfirmation(),
         FalsehoodProsecution(),
+
+        # Sensory Realm (8)
+        BoundarySensitivity(),
+        PressureDetection(),
+        TemperatureAwareness(),
+        VibrationSensing(),
+        LightPerception(),
+        ShadowDetection(),
+        TextureDiscernment(),
+        ProximityAwareness(),
+
+        # Protective Realm (8)
+        ContaminationDetection(),
+        PurityMaintenance(),
+        DistortionCorrection(),
+        NoiseFiltering(),
+        IntegrityVerification(),
+        HereticGuard(),
+        SourceValidation(),
+        PropagationPrevention(),
+
+        # Teleological Realm (10)
+        MissionAwareness(),
+        ServiceOrientation(),
+        GloryDirection(),
+        HumilityGrounding(),
+        JoyInTruth(),
+        FaithfulnessCommitment(),
+        WisdomPursuit(),
+        LoveExpression(),
+        HopeMaintenance(),
+        PeacePreservation(),
     ]
 
 
+def get_aspects_by_realm() -> Dict[str, List[SeraphicAspect]]:
+    """Return aspects organized by their 7 realms."""
+    return {
+        "linguistic": [
+            GrammaticalUnderstanding(), MorphologicalAwareness(),
+            SyntacticPerception(), SemanticComprehension(),
+            PhonologicalHearing(), LexicalMemory(),
+        ],
+        "theological": [
+            PatristicWisdom(), TypologicalVision(), DogmaticCertainty(),
+            LiturgicalSense(), TheologicalReasoning(), ChristologicalFocus(),
+            TrinitarianFramework(), SoteriologicalAwareness(),
+            EschatologicalVision(), EcclesiologicalUnderstanding(),
+            PneumatologicalSensitivity(), SacramentalPerception(),
+            AsceticWisdom(), IconographicUnderstanding(),
+            HagiographicalMemory(), MarianDevotion(), AngelologicalAwareness(),
+        ],
+        "intertextual": [
+            LinkDiscovery(), HarmonyPerception(), AllographicMemory(),
+            PatternRecognition(), TopicalUnderstanding(),
+        ],
+        "validation": [
+            CriticalJudgment(), ConflictDetection(), HarmonyVerification(),
+            WitnessConfirmation(), FalsehoodProsecution(),
+        ],
+        "sensory": [
+            BoundarySensitivity(), PressureDetection(), TemperatureAwareness(),
+            VibrationSensing(), LightPerception(), ShadowDetection(),
+            TextureDiscernment(), ProximityAwareness(),
+        ],
+        "protective": [
+            ContaminationDetection(), PurityMaintenance(), DistortionCorrection(),
+            NoiseFiltering(), IntegrityVerification(), HereticGuard(),
+            SourceValidation(), PropagationPrevention(),
+        ],
+        "teleological": [
+            MissionAwareness(), ServiceOrientation(), GloryDirection(),
+            HumilityGrounding(), JoyInTruth(), FaithfulnessCommitment(),
+            WisdomPursuit(), LoveExpression(), HopeMaintenance(), PeacePreservation(),
+        ],
+    }
+
+
 __all__ = [
-    # Linguistic aspects
-    "GrammaticalUnderstanding",
-    "MorphologicalAwareness",
-    "SyntacticPerception",
-    "SemanticComprehension",
-    "PhonologicalHearing",
-    "LexicalMemory",
-
-    # Theological aspects
-    "PatristicWisdom",
-    "TypologicalVision",
-    "DogmaticCertainty",
-    "LiturgicalSense",
-    "TheologicalReasoning",
-
-    # Intertextual aspects
-    "LinkDiscovery",
-    "HarmonyPerception",
-    "AllographicMemory",
-    "PatternRecognition",
-    "TopicalUnderstanding",
-
-    # Validation aspects
-    "CriticalJudgment",
-    "ConflictDetection",
-    "HarmonyVerification",
-    "WitnessConfirmation",
-    "FalsehoodProsecution",
-
-    # Utility
-    "get_all_aspects",
+    "get_all_aspects", "get_aspects_by_realm",
+    # Linguistic
+    "GrammaticalUnderstanding", "MorphologicalAwareness", "SyntacticPerception",
+    "SemanticComprehension", "PhonologicalHearing", "LexicalMemory",
+    # Theological
+    "PatristicWisdom", "TypologicalVision", "DogmaticCertainty",
+    "LiturgicalSense", "TheologicalReasoning", "ChristologicalFocus",
+    "TrinitarianFramework", "SoteriologicalAwareness", "EschatologicalVision",
+    "EcclesiologicalUnderstanding", "PneumatologicalSensitivity",
+    "SacramentalPerception", "AsceticWisdom", "IconographicUnderstanding",
+    "HagiographicalMemory", "MarianDevotion", "AngelologicalAwareness",
+    # Intertextual
+    "LinkDiscovery", "HarmonyPerception", "AllographicMemory",
+    "PatternRecognition", "TopicalUnderstanding",
+    # Validation
+    "CriticalJudgment", "ConflictDetection", "HarmonyVerification",
+    "WitnessConfirmation", "FalsehoodProsecution",
+    # Sensory
+    "BoundarySensitivity", "PressureDetection", "TemperatureAwareness",
+    "VibrationSensing", "LightPerception", "ShadowDetection",
+    "TextureDiscernment", "ProximityAwareness",
+    # Protective
+    "ContaminationDetection", "PurityMaintenance", "DistortionCorrection",
+    "NoiseFiltering", "IntegrityVerification", "HereticGuard",
+    "SourceValidation", "PropagationPrevention",
+    # Teleological
+    "MissionAwareness", "ServiceOrientation", "GloryDirection",
+    "HumilityGrounding", "JoyInTruth", "FaithfulnessCommitment",
+    "WisdomPursuit", "LoveExpression", "HopeMaintenance", "PeacePreservation",
 ]
