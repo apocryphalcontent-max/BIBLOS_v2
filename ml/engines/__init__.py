@@ -19,14 +19,61 @@ from ml.engines.omnicontext_resolver import (
     OmniContextualResolver,
 )
 
-__all__ = [
+from ml.engines.necessity_calculator import (
     # Enums
-    "EliminationReason",
+    NecessityType,
+    NecessityStrength,
+    GapType,
+    PresuppositionType,
+    SyntacticRole,
+    ClauseType,
     # Dataclasses
+    SemanticGap,
+    Presupposition,
+    ExplicitReference,
+    ResolutionCandidate,
+    ScoreDistribution,
+    NecessityAnalysisResult,
+    VerseData,
+    # Component classes
+    ReferenceExtractor,
+    PresuppositionDetector,
+    GapSeverityCalculator,
+    NecessityScoreComputer,
+    DependencyGraph,
+    # Main class
+    InterVerseNecessityCalculator,
+)
+
+__all__ = [
+    # OmniContextualResolver exports
+    "EliminationReason",
     "EliminationStep",
     "SemanticFieldEntry",
     "CompatibilityResult",
     "AbsoluteMeaningResult",
-    # Main class
     "OmniContextualResolver",
+    # NecessityCalculator enums
+    "NecessityType",
+    "NecessityStrength",
+    "GapType",
+    "PresuppositionType",
+    "SyntacticRole",
+    "ClauseType",
+    # NecessityCalculator dataclasses
+    "SemanticGap",
+    "Presupposition",
+    "ExplicitReference",
+    "ResolutionCandidate",
+    "ScoreDistribution",
+    "NecessityAnalysisResult",
+    "VerseData",
+    # NecessityCalculator component classes
+    "ReferenceExtractor",
+    "PresuppositionDetector",
+    "GapSeverityCalculator",
+    "NecessityScoreComputer",
+    "DependencyGraph",
+    # NecessityCalculator main class
+    "InterVerseNecessityCalculator",
 ]

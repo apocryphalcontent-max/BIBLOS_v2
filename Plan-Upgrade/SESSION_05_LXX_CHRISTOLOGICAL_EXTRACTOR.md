@@ -4,16 +4,13 @@
 
 **Objective**: Implement the `LXXChristologicalExtractor` engine that discovers Christological content uniquely present in the Septuagint but absent from or muted in the Masoretic Text. This is the third of the Five Impossible Oracles.
 
-**Estimated Duration**: 1 Claude session (75-90 minutes of focused implementation)
-
 **Prerequisites**:
 - Access to parallel LXX and MT corpus data
-- Access to oldest manuscript transcriptions (user has sources)
+- Access to oldest manuscript transcriptions (sources in `MASTER_LINGUISTIC_CORPUS/RESTRUCTURED_CORPUS`)
 - Understanding of Greek/Hebrew textual criticism basics
 - Familiarity with messianic prophecy traditions
-- Access to NT quotation apparatus
 
-**Critical Principle**: **Oldest transcriptions are most valid**. When manuscript variants exist, prioritize the earliest attested readings. The user has access to these primary sources.
+**Critical Principle**: **Oldest transcriptions are most valid**. When manuscript variants exist, prioritize the earliest attested readings.
 
 ---
 
@@ -22,24 +19,40 @@
 ### Core Capability
 The Septuagint (LXX) was translated by Jewish scholars 200-300 years before Christ. Yet it often renders Hebrew text in ways that appear **prophetically Christological** - readings that the Church Fathers consistently noted pointed to Christ more clearly than the later Masoretic Text.
 
-This engine detects and catalogs these divergences systematically.
-
 ### Why This Is Significant
 
 1. **Pre-Christian Witness**: LXX translators had no Christian agenda, yet their translation choices often favor Christological readings
 2. **NT Preference**: New Testament authors quote the LXX over 300 times, often choosing specifically Christological LXX readings
 3. **Patristic Foundation**: Church Fathers heavily relied on LXX as inspired text
-4. **Apologetic Value**: LXX divergences that favor Christ predate Christianity, eliminating "Christian tampering" objections
-5. **Oldest Transcriptions Priority**: The earliest manuscript evidence carries the greatest weight; later standardizations (like the Masoretic standardization) may reflect theological editing
+4. **Apologetic Value**: LXX divergences that favor Christ predate Christianity
+5. **Oldest Transcriptions Priority**: Earliest manuscript evidence carries greatest weight
 
 ### Manuscript Priority Hierarchy
 
-The engine should respect this textual authority ranking:
-1. **Dead Sea Scrolls (DSS)** - 3rd century BCE to 1st century CE (oldest Hebrew)
-2. **Oldest LXX Manuscripts** - Codex Vaticanus, Codex Sinaiticus (4th century CE)
-3. **Hexaplaric LXX** - Origen's critical edition preserving older readings
-4. **Masoretic Text** - 7th-10th century CE standardization (useful but later)
-5. **Vulgate/Peshitta** - For confirmation of early readings
+```python
+class ManuscriptPriority(Enum):
+    """
+    Textual authority ranking - oldest = most authoritative.
+    Century values are negative for BCE, positive for CE.
+    """
+    DSS = ("Dead Sea Scrolls", -3, 1)           # 3rd c. BCE - 1st c. CE
+    OLDEST_LXX = ("Vaticanus/Sinaiticus", 4, 4)  # 4th century CE
+    HEXAPLARIC = ("Origen's Hexapla", 3, 3)      # 3rd century CE (fragments)
+    MASORETIC = ("Masoretic Text", 7, 10)        # 7th-10th century CE
+    VULGATE_PESHITTA = ("Vulgate/Peshitta", 4, 5) # Confirmation witnesses
+
+    def __init__(self, name: str, century_start: int, century_end: int):
+        self.display_name = name
+        self.century_start = century_start
+        self.century_end = century_end
+
+    @property
+    def reliability_weight(self) -> float:
+        """Earlier = higher weight."""
+        avg_century = (self.century_start + self.century_end) / 2
+        # Normalize: -3 → 1.0, 10 → 0.3
+        return max(0.3, 1.0 - (avg_century + 3) * 0.05)
+```
 
 ### Canonical Examples
 
@@ -48,10 +61,19 @@ The engine should respect this textual authority ranking:
 MT (Hebrew): הָעַלְמָה (ha'almah) - "the young woman"
 LXX (Greek): ἡ παρθένος (hē parthenos) - "the virgin"
 
-Christological Significance:
-- LXX specifies "virgin" (biological state)
-- NT quotes LXX in MAT.1.23
-- Pre-Christian translation supports virgin birth doctrine
+Divergence Analysis:
+┌────────────────────────────────────────────────────────────────┐
+│ Aspect          │ MT Reading        │ LXX Reading              │
+├─────────────────┼───────────────────┼──────────────────────────┤
+│ Lexeme          │ עַלְמָה (almah)    │ παρθένος (parthenos)     │
+│ Semantic Range  │ young woman (age) │ virgin (biological)      │
+│ Definiteness    │ definite article  │ definite article         │
+│ NT Citation     │ —                 │ MAT.1.23 (verbatim)      │
+│ DSS Support     │ 1QIsaᵃ: עלמה      │ —                        │
+│ Patristic       │ —                 │ Justin, Irenaeus, Origen │
+└────────────────────────────────────────────────────────────────┘
+
+Christological Score: 0.95 (VIRGIN_BIRTH)
 ```
 
 #### Example 2: Psalm 40:6 (LXX 39:7) - Body Prepared
@@ -60,69 +82,63 @@ MT: אָזְנַיִם כָּרִיתָ לִּי (ears you have dug/opened for m
 LXX: σῶμα δὲ κατηρτίσω μοι (a body you have prepared for me)
 
 Christological Significance:
-- Hebrews 10:5 quotes LXX reading
-- Points to Incarnation (body prepared for sacrifice)
-- MT reading about "opened ears" lacks this Christological depth
+- Hebrews 10:5 quotes LXX reading verbatim
+- Points directly to Incarnation (body prepared for sacrifice)
+- MT "opened ears" = obedience metaphor; LXX = embodiment
+
+Christological Score: 0.92 (INCARNATION)
 ```
 
-#### Example 3: Genesis 3:15 - αὐτός vs הוּא
+#### Example 3: Psalm 22:16 (LXX 21:17) - Pierced
 ```
-MT: הוּא (hu) - "it" (neuter, referring to seed/offspring collectively)
-LXX: αὐτός (autos) - "he" (masculine, specific person)
+MT: כָּאֲרִי (ka'ari) - "like a lion" [hands and feet]
+LXX: ὤρυξαν (ōryxan) - "they pierced" [hands and feet]
+DSS: כארו (ka'aru) - "they pierced" (4QPs supports LXX!)
 
-Christological Significance:
-- LXX makes Protoevangelium specifically about a single male individual
-- Points to Christ as the one who crushes the serpent
-- MT is ambiguous about collective vs individual
-```
+Manuscript Evidence:
+- DSS 4QPs^f supports "pierced" reading
+- MT "like a lion" creates grammatical difficulty
+- LXX describes crucifixion detail centuries before Christ
 
-#### Example 4: Psalm 22:16 (LXX 21:17) - כָּאֲרִי vs ὤρυξαν
-```
-MT: כָּאֲרִי (ka'ari) - "like a lion" (my hands and feet)
-LXX: ὤρυξαν (ōryxan) - "they pierced" (my hands and feet)
-
-Christological Significance:
-- LXX describes crucifixion detail
-- DSS supports "pierced" reading (כארו)
-- MT reading awkward grammatically
+Christological Score: 0.94 (PASSION)
 ```
 
 ---
 
-## Part 2: File Creation Specification
+## Part 2: Core Data Structures
 
 ### File: `ml/engines/lxx_extractor.py`
 
-**Location**: `ml/engines/` (directory created in Session 03)
-
-**Dependencies to Import**:
-- `dataclasses` for result schemas
-- `typing` for type hints
-- `logging` for analysis logging
-- `difflib` for textual comparison
-- Access to LXX corpus (Rahlfs, Swete)
-- Access to MT corpus (BHSA, Macula-Hebrew)
-- Access to NT quotation database
-- Greek/Hebrew morphology libraries
-
-**Classes to Define**:
-
-#### 1. `DivergenceType` (Enum)
 ```python
+from __future__ import annotations
+import asyncio
+import logging
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Dict, List, Optional, Tuple
+from difflib import SequenceMatcher
+
+from db.neo4j_client import Neo4jClient
+from db.redis_client import RedisClient
+from integrations.lxx_corpus import LXXCorpusClient
+from integrations.text_fabric import TextFabricClient
+from config import LXXExtractorConfig
+
+
 class DivergenceType(Enum):
-    LEXICAL = "lexical"              # Different word choice
-    SEMANTIC_EXPANSION = "expansion"  # LXX adds meaning
-    SEMANTIC_RESTRICTION = "restriction"  # LXX narrows meaning
-    GRAMMATICAL = "grammatical"       # Gender, number, case changes
-    ADDITION = "addition"             # LXX adds words/phrases
-    OMISSION = "omission"             # LXX omits MT content
-    TRANSLATIONAL = "translational"   # Interpretive rendering
-    TEXTUAL_VARIANT = "variant"       # Different Vorlage
-```
+    """Classification of MT-LXX differences."""
+    LEXICAL = "lexical"                    # Different word choice (almah → parthenos)
+    SEMANTIC_EXPANSION = "expansion"        # LXX adds meaning
+    SEMANTIC_RESTRICTION = "restriction"    # LXX narrows meaning
+    GRAMMATICAL = "grammatical"             # Gender, number, case changes
+    ADDITION = "addition"                   # LXX adds words/phrases
+    OMISSION = "omission"                   # LXX omits MT content
+    TRANSLATIONAL = "translational"         # Interpretive rendering
+    TEXTUAL_VARIANT = "variant"             # Different Vorlage (Hebrew source)
 
-#### 2. `ChristologicalCategory` (Enum)
-```python
+
 class ChristologicalCategory(Enum):
+    """Theological categories for Christological content."""
     VIRGIN_BIRTH = "virgin_birth"
     INCARNATION = "incarnation"
     PASSION = "passion"
@@ -133,598 +149,584 @@ class ChristologicalCategory(Enum):
     SACRIFICIAL = "sacrificial"
     ROYAL_DAVIDIC = "royal_davidic"
     SOTERIOLOGICAL = "soteriological"
+    THEOPHANIC = "theophanic"
+    PRIESTLY = "priestly"
+
+
+@dataclass
+class ManuscriptWitness:
+    """Evidence from a specific manuscript."""
+    manuscript_id: str              # "4QIsaᵃ", "Codex Vaticanus"
+    manuscript_type: ManuscriptPriority
+    date_range: str                 # "150-100 BCE"
+    century_numeric: int            # -2 for 2nd century BCE
+    reading: str                    # The text in this manuscript
+    reading_transliterated: str
+    supports_lxx: bool
+    supports_mt: bool
+    notes: str
+    reliability_score: float        # Based on age and completeness
+
+    @property
+    def is_oldest_available(self) -> bool:
+        return self.century_numeric <= -1  # Pre-Christian
+
+
+@dataclass
+class NTQuotation:
+    """New Testament quotation of an OT passage."""
+    nt_verse: str
+    nt_text_greek: str
+    quote_type: str                 # "exact", "adapted", "allusion", "echo"
+    follows_lxx: bool
+    follows_mt: bool
+    verbal_agreement_lxx: float     # 0-1 similarity score
+    verbal_agreement_mt: float
+    theological_significance: str
+
+
+@dataclass
+class PatristicWitness:
+    """Church Father's interpretation."""
+    father: str                     # "Chrysostom", "Irenaeus"
+    era: str                        # "ante-nicene", "nicene", "post-nicene"
+    work: str
+    citation: str
+    interpretation: str
+    text_preference: str            # "lxx", "mt", "both"
+    christological_reading: bool
+
+
+@dataclass
+class LXXDivergence:
+    """A single divergence between MT and LXX."""
+    divergence_id: str
+    verse_id: str
+
+    # Textual content
+    mt_text_hebrew: str
+    mt_text_transliterated: str
+    mt_gloss: str
+    lxx_text_greek: str
+    lxx_text_transliterated: str
+    lxx_gloss: str
+
+    # Classification
+    divergence_type: DivergenceType
+    christological_category: Optional[ChristologicalCategory]
+    christological_significance: str
+
+    # Manuscript evidence
+    manuscript_witnesses: List[ManuscriptWitness] = field(default_factory=list)
+    oldest_witness: Optional[ManuscriptWitness] = None
+    oldest_supports: str = "unknown"  # "lxx", "mt", "neither", "unique"
+
+    # NT and Patristic support
+    nt_quotations: List[NTQuotation] = field(default_factory=list)
+    patristic_witnesses: List[PatristicWitness] = field(default_factory=list)
+
+    # Scoring
+    divergence_score: float = 0.0       # How significant is the difference
+    christological_score: float = 0.0   # Christological importance
+    manuscript_confidence: float = 0.0  # Confidence from manuscript priority
+    composite_score: float = 0.0        # Combined score
+
+    def compute_composite_score(self) -> float:
+        """Weighted combination of evidence."""
+        weights = {
+            'divergence': 0.20,
+            'christological': 0.30,
+            'manuscript': 0.25,
+            'nt_support': 0.15,
+            'patristic': 0.10
+        }
+
+        nt_support = len([q for q in self.nt_quotations if q.follows_lxx]) / max(1, len(self.nt_quotations))
+        patristic_support = len([p for p in self.patristic_witnesses if p.christological_reading]) / max(1, len(self.patristic_witnesses))
+
+        self.composite_score = (
+            weights['divergence'] * self.divergence_score +
+            weights['christological'] * self.christological_score +
+            weights['manuscript'] * self.manuscript_confidence +
+            weights['nt_support'] * nt_support +
+            weights['patristic'] * patristic_support
+        )
+        return self.composite_score
+
+
+@dataclass
+class LXXAnalysisResult:
+    """Complete analysis result for a verse."""
+    verse_id: str
+    mt_verse_id: str                # May differ (Psalm numbering)
+    lxx_verse_id: str
+
+    divergences: List[LXXDivergence]
+    primary_christological_insight: str
+    christological_category: Optional[ChristologicalCategory]
+
+    # Counts
+    total_divergence_count: int
+    christological_divergence_count: int
+
+    # Aggregate scores
+    nt_support_strength: float
+    patristic_unanimity: float
+    manuscript_priority_score: float
+    overall_significance: float
+
+    # Metadata
+    analysis_timestamp: str
+    cache_hit: bool = False
 ```
-
-#### 3. `ManuscriptWitness` (Dataclass)
-Fields:
-- `manuscript_id: str` - Identifier (e.g., "4QIsaa", "Codex Vaticanus")
-- `date_range: str` - Estimated date range (e.g., "150-100 BCE")
-- `century_numeric: int` - For sorting (-3 = 3rd century BCE)
-- `reading: str` - The text as found in this manuscript
-- `reading_transliterated: str` - Transliteration if applicable
-- `supports_lxx: bool` - Does this witness support LXX reading?
-- `supports_mt: bool` - Does this witness support MT reading?
-- `notes: str` - Scholarly notes on this witness
-- `reliability_score: float` - Based on age and completeness (0-1)
-
-#### 4. `NTQuotation` (Dataclass)
-Fields:
-- `nt_verse: str` - NT verse that quotes this passage
-- `quote_type: str` - "exact", "adapted", "allusion"
-- `follows_lxx: bool` - Does NT follow LXX reading?
-- `follows_mt: bool` - Does NT follow MT reading?
-- `nt_text_greek: str` - Greek text in NT
-- `significance: str` - Why this quotation matters
-
-#### 4. `PatristicWitness` (Dataclass)
-Fields:
-- `father: str` - Name of Church Father
-- `work: str` - Source document
-- `citation: str` - Reference
-- `interpretation: str` - Father's Christological interpretation
-- `preference: str` - "lxx", "mt", or "both"
-
-#### 6. `LXXDivergence` (Dataclass)
-Fields:
-- `verse_id: str` - Verse reference (e.g., "ISA.7.14")
-- `mt_text_hebrew: str` - Masoretic Hebrew text
-- `mt_text_transliterated: str` - Transliteration
-- `mt_gloss: str` - English gloss of MT
-- `lxx_text_greek: str` - Septuagint Greek text
-- `lxx_text_transliterated: str` - Transliteration
-- `lxx_gloss: str` - English gloss of LXX
-- `divergence_type: DivergenceType` - Type of difference
-- `christological_category: ChristologicalCategory` - Theological category
-- `christological_significance: str` - Explanation of Christological import
-- `manuscript_witnesses: List[ManuscriptWitness]` - ALL manuscript evidence
-- `oldest_witness: ManuscriptWitness` - The oldest available witness
-- `oldest_supports: str` - "lxx", "mt", "neither", or "unique"
-- `nt_quotations: List[NTQuotation]` - NT usage
-- `patristic_witnesses: List[PatristicWitness]` - Father's interpretations
-- `confidence: float` - Confidence in Christological significance
-- `manuscript_confidence: float` - Confidence from manuscript priority
-- `scholarly_notes: str` - Academic discussion points
-
-#### 7. `LXXAnalysisResult` (Dataclass)
-Fields:
-- `verse_id: str` - Analyzed verse
-- `divergences: List[LXXDivergence]` - All detected divergences
-- `primary_christological_insight: str` - Main finding
-- `total_divergence_count: int` - Number of differences found
-- `christological_divergence_count: int` - Theologically significant ones
-- `nt_support_strength: float` - How strongly NT supports LXX reading
-- `patristic_unanimity: float` - Agreement among Fathers
-- `overall_significance: float` - Composite importance score
-
-#### 7. `LXXChristologicalExtractor` (Main Class)
-
-**Constructor**:
-- Accept LXX corpus client reference
-- Accept MT corpus client reference
-- Accept NT quotation database reference
-- Accept patristic database reference
-- Accept configuration
-
-**Class Attributes**:
-```python
-# Known significant divergence verses
-KNOWN_CHRISTOLOGICAL_VERSES = {
-    "ISA.7.14": ChristologicalCategory.VIRGIN_BIRTH,
-    "PSA.40.6": ChristologicalCategory.INCARNATION,  # LXX 39:7
-    "GEN.3.15": ChristologicalCategory.SOTERIOLOGICAL,
-    "PSA.22.16": ChristologicalCategory.PASSION,  # LXX 21:17
-    "ISA.53.8": ChristologicalCategory.PASSION,
-    "PSA.16.10": ChristologicalCategory.RESURRECTION,  # LXX 15:10
-    "ISA.9.6": ChristologicalCategory.DIVINE_NATURE,
-    "MIC.5.2": ChristologicalCategory.DIVINE_NATURE,
-    "ZEC.12.10": ChristologicalCategory.PASSION,
-    "PSA.110.1": ChristologicalCategory.ROYAL_DAVIDIC,  # LXX 109:1
-    # ... extensive catalog
-}
-
-# NT books with heavy LXX dependence
-LXX_DEPENDENT_NT_BOOKS = [
-    "MAT", "LUK", "ACT", "ROM", "GAL", "HEB", "1PE"
-]
-```
-
-**Methods**:
-
-##### `async def extract_christological_content(self, verse_id: str) -> LXXAnalysisResult`
-Main entry point:
-1. Get MT text for verse
-2. Get LXX text for verse (handling numbering differences)
-3. Align and compare texts
-4. Identify all divergences
-5. Classify Christological significance of each
-6. Gather NT quotation evidence
-7. Gather patristic witness
-8. Return complete analysis
-
-##### `async def align_mt_lxx(self, mt_text: str, lxx_text: str) -> List[Tuple[str, str]]`
-- Word-by-word alignment
-- Handle Hebrew-to-Greek morphological mapping
-- Account for translation techniques
-- Return aligned word pairs
-
-##### `async def detect_divergences(self, aligned_pairs: List[Tuple]) -> List[LXXDivergence]`
-- Compare each aligned pair
-- Classify divergence type
-- Calculate semantic distance
-- Return divergence list
-
-##### `async def classify_christological_significance(self, divergence: LXXDivergence) -> Tuple[ChristologicalCategory, float]`
-- Check against known significant passages
-- Analyze semantic implications
-- Cross-reference with NT usage
-- Return category and confidence
-
-##### `async def find_nt_quotations(self, verse_id: str) -> List[NTQuotation]`
-- Query NT quotation database
-- Match quotation to source verse
-- Determine if NT follows LXX or MT
-- Return quotation list
-
-##### `async def gather_patristic_witness(self, verse_id: str) -> List[PatristicWitness]`
-- Query patristic database for verse citations
-- Extract Father's interpretation
-- Note preference for LXX vs MT reading
-- Return witness list
-
-##### `async def gather_manuscript_witnesses(self, verse_id: str) -> List[ManuscriptWitness]`
-- Query all available manuscript sources for this verse
-- Include DSS fragments if available
-- Include oldest LXX uncials (Vaticanus, Sinaiticus, Alexandrinus)
-- Include any other ancient witnesses (Hexapla, Old Latin, etc.)
-- Sort by age (oldest first)
-- Calculate reliability scores
-- Return chronologically ordered witness list
-
-##### `async def determine_oldest_reading(self, witnesses: List[ManuscriptWitness]) -> Tuple[ManuscriptWitness, str]`
-- Sort witnesses by century_numeric (oldest first)
-- Identify the oldest complete witness
-- Determine if it supports LXX, MT, or has unique reading
-- Return (oldest_witness, "lxx"/"mt"/"unique")
-
-##### `async def calculate_nt_support(self, quotations: List[NTQuotation]) -> float`
-- Count quotations following LXX
-- Weight by theological importance
-- Return support score (0-1)
-
-##### `async def calculate_patristic_unanimity(self, witnesses: List[PatristicWitness]) -> float`
-- Measure agreement among Fathers
-- Account for different traditions (Antiochene vs Alexandrian)
-- Return unanimity score (0-1)
-
-##### `async def handle_verse_numbering(self, verse_id: str, from_system: str, to_system: str) -> str`
-- Convert between MT and LXX numbering systems
-- Handle Psalm numbering differences (LXX = MT - 1 for Psalms 10-147)
-- Return equivalent verse ID
-
-##### `async def scan_book_for_divergences(self, book_id: str) -> List[LXXAnalysisResult]`
-- Scan entire book for significant divergences
-- Return all Christologically significant findings
-- Rank by significance
 
 ---
 
-## Part 3: Divergence Detection Algorithms
-
-### Algorithm 1: Lexical Comparison
+## Part 3: Main Extractor Implementation
 
 ```python
-async def compare_lexemes(self, hebrew_word: str, greek_word: str) -> Optional[DivergenceType]:
+class LXXChristologicalExtractor:
     """
-    Compare Hebrew lemma to Greek translation.
+    The third Impossible Oracle: discovers Christological content in LXX.
+
+    Architecture:
+    ┌─────────────────────────────────────────────────────────────┐
+    │              LXXChristologicalExtractor                      │
+    │                                                              │
+    │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐       │
+    │  │ TextAligner  │  │ Divergence   │  │ Christology  │       │
+    │  │              │  │ Detector     │  │ Classifier   │       │
+    │  │ MT ↔ LXX     │  │              │  │              │       │
+    │  │ alignment    │  │ Type & score │  │ Category     │       │
+    │  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘       │
+    │         │                 │                 │                │
+    │         └─────────────────┼─────────────────┘                │
+    │                           ▼                                  │
+    │              ┌─────────────────────────┐                    │
+    │              │   EvidenceGatherer      │                    │
+    │              │                         │                    │
+    │              │  - Manuscripts (DSS)    │                    │
+    │              │  - NT Quotations        │                    │
+    │              │  - Patristic Witness    │                    │
+    │              └───────────┬─────────────┘                    │
+    │                          │                                  │
+    │                          ▼                                  │
+    │              ┌─────────────────────────┐                    │
+    │              │   LXXAnalysisResult     │                    │
+    │              └─────────────────────────┘                    │
+    └─────────────────────────────────────────────────────────────┘
     """
-    # Get standard translation equivalents
-    standard_translations = await self.get_translation_equivalents(hebrew_word)
 
-    if greek_word not in standard_translations:
-        # Check if it's a legitimate alternative
-        semantic_distance = await self.calculate_semantic_distance(
-            hebrew_word, greek_word
-        )
+    # Known Christological verses (pre-cataloged)
+    KNOWN_CHRISTOLOGICAL_VERSES = {
+        "ISA.7.14": ChristologicalCategory.VIRGIN_BIRTH,
+        "PSA.40.6": ChristologicalCategory.INCARNATION,
+        "GEN.3.15": ChristologicalCategory.SOTERIOLOGICAL,
+        "PSA.22.16": ChristologicalCategory.PASSION,
+        "ISA.53.8": ChristologicalCategory.PASSION,
+        "PSA.16.10": ChristologicalCategory.RESURRECTION,
+        "ISA.9.6": ChristologicalCategory.DIVINE_NATURE,
+        "MIC.5.2": ChristologicalCategory.DIVINE_NATURE,
+        "ZEC.12.10": ChristologicalCategory.PASSION,
+        "PSA.110.1": ChristologicalCategory.ROYAL_DAVIDIC,
+        "DAN.7.13": ChristologicalCategory.DIVINE_NATURE,
+        "ISA.61.1": ChristologicalCategory.MESSIANIC_TITLE,
+        "MAL.3.1": ChristologicalCategory.PROPHETIC_FULFILLMENT,
+        "PSA.2.7": ChristologicalCategory.DIVINE_NATURE,
+        "ISA.11.1": ChristologicalCategory.ROYAL_DAVIDIC,
+    }
 
-        if semantic_distance > 0.5:
-            return DivergenceType.LEXICAL
+    # Psalm numbering offset (LXX = MT - 1 for Psalms 10-147)
+    PSALM_OFFSET_RANGE = (10, 147)
 
-    return None
-```
+    def __init__(
+        self,
+        lxx_client: LXXCorpusClient,
+        mt_client: TextFabricClient,
+        neo4j: Neo4jClient,
+        redis: RedisClient,
+        config: LXXExtractorConfig
+    ):
+        self.lxx = lxx_client
+        self.mt = mt_client
+        self.neo4j = neo4j
+        self.redis = redis
+        self.config = config
+        self.logger = logging.getLogger(__name__)
 
-### Algorithm 2: Semantic Expansion Detection
+    async def extract_christological_content(
+        self,
+        verse_id: str,
+        force_recompute: bool = False
+    ) -> LXXAnalysisResult:
+        """Main entry point for LXX Christological analysis."""
 
-```python
-async def detect_semantic_expansion(
-    self, hebrew_lemma: str, greek_lemma: str
-) -> Optional[LXXDivergence]:
-    """
-    Detect when LXX adds semantic content not in Hebrew.
-    """
-    hebrew_semantic_range = await self.get_semantic_range(hebrew_lemma, "hebrew")
-    greek_semantic_range = await self.get_semantic_range(greek_lemma, "greek")
+        # Check cache
+        if not force_recompute:
+            cached = await self._get_cached(verse_id)
+            if cached:
+                return cached
 
-    # Check if Greek range exceeds Hebrew
-    expansion = set(greek_semantic_range) - set(hebrew_semantic_range)
+        # Convert verse numbering if needed
+        mt_verse_id, lxx_verse_id = await self._normalize_verse_ids(verse_id)
 
-    if expansion:
-        return LXXDivergence(
-            divergence_type=DivergenceType.SEMANTIC_EXPANSION,
-            christological_significance=f"LXX adds meanings: {expansion}"
-        )
+        # Fetch texts
+        mt_data = await self.mt.get_verse(mt_verse_id)
+        lxx_data = await self.lxx.get_verse(lxx_verse_id)
 
-    return None
-```
+        # Align texts
+        alignments = await self._align_texts(mt_data, lxx_data)
 
-### Algorithm 3: Christological Classification
+        # Detect divergences
+        divergences = await self._detect_divergences(alignments, verse_id)
 
-```python
-async def classify_christological_import(
-    self, divergence: LXXDivergence
-) -> Tuple[ChristologicalCategory, float]:
-    """
-    Determine Christological category and confidence.
-    """
-    # Check against known catalog
-    if divergence.verse_id in self.KNOWN_CHRISTOLOGICAL_VERSES:
-        return (
-            self.KNOWN_CHRISTOLOGICAL_VERSES[divergence.verse_id],
-            0.95  # High confidence for known verses
-        )
+        # Gather evidence for each divergence
+        for div in divergences:
+            div.manuscript_witnesses = await self._gather_manuscripts(verse_id)
+            div.nt_quotations = await self._find_nt_quotations(verse_id)
+            div.patristic_witnesses = await self._gather_patristic(verse_id)
+            div.oldest_witness, div.oldest_supports = self._determine_oldest(div.manuscript_witnesses)
+            await self._classify_christological(div)
+            div.compute_composite_score()
 
-    # Analyze divergence content
-    greek_text = divergence.lxx_text_greek.lower()
+        # Build result
+        result = self._build_result(verse_id, mt_verse_id, lxx_verse_id, divergences)
 
-    # Check for Christological markers
-    if any(term in greek_text for term in ["παρθένος", "χριστός", "κύριος"]):
-        if "παρθένος" in greek_text:
-            return (ChristologicalCategory.VIRGIN_BIRTH, 0.85)
-        if "χριστός" in greek_text:
-            return (ChristologicalCategory.MESSIANIC_TITLE, 0.80)
+        # Cache and store
+        await self._cache_result(result)
+        await self._store_to_neo4j(result)
 
-    # Check for passion language
-    passion_terms = ["ὤρυξαν", "ἐξεκέντησαν", "πάσχω", "σταυρός"]
-    if any(term in greek_text for term in passion_terms):
-        return (ChristologicalCategory.PASSION, 0.75)
+        return result
 
-    # Default: needs manual review
-    return (None, 0.0)
-```
+    async def _normalize_verse_ids(self, verse_id: str) -> Tuple[str, str]:
+        """Handle MT/LXX numbering differences (especially Psalms)."""
+        parts = verse_id.split(".")
+        book = parts[0]
 
-### Algorithm 4: NT Quotation Matching
+        if book == "PSA" and len(parts) >= 2:
+            psalm_num = int(parts[1])
+            if self.PSALM_OFFSET_RANGE[0] <= psalm_num <= self.PSALM_OFFSET_RANGE[1]:
+                lxx_psalm = psalm_num - 1
+                lxx_verse_id = f"PSA.{lxx_psalm}.{'.'.join(parts[2:])}" if len(parts) > 2 else f"PSA.{lxx_psalm}"
+                return verse_id, lxx_verse_id
 
-```python
-async def match_nt_quotation(
-    self, ot_verse: str, nt_verse: str
-) -> NTQuotation:
-    """
-    Determine how NT quotes OT and whether it follows LXX.
-    """
-    # Get texts
-    mt_text = await self.get_mt_text(ot_verse)
-    lxx_text = await self.get_lxx_text(ot_verse)
-    nt_text = await self.get_nt_text(nt_verse)
+        return verse_id, verse_id
 
-    # Calculate similarity scores
-    lxx_similarity = self.calculate_text_similarity(lxx_text, nt_text)
-    mt_backtranslation = await self.backtranslate_to_greek(mt_text)
-    mt_similarity = self.calculate_text_similarity(mt_backtranslation, nt_text)
+    async def _align_texts(
+        self,
+        mt_data: Dict,
+        lxx_data: Dict
+    ) -> List[Tuple[str, str, float]]:
+        """Align Hebrew and Greek words."""
+        mt_words = mt_data.get("words", [])
+        lxx_words = lxx_data.get("words", [])
 
-    follows_lxx = lxx_similarity > mt_similarity + 0.1
-    follows_mt = mt_similarity > lxx_similarity + 0.1
+        alignments = []
+        # Use semantic alignment with morphological awareness
+        for i, mt_word in enumerate(mt_words):
+            best_match = None
+            best_score = 0.0
 
-    return NTQuotation(
-        nt_verse=nt_verse,
-        quote_type=self.classify_quote_type(lxx_similarity),
-        follows_lxx=follows_lxx,
-        follows_mt=follows_mt and not follows_lxx,
-        nt_text_greek=nt_text,
-        significance=self.explain_significance(follows_lxx, ot_verse)
-    )
+            for lxx_word in lxx_words:
+                score = await self._word_alignment_score(mt_word, lxx_word)
+                if score > best_score:
+                    best_score = score
+                    best_match = lxx_word
+
+            alignments.append((mt_word, best_match, best_score))
+
+        return alignments
+
+    async def _detect_divergences(
+        self,
+        alignments: List[Tuple],
+        verse_id: str
+    ) -> List[LXXDivergence]:
+        """Identify significant divergences from alignments."""
+        divergences = []
+
+        for mt_word, lxx_word, alignment_score in alignments:
+            if alignment_score < self.config.alignment_threshold:
+                # Potential divergence
+                div_type = await self._classify_divergence_type(mt_word, lxx_word)
+                div_score = 1.0 - alignment_score
+
+                if div_score >= self.config.min_divergence_score:
+                    divergences.append(LXXDivergence(
+                        divergence_id=f"div_{verse_id}_{len(divergences)}",
+                        verse_id=verse_id,
+                        mt_text_hebrew=mt_word.get("text", ""),
+                        mt_text_transliterated=mt_word.get("translit", ""),
+                        mt_gloss=mt_word.get("gloss", ""),
+                        lxx_text_greek=lxx_word.get("text", "") if lxx_word else "",
+                        lxx_text_transliterated=lxx_word.get("translit", "") if lxx_word else "",
+                        lxx_gloss=lxx_word.get("gloss", "") if lxx_word else "",
+                        divergence_type=div_type,
+                        divergence_score=div_score
+                    ))
+
+        return divergences
+
+    async def _classify_christological(self, divergence: LXXDivergence):
+        """Classify Christological significance."""
+        # Check known catalog
+        if divergence.verse_id in self.KNOWN_CHRISTOLOGICAL_VERSES:
+            divergence.christological_category = self.KNOWN_CHRISTOLOGICAL_VERSES[divergence.verse_id]
+            divergence.christological_score = 0.95
+            return
+
+        # Analyze Greek text for Christological markers
+        greek = divergence.lxx_text_greek.lower()
+
+        christological_markers = {
+            "παρθένος": (ChristologicalCategory.VIRGIN_BIRTH, 0.90),
+            "χριστός": (ChristologicalCategory.MESSIANIC_TITLE, 0.85),
+            "σῶμα": (ChristologicalCategory.INCARNATION, 0.80),
+            "ὤρυξαν": (ChristologicalCategory.PASSION, 0.88),
+            "ἐξεκέντησαν": (ChristologicalCategory.PASSION, 0.88),
+            "ἀνάστασις": (ChristologicalCategory.RESURRECTION, 0.85),
+        }
+
+        for marker, (category, score) in christological_markers.items():
+            if marker in greek:
+                divergence.christological_category = category
+                divergence.christological_score = score
+                return
+
+        # Check NT quotation support
+        if any(q.follows_lxx for q in divergence.nt_quotations):
+            divergence.christological_score = 0.70
+            divergence.christological_significance = "NT prefers LXX reading"
+
+    def _determine_oldest(
+        self,
+        witnesses: List[ManuscriptWitness]
+    ) -> Tuple[Optional[ManuscriptWitness], str]:
+        """Find oldest witness and what it supports."""
+        if not witnesses:
+            return None, "unknown"
+
+        # Sort by century (oldest first)
+        sorted_witnesses = sorted(witnesses, key=lambda w: w.century_numeric)
+        oldest = sorted_witnesses[0]
+
+        if oldest.supports_lxx and not oldest.supports_mt:
+            return oldest, "lxx"
+        elif oldest.supports_mt and not oldest.supports_lxx:
+            return oldest, "mt"
+        elif oldest.supports_lxx and oldest.supports_mt:
+            return oldest, "both"
+        else:
+            return oldest, "unique"
 ```
 
 ---
 
 ## Part 4: Integration Points
 
-### Integration 1: Corpus Access
+### Neo4j Schema Extension
 
-**LXX Corpus**:
-- Primary: Rahlfs 1935 edition (via local files or API)
-- Secondary: Swete's LXX for manuscript variants
-- Integration: `integrations/lxx_corpus.py` (new file)
+```cypher
+// LXX Divergence nodes and relationships
+CREATE (d:LXXDivergence {
+    divergence_id: $id,
+    verse_id: $verse_id,
+    divergence_type: $type,
+    christological_category: $category,
+    mt_text: $mt_text,
+    lxx_text: $lxx_text,
+    composite_score: $score
+})
 
-**MT Corpus**:
-- Primary: BHSA via Text-Fabric
-- Secondary: Macula-Hebrew for morphology
-- Integration: `integrations/text_fabric.py` (existing)
+MATCH (v:Verse {id: $verse_id})
+CREATE (v)-[:HAS_LXX_DIVERGENCE {
+    significance: $score,
+    category: $category
+}]->(d)
 
-### Integration 2: Cross-Reference Pipeline
+// Query high-significance Christological divergences
+MATCH (v:Verse)-[r:HAS_LXX_DIVERGENCE]->(d:LXXDivergence)
+WHERE d.christological_category IS NOT NULL
+  AND d.composite_score >= 0.7
+RETURN v.id, d.christological_category, d.composite_score
+ORDER BY d.composite_score DESC
+```
 
-**Location**: `ml/inference/pipeline.py`
-
-**Modification**:
-- Add LXX divergence check for OT verses in cross-reference discovery
-- Flag connections involving known Christological divergences
-- Enhance confidence for prophetic connections with LXX support
+### Pipeline Integration
 
 ```python
-# In discover_cross_references()
-if source_verse.is_ot and candidate.is_nt:
-    lxx_analysis = await self.lxx_extractor.extract_christological_content(
-        source_verse.id
-    )
-    if lxx_analysis.christological_divergence_count > 0:
-        candidate.features["lxx_christological"] = True
-        candidate.features["lxx_significance"] = lxx_analysis.overall_significance
+# In ml/inference/pipeline.py
+async def enrich_with_lxx_analysis(
+    self,
+    cross_ref: CrossReferenceCandidate
+) -> CrossReferenceCandidate:
+    """Add LXX Christological data to cross-references."""
+
+    if cross_ref.source_verse.startswith(("GEN", "EXO", "LEV", "NUM", "DEU",
+                                           "PSA", "ISA", "JER", "EZE", "DAN")):
+        lxx_result = await self.lxx_extractor.extract_christological_content(
+            cross_ref.source_verse
+        )
+
+        if lxx_result.christological_divergence_count > 0:
+            cross_ref.features["lxx_christological"] = True
+            cross_ref.features["lxx_category"] = lxx_result.christological_category.value
+            cross_ref.features["lxx_significance"] = lxx_result.overall_significance
+
+            # Boost confidence for prophetic connections
+            if cross_ref.connection_type == "prophetic":
+                cross_ref.confidence *= (1.0 + lxx_result.overall_significance * 0.2)
+
+    return cross_ref
 ```
 
-### Integration 3: Neo4j Graph
+---
 
-**Schema Extension**:
-```cypher
-// Add LXX divergence properties
-CREATE (v:Verse)-[:HAS_LXX_DIVERGENCE {
-    type: "lexical",
-    christological_category: "virgin_birth",
-    mt_text: "הָעַלְמָה",
-    lxx_text: "ἡ παρθένος",
-    significance: 0.95
-}]->(d:LXXDivergence)
+## Part 5: Testing Specification
 
-// Query Christological divergences
-MATCH (v:Verse)-[:HAS_LXX_DIVERGENCE]->(d)
-WHERE d.christological_category IS NOT NULL
-RETURN v.id, d.type, d.significance
-ORDER BY d.significance DESC
+```python
+class TestLXXExtractor:
+    """Tests for LXX Christological Extractor."""
+
+    @pytest.mark.asyncio
+    async def test_isaiah_7_14_parthenos(self, extractor):
+        """ISA.7.14: almah → parthenos divergence."""
+        result = await extractor.extract_christological_content("ISA.7.14")
+
+        assert result.christological_divergence_count >= 1
+        assert result.christological_category == ChristologicalCategory.VIRGIN_BIRTH
+
+        # Check divergence details
+        div = result.divergences[0]
+        assert "παρθένος" in div.lxx_text_greek or "parthenos" in div.lxx_text_transliterated.lower()
+        assert div.composite_score >= 0.85
+
+        # NT support
+        nt_refs = [q.nt_verse for q in div.nt_quotations]
+        assert "MAT.1.23" in nt_refs
+
+    @pytest.mark.asyncio
+    async def test_psalm_40_body_prepared(self, extractor):
+        """PSA.40.6: ears → body divergence with Psalm numbering."""
+        result = await extractor.extract_christological_content("PSA.40.6")
+
+        assert result.lxx_verse_id == "PSA.39.6"  # Numbering conversion
+        assert result.christological_category == ChristologicalCategory.INCARNATION
+
+        # Check HEB.10.5 quotation
+        has_hebrews_quote = any(
+            q.nt_verse == "HEB.10.5" and q.follows_lxx
+            for div in result.divergences
+            for q in div.nt_quotations
+        )
+        assert has_hebrews_quote
+
+    @pytest.mark.asyncio
+    async def test_psalm_22_16_pierced(self, extractor):
+        """PSA.22.16: lion → pierced with DSS support."""
+        result = await extractor.extract_christological_content("PSA.22.16")
+
+        assert result.christological_category == ChristologicalCategory.PASSION
+
+        # Check for DSS support
+        div = result.divergences[0]
+        dss_witnesses = [w for w in div.manuscript_witnesses if "Q" in w.manuscript_id]
+        assert len(dss_witnesses) >= 1
+
+        # DSS should support LXX
+        if dss_witnesses:
+            assert dss_witnesses[0].supports_lxx
+
+    @pytest.mark.asyncio
+    async def test_no_christological_divergence(self, extractor):
+        """GEN.1.1: No significant Christological divergence."""
+        result = await extractor.extract_christological_content("GEN.1.1")
+
+        assert result.christological_divergence_count == 0
+        assert result.christological_category is None
+
+    @pytest.mark.asyncio
+    async def test_manuscript_priority(self, extractor):
+        """Verify oldest manuscript is prioritized."""
+        result = await extractor.extract_christological_content("ISA.7.14")
+
+        for div in result.divergences:
+            if div.oldest_witness:
+                # Oldest should have highest reliability
+                other_scores = [w.reliability_score for w in div.manuscript_witnesses if w != div.oldest_witness]
+                if other_scores:
+                    assert div.oldest_witness.reliability_score >= max(other_scores)
 ```
 
-### Integration 4: Data Schemas
+---
 
-**Add to `data/schemas.py`**:
+## Part 6: Configuration
+
 ```python
 @dataclass
-class VerseSchema:
-    # ... existing fields ...
+class LXXExtractorConfig:
+    """Configuration for LXX Christological Extractor."""
 
-    # New LXX fields
-    has_lxx_divergence: bool = False
-    lxx_christological_category: Optional[str] = None
-    lxx_significance_score: float = 0.0
-    lxx_nt_support: bool = False
+    # Corpus paths
+    lxx_corpus_path: str = "data/corpora/lxx"
+    mt_corpus_path: str = "data/corpora/mt"
+    catalog_path: str = "data/lxx_christological_catalog.json"
+
+    # Detection thresholds
+    alignment_threshold: float = 0.7      # Below this = potential divergence
+    min_divergence_score: float = 0.3     # Minimum to report
+    christological_threshold: float = 0.5 # Minimum for Christological significance
+
+    # Evidence gathering
+    include_manuscripts: bool = True
+    include_nt_quotations: bool = True
+    include_patristic: bool = True
+    max_patristic_witnesses: int = 10
+
+    # Caching
+    cache_enabled: bool = True
+    cache_ttl_seconds: int = 604800       # 1 week
+
+    # Performance
+    batch_size: int = 50
+    parallel_analysis: bool = True
 ```
 
 ---
 
-## Part 5: Database of Known Divergences
-
-### Catalog Structure
-
-Create supporting data file: `data/lxx_christological_catalog.json`
-
-```json
-{
-  "ISA.7.14": {
-    "mt_hebrew": "הִנֵּה הָעַלְמָה הָרָה וְיֹלֶדֶת בֵּן",
-    "mt_gloss": "Behold, the young woman is pregnant and bears a son",
-    "lxx_greek": "ἰδοὺ ἡ παρθένος ἐν γαστρὶ ἕξει καὶ τέξεται υἱόν",
-    "lxx_gloss": "Behold, the virgin shall conceive and bear a son",
-    "key_divergence": "עַלְמָה (almah) → παρθένος (parthenos)",
-    "christological_category": "virgin_birth",
-    "nt_quotations": ["MAT.1.23"],
-    "patristic_witnesses": [
-      {"father": "Justin Martyr", "work": "Dialogue with Trypho", "chapter": 43},
-      {"father": "Irenaeus", "work": "Against Heresies", "book": 3, "chapter": 21}
-    ],
-    "significance": "LXX specifies biological virginity, supporting virgin birth doctrine"
-  },
-  "PSA.40.6": {
-    "mt_hebrew": "אָזְנַיִם כָּרִיתָ לִּי",
-    "mt_gloss": "Ears you have dug/opened for me",
-    "lxx_greek": "σῶμα δὲ κατηρτίσω μοι",
-    "lxx_gloss": "But a body you have prepared for me",
-    "key_divergence": "אָזְנַיִם (ears) → σῶμα (body)",
-    "christological_category": "incarnation",
-    "nt_quotations": ["HEB.10.5"],
-    "patristic_witnesses": [
-      {"father": "Chrysostom", "work": "Homilies on Hebrews", "homily": 18}
-    ],
-    "significance": "LXX reading points to Incarnation; Hebrews quotes LXX form"
-  }
-  // ... extensive catalog
-}
-```
-
----
-
-## Part 6: Testing Specification
-
-### Unit Tests: `tests/ml/engines/test_lxx_extractor.py`
-
-**Test 1: `test_isaiah_7_14_parthenos`**
-- Input: ISA.7.14
-- Expected: Divergence detected (almah → parthenos)
-- Category: VIRGIN_BIRTH
-- NT Support: MAT.1.23 follows LXX
-- Confidence: > 0.9
-
-**Test 2: `test_psalm_40_6_body_prepared`**
-- Input: PSA.40.6 (handle numbering: LXX PSA.39.7)
-- Expected: Divergence detected (ears → body)
-- Category: INCARNATION
-- NT Support: HEB.10.5 follows LXX
-- Confidence: > 0.85
-
-**Test 3: `test_genesis_3_15_autos`**
-- Input: GEN.3.15
-- Expected: Grammatical divergence (hu → autos)
-- Category: SOTERIOLOGICAL
-- Significance: Individual vs collective interpretation
-
-**Test 4: `test_psalm_22_16_pierced`**
-- Input: PSA.22.16 (LXX PSA.21.17)
-- Expected: Lexical divergence (lion → pierced)
-- Category: PASSION
-- Note: DSS support for "pierced" reading
-
-**Test 5: `test_verse_numbering_conversion`**
-- Input: MT PSA.23.1
-- Expected LXX: PSA.22.1
-- Verify correct mapping for Psalms 10-147
-
-**Test 6: `test_nt_quotation_detection`**
-- Input: ISA.7.14
-- Expected: Detect MAT.1.23 quotation
-- Verify follows_lxx = True
-
-**Test 7: `test_no_christological_divergence`**
-- Input: GEN.1.1 (no significant LXX divergence)
-- Expected: Empty or minimal divergence list
-- Christological significance: None
-
-**Test 8: `test_book_scan_isaiah`**
-- Input: ISA (full book)
-- Expected: Multiple Christological divergences found
-- Key verses: 7:14, 9:6, 53:8, etc.
-
----
-
-## Part 7: Configuration
-
-### Add to `config.py`
-
-**New Configuration Dataclass**: `LXXExtractorConfig`
-
-Fields:
-- `lxx_corpus_path: str = "data/corpora/lxx"` - Path to LXX data
-- `catalog_path: str = "data/lxx_christological_catalog.json"` - Known divergences
-- `min_divergence_significance: float = 0.5` - Threshold for reporting
-- `include_patristic_witness: bool = True` - Gather Father's interpretations
-- `include_nt_quotations: bool = True` - Check NT usage
-- `cache_alignments: bool = True` - Cache MT-LXX alignments
-- `alignment_cache_ttl: int = 604800` - One week
-- `semantic_distance_threshold: float = 0.3` - For divergence detection
-- `scan_batch_size: int = 50` - Verses per batch for book scanning
-
----
-
-## Part 8: Plugins/Tools to Use
-
-### During Implementation
-- **sequential-thinking MCP**: Use for alignment algorithm design
-- **memory MCP**: Store known divergences and patristic citations
-- **context7 MCP**: Reference difflib documentation for text comparison
-
-### Corpus Access
-- **Text-Fabric integration**: For BHSA Hebrew corpus
-- **LXX integration**: New integration for Septuagint text
-- **Macula integration**: For morphological comparison
-
-### External Tools
-- **CATSS parallel alignment data**: If available
-- **Accordance/Logos export**: For cross-checking divergences
-
-### Testing Commands
-```bash
-# Run unit tests
-pytest tests/ml/engines/test_lxx_extractor.py -v
-
-# Run Isaiah 7:14 specific test
-pytest tests/ml/engines/test_lxx_extractor.py -k "isaiah_7_14" -v
-
-# Run with patristic witness tests
-pytest tests/ml/engines/test_lxx_extractor.py -k "patristic" -v
-
-# Performance testing for book scanning
-pytest tests/ml/engines/test_lxx_extractor.py -k "book_scan" --benchmark
-```
-
----
-
-## Part 9: Success Criteria
+## Part 7: Success Criteria
 
 ### Functional Requirements
 - [ ] Correctly aligns MT and LXX texts
-- [ ] Detects lexical divergences accurately
-- [ ] Classifies Christological categories correctly
-- [ ] Finds NT quotations for source verses
-- [ ] Handles verse numbering differences (especially Psalms)
-- [ ] Scans entire books efficiently
+- [ ] Detects lexical divergences with semantic analysis
+- [ ] Classifies Christological categories accurately
+- [ ] Handles Psalm numbering conversion
+- [ ] Gathers manuscript evidence with priority ranking
+- [ ] Finds NT quotations and determines LXX vs MT preference
 
 ### Theological Accuracy
-- [ ] ISA.7.14: παρθένος divergence detected with VIRGIN_BIRTH category
-- [ ] PSA.40.6: σῶμα divergence detected with INCARNATION category
-- [ ] GEN.3.15: αὐτός divergence detected with SOTERIOLOGICAL category
-- [ ] Known catalog entries all pass validation
+- [ ] ISA.7.14: παρθένος detected, VIRGIN_BIRTH, score ≥ 0.90
+- [ ] PSA.40.6: σῶμα detected, INCARNATION, HEB.10.5 support
+- [ ] PSA.22.16: ὤρυξαν detected, PASSION, DSS support noted
+- [ ] GEN.3.15: αὐτός detected, SOTERIOLOGICAL
 
-### Performance Requirements
-- [ ] Single verse analysis: < 1 second (with cache)
-- [ ] First-time verse analysis: < 5 seconds
-- [ ] Full book scan: < 2 minutes
-- [ ] NT quotation lookup: < 500ms
-
----
-
-## Part 10: Detailed Implementation Order
-
-1. **Create enums**: `DivergenceType`, `ChristologicalCategory`
-2. **Create dataclasses**: `NTQuotation`, `PatristicWitness`, `LXXDivergence`, `LXXAnalysisResult`
-3. **Create LXX corpus integration** in `integrations/lxx_corpus.py`
-4. **Implement `handle_verse_numbering()`** - crucial for Psalms
-5. **Implement `align_mt_lxx()`** - core alignment algorithm
-6. **Implement `detect_divergences()`** - divergence detection
-7. **Implement `classify_christological_significance()`** - categorization
-8. **Implement `find_nt_quotations()`** - NT cross-reference
-9. **Implement `gather_patristic_witness()`** - Father's interpretations
-10. **Implement main `extract_christological_content()`** - orchestration
-11. **Implement `scan_book_for_divergences()`** - batch processing
-12. **Create `data/lxx_christological_catalog.json`** - known divergences
-13. **Add caching layer** for alignments
-14. **Add configuration to `config.py`**
-15. **Write and run unit tests**
-16. **Validate against known Christological passages**
+### Performance
+- [ ] Single verse: < 1s cached, < 3s cold
+- [ ] Book scan: < 2 minutes
+- [ ] Manuscript lookup: < 500ms
 
 ---
 
-## Part 11: Dependencies on Other Sessions
+## Part 8: Dependencies
 
 ### Depends On
-- SESSION 03: Omni-Contextual Resolver (for Greek word meaning resolution)
+- SESSION 03: OmniContextualResolver (word meaning resolution)
+- Corpus integrations (Text-Fabric, LXX sources)
 
 ### Depended On By
-- SESSION 06: Fractal Typology Engine (uses LXX readings for type analysis)
-- SESSION 07: Prophetic Necessity Prover (uses LXX for prophecy evidence)
-- SESSION 11: Pipeline Integration (incorporates LXX analysis)
-
-### External Dependencies
-- LXX corpus data (Rahlfs or Swete)
-- NT quotation apparatus
-- Patristic citation database
-- Greek-Hebrew lexical alignment data
-
----
-
-## Part 12: New File Requirements
-
-### New Integration File: `integrations/lxx_corpus.py`
-
-```python
-"""
-Septuagint (LXX) Corpus Integration
-
-Provides access to Septuagint Greek text with:
-- Verse retrieval by reference
-- Morphological analysis
-- Manuscript variant tracking
-- Verse numbering conversion
-"""
-
-class LXXCorpusClient:
-    async def get_verse(self, verse_id: str) -> Dict
-    async def get_morphology(self, verse_id: str) -> List[Dict]
-    async def convert_reference(self, ref: str, from_system: str, to_system: str) -> str
-    async def get_variants(self, verse_id: str) -> List[Dict]
-```
+- SESSION 06: Fractal Typology Engine (LXX readings for types)
+- SESSION 07: Prophetic Necessity Prover (LXX as evidence)
+- SESSION 11: Pipeline Integration
 
 ---
 
@@ -733,21 +735,15 @@ class LXXCorpusClient:
 ```markdown
 - [ ] `ml/engines/lxx_extractor.py` implemented
 - [ ] `integrations/lxx_corpus.py` created
-- [ ] All enums and dataclasses defined
-- [ ] Verse numbering conversion working (especially Psalms)
+- [ ] Verse numbering conversion (Psalms)
 - [ ] MT-LXX alignment functional
-- [ ] Divergence detection accurate
-- [ ] Christological classification working
-- [ ] NT quotation lookup functional
-- [ ] Patristic witness gathering working
-- [ ] `data/lxx_christological_catalog.json` created
-- [ ] Caching layer integrated
-- [ ] Configuration added to config.py
-- [ ] ISA.7.14 test passing (παρθένος)
-- [ ] PSA.40.6 test passing (σῶμα)
-- [ ] GEN.3.15 test passing (αὐτός)
-- [ ] Performance tests passing
-- [ ] Documentation complete
+- [ ] Divergence detection and classification
+- [ ] Manuscript priority ranking
+- [ ] NT quotation detection
+- [ ] Neo4j schema extension
+- [ ] ISA.7.14 test passing
+- [ ] PSA.40.6 test passing
+- [ ] Configuration added
 ```
 
 **Next Session**: SESSION 06: Hyper-Fractal Typology Engine

@@ -436,6 +436,111 @@ class OmniContextualConfig:
 
 
 @dataclass
+class NecessityCalculatorConfig:
+    """
+    Configuration for the Inter-Verse Necessity Calculator.
+
+    The Second Impossible Oracle: Determines if verse B is NECESSARY
+    to understand verse A (not just helpful).
+    """
+    # Strength thresholds
+    absolute_threshold: float = field(
+        default_factory=lambda: float(os.getenv("NECESSITY_ABSOLUTE_THRESHOLD", "0.90"))
+    )
+    strong_threshold: float = field(
+        default_factory=lambda: float(os.getenv("NECESSITY_STRONG_THRESHOLD", "0.70"))
+    )
+    moderate_threshold: float = field(
+        default_factory=lambda: float(os.getenv("NECESSITY_MODERATE_THRESHOLD", "0.50"))
+    )
+    weak_threshold: float = field(
+        default_factory=lambda: float(os.getenv("NECESSITY_WEAK_THRESHOLD", "0.30"))
+    )
+
+    # Score component weights
+    gap_coverage_weight: float = field(
+        default_factory=lambda: float(os.getenv("NECESSITY_GAP_WEIGHT", "0.35"))
+    )
+    severity_weight: float = field(
+        default_factory=lambda: float(os.getenv("NECESSITY_SEVERITY_WEIGHT", "0.25"))
+    )
+    type_weight: float = field(
+        default_factory=lambda: float(os.getenv("NECESSITY_TYPE_WEIGHT", "0.15"))
+    )
+    explicit_ref_weight: float = field(
+        default_factory=lambda: float(os.getenv("NECESSITY_EXPLICIT_REF_WEIGHT", "0.15"))
+    )
+    presupposition_weight: float = field(
+        default_factory=lambda: float(os.getenv("NECESSITY_PRESUPPOSITION_WEIGHT", "0.10"))
+    )
+
+    # Detection settings
+    min_entity_confidence: float = field(
+        default_factory=lambda: float(os.getenv("NECESSITY_MIN_ENTITY_CONF", "0.7"))
+    )
+    min_quotation_overlap: float = field(
+        default_factory=lambda: float(os.getenv("NECESSITY_MIN_QUOTE_OVERLAP", "0.5"))
+    )
+    min_presupposition_conf: float = field(
+        default_factory=lambda: float(os.getenv("NECESSITY_MIN_PRESUP_CONF", "0.6"))
+    )
+
+    # Graph settings
+    max_chain_depth: int = field(
+        default_factory=lambda: int(os.getenv("NECESSITY_MAX_CHAIN_DEPTH", "10"))
+    )
+    max_graph_nodes: int = field(
+        default_factory=lambda: int(os.getenv("NECESSITY_MAX_GRAPH_NODES", "1000"))
+    )
+    graph_min_score: float = field(
+        default_factory=lambda: float(os.getenv("NECESSITY_GRAPH_MIN_SCORE", "0.3"))
+    )
+
+    # Caching
+    cache_enabled: bool = field(
+        default_factory=lambda: os.getenv("NECESSITY_CACHE_ENABLED", "true").lower() == "true"
+    )
+    cache_ttl_seconds: int = field(
+        default_factory=lambda: int(os.getenv("NECESSITY_CACHE_TTL", "604800"))
+    )
+
+    # Performance
+    parallel_gap_detection: bool = field(
+        default_factory=lambda: os.getenv("NECESSITY_PARALLEL_GAPS", "true").lower() == "true"
+    )
+    batch_size: int = field(
+        default_factory=lambda: int(os.getenv("NECESSITY_BATCH_SIZE", "50"))
+    )
+    max_concurrent: int = field(
+        default_factory=lambda: int(os.getenv("NECESSITY_MAX_CONCURRENT", "10"))
+    )
+
+    # Integration
+    enrich_cross_references: bool = field(
+        default_factory=lambda: os.getenv("NECESSITY_ENRICH_CROSSREFS", "true").lower() == "true"
+    )
+    store_to_neo4j: bool = field(
+        default_factory=lambda: os.getenv("NECESSITY_STORE_NEO4J", "true").lower() == "true"
+    )
+    emit_events: bool = field(
+        default_factory=lambda: os.getenv("NECESSITY_EMIT_EVENTS", "true").lower() == "true"
+    )
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert to dictionary for diagnostics."""
+        return {
+            "absolute_threshold": self.absolute_threshold,
+            "strong_threshold": self.strong_threshold,
+            "moderate_threshold": self.moderate_threshold,
+            "weak_threshold": self.weak_threshold,
+            "gap_coverage_weight": self.gap_coverage_weight,
+            "severity_weight": self.severity_weight,
+            "cache_enabled": self.cache_enabled,
+            "cache_ttl_seconds": self.cache_ttl_seconds,
+        }
+
+
+@dataclass
 class APIConfig:
     """API server configuration."""
     host: str = field(default_factory=lambda: os.getenv("API_HOST", "0.0.0.0"))
@@ -470,6 +575,7 @@ class Config:
     mutual_transformation: MutualTransformationConfig = field(default_factory=MutualTransformationConfig)
     theological_constraint: TheologicalConstraintConfig = field(default_factory=TheologicalConstraintConfig)
     omni_contextual: OmniContextualConfig = field(default_factory=OmniContextualConfig)
+    necessity_calculator: NecessityCalculatorConfig = field(default_factory=NecessityCalculatorConfig)
 
     def __post_init__(self):
         """Create directories if they don't exist."""
