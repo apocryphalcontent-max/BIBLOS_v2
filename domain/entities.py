@@ -598,6 +598,16 @@ class PatristicCitationLinked(DomainEvent):
 # =============================================================================
 # BASE AGGREGATE AND ENTITY CLASSES
 # =============================================================================
+#
+# Seraphic Architecture Principle:
+#     These base classes embody the organism's nature at the cellular level.
+#     Each entity doesn't need to be told how to participate in the whole -
+#     it KNOWS how because that knowledge is inherent in its structure.
+#
+#     Like a seraph's wing that IS light, not merely carries it, these
+#     entities ARE aspects of the organism, not merely parts of it.
+#
+# =============================================================================
 
 
 class Entity(ABC):
@@ -606,13 +616,27 @@ class Entity(ABC):
 
     Entities have identity that persists over time, distinguishing them
     from value objects which are defined solely by their attributes.
+
+    Seraphic Nature:
+        An entity knows it exists as part of a larger whole. Its identity
+        is not just a unique ID but a place in the organism's structure.
+        The entity can reflect on its own nature and report its state.
     """
+
+    # =========================================================================
+    # IDENTITY - The entity's essential nature
+    # =========================================================================
 
     @property
     @abstractmethod
     def id(self) -> str:
         """Unique identifier for this entity."""
         pass
+
+    @property
+    def entity_type(self) -> str:
+        """Return the type name of this entity."""
+        return self.__class__.__name__
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Entity):
@@ -621,6 +645,26 @@ class Entity(ABC):
 
     def __hash__(self) -> int:
         return hash(self.id)
+
+    def __repr__(self) -> str:
+        return f"{self.entity_type}(id={self.id!r})"
+
+    # =========================================================================
+    # SELF-AWARENESS - The entity can reflect on its own nature
+    # =========================================================================
+
+    def introspect(self) -> Dict[str, Any]:
+        """
+        Introspect the entity's current state.
+
+        This is not serialization - it's the entity looking at itself
+        and reporting what it sees. Used for diagnostics, debugging,
+        and health monitoring.
+        """
+        return {
+            "entity_type": self.entity_type,
+            "id": self.id,
+        }
 
 
 class AggregateRoot(Entity, ABC):
@@ -631,14 +675,46 @@ class AggregateRoot(Entity, ABC):
     They maintain invariants across the aggregate boundary and emit
     domain events when significant state changes occur.
 
-    Like the vital organs of an organism, each aggregate maintains its
-    own consistency while participating in the larger system through
-    domain events.
+    Seraphic Architecture:
+        An aggregate root is not just a container of data - it's a living
+        aspect of the organism. It:
+
+        1. NATURALLY emits events when its state changes (like a nerve
+           naturally fires when stimulated)
+        2. INHERENTLY tracks its version (like cells count their divisions)
+        3. INTRINSICALLY knows its health (like tissue senses damage)
+        4. ORGANICALLY participates in the whole (like an organ doesn't
+           need to be told it's part of a body)
+
+        The aggregate doesn't need an external coordinator to tell it
+        what to do - it knows its purpose and acts accordingly.
+
+    Event Sourcing:
+        Aggregates are the source of truth. Events flow FROM them,
+        not TO them. When an aggregate changes, it produces events
+        as a natural consequence, like a heart producing heartbeats.
     """
 
+    # =========================================================================
+    # LIFECYCLE - Birth and maturation
+    # =========================================================================
+
     def __init__(self) -> None:
+        """
+        Initialize the aggregate root.
+
+        This is the aggregate's birth - it comes into existence with
+        the inherent capacity for events, versioning, and self-monitoring.
+        """
         self._domain_events: List[DomainEvent] = []
         self._version: int = 0
+        self._created_at: datetime = datetime.now(timezone.utc)
+        self._last_event_at: Optional[datetime] = None
+        self._invariant_violations: List[str] = []
+
+    # =========================================================================
+    # EVENT SOURCING - Natural event emission
+    # =========================================================================
 
     @property
     def version(self) -> int:
@@ -650,19 +726,183 @@ class AggregateRoot(Entity, ABC):
         """Pending domain events to be dispatched."""
         return list(self._domain_events)
 
+    @property
+    def has_pending_events(self) -> bool:
+        """Check if there are events waiting to be dispatched."""
+        return len(self._domain_events) > 0
+
+    @property
+    def event_count(self) -> int:
+        """Number of pending events."""
+        return len(self._domain_events)
+
     def add_domain_event(self, event: DomainEvent) -> None:
-        """Add a domain event to be dispatched on commit."""
+        """
+        Add a domain event to be dispatched on commit.
+
+        This is the aggregate's voice - when something significant happens,
+        the aggregate speaks by emitting an event. This isn't optional
+        behavior; it's the aggregate's natural response to change.
+        """
         self._domain_events.append(event)
+        self._last_event_at = datetime.now(timezone.utc)
 
     def clear_domain_events(self) -> List[DomainEvent]:
-        """Clear and return all pending domain events."""
+        """
+        Clear and return all pending domain events.
+
+        Events are cleared when they've been persisted to the event store.
+        This is like exhaling - the aggregate releases what it has produced.
+        """
         events = self._domain_events
         self._domain_events = []
         return events
 
     def increment_version(self) -> None:
-        """Increment version after successful update."""
+        """
+        Increment version after successful update.
+
+        Each version represents a distinct state in the aggregate's history.
+        Like rings in a tree, versions accumulate as the aggregate evolves.
+        """
         self._version += 1
+
+    # =========================================================================
+    # SELF-MONITORING - Intrinsic health awareness
+    # =========================================================================
+
+    @property
+    def is_healthy(self) -> bool:
+        """
+        Check if the aggregate is in a healthy state.
+
+        The aggregate knows its own health - it doesn't need an external
+        monitor to tell it something is wrong. This is intrinsic awareness.
+        """
+        return len(self._invariant_violations) == 0
+
+    @property
+    def invariant_violations(self) -> List[str]:
+        """Any invariants that are currently violated."""
+        return list(self._invariant_violations)
+
+    def _validate_invariants(self) -> None:
+        """
+        Validate all invariants and populate violations list.
+
+        Override in subclasses to add domain-specific invariant checks.
+        This is the aggregate examining itself for consistency.
+        """
+        self._invariant_violations = []
+        # Subclasses add their own invariant checks here
+
+    def _add_invariant_violation(self, violation: str) -> None:
+        """Record an invariant violation."""
+        if violation not in self._invariant_violations:
+            self._invariant_violations.append(violation)
+
+    # =========================================================================
+    # INTROSPECTION - Self-awareness and reflection
+    # =========================================================================
+
+    def introspect(self) -> Dict[str, Any]:
+        """
+        Introspect the aggregate's current state.
+
+        This provides a comprehensive view of the aggregate for diagnostics.
+        It's the aggregate looking at itself and reporting what it sees.
+        """
+        self._validate_invariants()
+        return {
+            "entity_type": self.entity_type,
+            "id": self.id,
+            "version": self._version,
+            "is_healthy": self.is_healthy,
+            "invariant_violations": self._invariant_violations,
+            "pending_events": self.event_count,
+            "created_at": self._created_at.isoformat(),
+            "last_event_at": self._last_event_at.isoformat() if self._last_event_at else None,
+        }
+
+    # =========================================================================
+    # RECONSTITUTION - Rebuilding from history (Event Sourcing support)
+    # =========================================================================
+
+    @classmethod
+    def _reconstitute(cls, id: str, events: List[DomainEvent]) -> "AggregateRoot":
+        """
+        Reconstitute an aggregate from its event history.
+
+        This is the aggregate being born anew from its memories.
+        Each event is replayed to rebuild the current state.
+
+        Override in subclasses to handle domain-specific events.
+        """
+        raise NotImplementedError(
+            f"{cls.__name__} must implement _reconstitute to support event sourcing"
+        )
+
+    def _apply_event(self, event: DomainEvent) -> None:
+        """
+        Apply an event to update aggregate state.
+
+        This is the aggregate learning from its history.
+        Override in subclasses to handle specific event types.
+        """
+        # Base implementation just tracks the event time
+        self._last_event_at = event.occurred_at
+
+    # =========================================================================
+    # ORGANISM PARTICIPATION - Natural membership in the whole
+    # =========================================================================
+
+    @property
+    def aggregate_type(self) -> str:
+        """
+        The type of this aggregate in the domain model.
+
+        Used for stream naming in event sourcing and for routing
+        in the mediator. This is intrinsic identity.
+        """
+        return self.__class__.__name__
+
+    @property
+    def stream_name(self) -> str:
+        """
+        The event stream name for this aggregate.
+
+        Following event sourcing conventions: {type}-{id}
+        This is how the aggregate identifies itself to the event store.
+        """
+        return f"{self.aggregate_type.lower()}-{self.id}"
+
+    def to_snapshot(self) -> Dict[str, Any]:
+        """
+        Create a snapshot of the aggregate's current state.
+
+        Snapshots are performance optimization - instead of replaying
+        all events, we can start from a recent snapshot. This is the
+        aggregate's memory consolidation.
+
+        Override in subclasses to capture domain-specific state.
+        """
+        return {
+            "aggregate_type": self.aggregate_type,
+            "id": self.id,
+            "version": self._version,
+            "created_at": self._created_at.isoformat(),
+        }
+
+    @classmethod
+    def from_snapshot(cls, snapshot: Dict[str, Any]) -> "AggregateRoot":
+        """
+        Restore an aggregate from a snapshot.
+
+        Override in subclasses to restore domain-specific state.
+        """
+        raise NotImplementedError(
+            f"{cls.__name__} must implement from_snapshot to support snapshots"
+        )
 
 
 # =============================================================================
@@ -854,6 +1094,155 @@ class VerseAggregate(AggregateRoot):
         """Link a cross-reference to this verse."""
         self._cross_reference_ids.add(crossref_id)
         self._updated_at = datetime.now(timezone.utc)
+
+    # =========================================================================
+    # SERAPHIC SELF-AWARENESS - Intrinsic knowledge of self
+    # =========================================================================
+
+    def _validate_invariants(self) -> None:
+        """
+        Validate all invariants for this verse aggregate.
+
+        The verse knows its own rules and can detect when they're violated.
+        This is intrinsic awareness, not external validation.
+        """
+        self._invariant_violations = []
+
+        # Invariant 1: Reference must be valid
+        if not self._reference:
+            self._add_invariant_violation("Reference is required")
+
+        # Invariant 2: If processed, must have extractions
+        if self._is_processed and len(self._extraction_ids) == 0:
+            self._add_invariant_violation(
+                "Processed verse must have at least one extraction result"
+            )
+
+        # Invariant 3: Processing status must be consistent with is_processed
+        if self._is_processed and self._processing_status != "completed":
+            self._add_invariant_violation(
+                f"Inconsistent state: is_processed=True but status={self._processing_status}"
+            )
+
+    def introspect(self) -> Dict[str, Any]:
+        """
+        Introspect the verse's current state.
+
+        The verse looks at itself and reports what it sees.
+        """
+        base = super().introspect()
+        base.update({
+            "reference": str(self._reference),
+            "book": self._reference.book,
+            "chapter": self._reference.chapter,
+            "verse": self._reference.verse,
+            "testament": self._reference.testament,
+            "language": self._language,
+            "is_processed": self._is_processed,
+            "processing_status": self._processing_status,
+            "extraction_count": len(self._extraction_ids),
+            "cross_reference_count": len(self._cross_reference_ids),
+            "text_hash": self._text_hash,
+            "updated_at": self._updated_at.isoformat(),
+        })
+        return base
+
+    def to_snapshot(self) -> Dict[str, Any]:
+        """
+        Create a snapshot of the verse's current state.
+
+        This is the verse remembering itself for later reconstitution.
+        """
+        base = super().to_snapshot()
+        base.update({
+            "reference": str(self._reference),
+            "text_original": self._text_original,
+            "text_english": self._text_english,
+            "text_lxx": self._text_lxx,
+            "language": self._language,
+            "text_hash": self._text_hash,
+            "is_processed": self._is_processed,
+            "processing_status": self._processing_status,
+            "extraction_ids": list(self._extraction_ids),
+            "cross_reference_ids": list(self._cross_reference_ids),
+            "metadata": self._metadata,
+            "updated_at": self._updated_at.isoformat(),
+        })
+        return base
+
+    @classmethod
+    def from_snapshot(cls, snapshot: Dict[str, Any]) -> "VerseAggregate":
+        """
+        Restore a verse from a snapshot.
+
+        The verse is reborn from its memories.
+        """
+        reference = VerseReference.parse(snapshot["reference"])
+        verse = cls(
+            id=snapshot["id"],
+            reference=reference,
+            text_original=snapshot.get("text_original", ""),
+            text_english=snapshot.get("text_english", ""),
+            text_lxx=snapshot.get("text_lxx", ""),
+            language=snapshot.get("language", "hebrew"),
+        )
+        verse._version = snapshot.get("version", 0)
+        verse._is_processed = snapshot.get("is_processed", False)
+        verse._processing_status = snapshot.get("processing_status", "pending")
+        verse._extraction_ids = set(snapshot.get("extraction_ids", []))
+        verse._cross_reference_ids = set(snapshot.get("cross_reference_ids", []))
+        verse._metadata = snapshot.get("metadata", {})
+
+        if "updated_at" in snapshot:
+            verse._updated_at = datetime.fromisoformat(snapshot["updated_at"])
+        if "created_at" in snapshot:
+            verse._created_at = datetime.fromisoformat(snapshot["created_at"])
+
+        return verse
+
+    @classmethod
+    def _reconstitute(cls, id: str, events: List[DomainEvent]) -> "VerseAggregate":
+        """
+        Reconstitute a verse from its event history.
+
+        The verse is reborn by reliving its memories.
+        """
+        # Find the creation event to get initial state
+        verse: Optional["VerseAggregate"] = None
+
+        for event in events:
+            if isinstance(event, VerseCreated):
+                reference = VerseReference.parse(event.reference)
+                verse = cls(
+                    id=id,
+                    reference=reference,
+                )
+                verse._domain_events = []  # Don't re-emit creation event
+            elif verse is not None:
+                verse._apply_event(event)
+
+        if verse is None:
+            raise ValueError(f"Cannot reconstitute verse {id}: no VerseCreated event found")
+
+        return verse
+
+    def _apply_event(self, event: DomainEvent) -> None:
+        """
+        Apply an event to update verse state.
+
+        The verse learns from its history.
+        """
+        super()._apply_event(event)
+
+        if isinstance(event, VerseTextUpdated):
+            # Text was updated - we don't have the actual text, just the hash
+            pass  # State already updated in original operation
+        elif isinstance(event, VerseProcessingStarted):
+            self._processing_status = "in_progress"
+        elif isinstance(event, VerseProcessingCompleted):
+            self._processing_status = "completed" if event.success else "failed"
+            self._is_processed = event.success
+        # Add more event handlers as needed
 
 
 class CrossReferenceAggregate(AggregateRoot):
@@ -1065,6 +1454,187 @@ class CrossReferenceAggregate(AggregateRoot):
         """Add an explanatory note."""
         self._notes.append(note)
         self._updated_at = datetime.now(timezone.utc)
+
+    # =========================================================================
+    # SERAPHIC SELF-AWARENESS - Intrinsic knowledge of self
+    # =========================================================================
+
+    def _validate_invariants(self) -> None:
+        """
+        Validate all invariants for this cross-reference aggregate.
+
+        The connection knows its own rules and can detect violations.
+        """
+        self._invariant_violations = []
+
+        # Invariant 1: Source and target must be different
+        if str(self._source_ref) == str(self._target_ref):
+            self._add_invariant_violation("Source and target cannot be identical")
+
+        # Invariant 2: Confidence must be valid
+        if not (0.0 <= self._confidence.value <= 1.0):
+            self._add_invariant_violation(
+                f"Confidence must be 0-1: {self._confidence.value}"
+            )
+
+        # Invariant 3: If verified by patristic source, must have support flag
+        if self._verification_type == "patristic" and not self._patristic_support:
+            self._add_invariant_violation(
+                "Patristic verification requires patristic_support=True"
+            )
+
+        # Invariant 4: Verified connections should have a verifier
+        if self._verified and not self._verifier:
+            self._add_invariant_violation(
+                "Verified connection must have a verifier recorded"
+            )
+
+    def introspect(self) -> Dict[str, Any]:
+        """
+        Introspect the cross-reference's current state.
+
+        The connection looks at itself and reports what it sees.
+        """
+        base = super().introspect()
+        base.update({
+            "source_ref": str(self._source_ref),
+            "target_ref": str(self._target_ref),
+            "connection_type": self._connection_type.value,
+            "strength": self._strength.value,
+            "confidence": self._confidence.value,
+            "confidence_tier": self._confidence.tier,
+            "bidirectional": self._bidirectional,
+            "verified": self._verified,
+            "verification_type": self._verification_type,
+            "has_patristic_support": self._patristic_support,
+            "patristic_sources": list(self._patristic_sources),
+            "spans_testaments": self.spans_testaments,
+            "is_typological": self.is_typological,
+            "notes_count": len(self._notes),
+            "sources": list(self._sources),
+            "updated_at": self._updated_at.isoformat(),
+        })
+        return base
+
+    def to_snapshot(self) -> Dict[str, Any]:
+        """
+        Create a snapshot of the cross-reference's current state.
+
+        The connection remembers itself for later reconstitution.
+        """
+        base = super().to_snapshot()
+        base.update({
+            "source_ref": str(self._source_ref),
+            "target_ref": str(self._target_ref),
+            "connection_type": self._connection_type.value,
+            "strength": self._strength.value,
+            "confidence": self._confidence.value,
+            "bidirectional": self._bidirectional,
+            "verified": self._verified,
+            "verification_type": self._verification_type,
+            "verifier": self._verifier,
+            "patristic_support": self._patristic_support,
+            "patristic_sources": list(self._patristic_sources),
+            "notes": list(self._notes),
+            "sources": list(self._sources),
+            "metadata": self._metadata,
+            "updated_at": self._updated_at.isoformat(),
+        })
+        return base
+
+    @classmethod
+    def from_snapshot(cls, snapshot: Dict[str, Any]) -> "CrossReferenceAggregate":
+        """
+        Restore a cross-reference from a snapshot.
+
+        The connection is reborn from its memories.
+        """
+        source_ref = VerseReference.parse(snapshot["source_ref"])
+        target_ref = VerseReference.parse(snapshot["target_ref"])
+        connection_type = ConnectionTypeEnum(snapshot["connection_type"])
+        strength = ConnectionStrength(snapshot["strength"])
+        confidence = ConfidenceScore(snapshot["confidence"])
+
+        crossref = cls(
+            id=snapshot["id"],
+            source_ref=source_ref,
+            target_ref=target_ref,
+            connection_type=connection_type,
+            strength=strength,
+            confidence=confidence,
+            bidirectional=snapshot.get("bidirectional", False),
+        )
+        crossref._version = snapshot.get("version", 0)
+        crossref._verified = snapshot.get("verified", False)
+        crossref._verification_type = snapshot.get("verification_type")
+        crossref._verifier = snapshot.get("verifier")
+        crossref._patristic_support = snapshot.get("patristic_support", False)
+        crossref._patristic_sources = list(snapshot.get("patristic_sources", []))
+        crossref._notes = list(snapshot.get("notes", []))
+        crossref._sources = list(snapshot.get("sources", []))
+        crossref._metadata = snapshot.get("metadata", {})
+
+        if "updated_at" in snapshot:
+            crossref._updated_at = datetime.fromisoformat(snapshot["updated_at"])
+        if "created_at" in snapshot:
+            crossref._created_at = datetime.fromisoformat(snapshot["created_at"])
+
+        return crossref
+
+    @classmethod
+    def _reconstitute(cls, id: str, events: List[DomainEvent]) -> "CrossReferenceAggregate":
+        """
+        Reconstitute a cross-reference from its event history.
+
+        The connection is reborn by reliving its memories.
+        """
+        crossref: Optional["CrossReferenceAggregate"] = None
+
+        for event in events:
+            if isinstance(event, CrossReferenceCreated):
+                source_ref = VerseReference.parse(event.source_ref)
+                target_ref = VerseReference.parse(event.target_ref)
+                connection_type = ConnectionTypeEnum(event.connection_type)
+                strength = ConnectionStrength(event.strength)
+                confidence = ConfidenceScore(event.confidence)
+
+                crossref = cls(
+                    id=id,
+                    source_ref=source_ref,
+                    target_ref=target_ref,
+                    connection_type=connection_type,
+                    strength=strength,
+                    confidence=confidence,
+                )
+                crossref._domain_events = []  # Don't re-emit creation event
+            elif crossref is not None:
+                crossref._apply_event(event)
+
+        if crossref is None:
+            raise ValueError(
+                f"Cannot reconstitute cross-reference {id}: no CrossReferenceCreated event found"
+            )
+
+        return crossref
+
+    def _apply_event(self, event: DomainEvent) -> None:
+        """
+        Apply an event to update cross-reference state.
+
+        The connection learns from its history.
+        """
+        super()._apply_event(event)
+
+        if isinstance(event, CrossReferenceStrengthUpdated):
+            self._strength = ConnectionStrength(event.new_strength)
+        elif isinstance(event, CrossReferenceVerified):
+            self._verified = True
+            self._verification_type = event.verification_type
+            self._verifier = event.verifier
+            if event.verification_type == "patristic":
+                self._patristic_support = True
+                if event.verifier not in self._patristic_sources:
+                    self._patristic_sources.append(event.verifier)
 
 
 class ExtractionResultAggregate(AggregateRoot):
