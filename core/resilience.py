@@ -37,6 +37,7 @@ from opentelemetry import trace
 
 from core.errors import (
     BiblosError,
+    BiblosPipelineError,
     BiblosResourceError,
     BiblosTimeoutError,
     ErrorContext,
@@ -648,3 +649,446 @@ class SyncCircuitBreaker:
             "success_count": self._success_count,
             "last_failure": self._last_failure_time if self._last_failure_time > 0 else None,
         }
+
+
+# =============================================================================
+# RATE LIMITER
+# =============================================================================
+
+
+@dataclass
+class RateLimiterConfig:
+    """Configuration for rate limiter (token bucket algorithm)."""
+
+    rate: float = 10.0  # Requests per second
+    burst: int = 20  # Maximum burst size
+    timeout_seconds: float = 5.0  # Wait timeout for acquiring token
+
+
+class RateLimiter:
+    """
+    Token bucket rate limiter for controlling request throughput.
+
+    Prevents overloading external services or internal resources
+    by limiting the rate of operations.
+
+    Usage:
+        limiter = RateLimiter("api_calls", rate=10.0, burst=20)
+
+        async with limiter:
+            await api_call()
+    """
+
+    def __init__(
+        self,
+        name: str,
+        config: Optional[RateLimiterConfig] = None,
+    ):
+        self.name = name
+        self.config = config or RateLimiterConfig()
+        self._tokens = float(self.config.burst)
+        self._last_refill = time.monotonic()
+        self._lock = asyncio.Lock()
+
+    async def _refill(self) -> None:
+        """Refill tokens based on elapsed time."""
+        now = time.monotonic()
+        elapsed = now - self._last_refill
+        self._tokens = min(
+            self.config.burst,
+            self._tokens + elapsed * self.config.rate
+        )
+        self._last_refill = now
+
+    async def acquire(self, tokens: float = 1.0) -> bool:
+        """
+        Acquire tokens from the bucket.
+
+        Args:
+            tokens: Number of tokens to acquire (default 1)
+
+        Returns:
+            True if tokens were acquired, False if timeout
+        """
+        deadline = time.monotonic() + self.config.timeout_seconds
+
+        while True:
+            async with self._lock:
+                await self._refill()
+
+                if self._tokens >= tokens:
+                    self._tokens -= tokens
+                    return True
+
+            # Calculate wait time for tokens to become available
+            tokens_needed = tokens - self._tokens
+            wait_time = tokens_needed / self.config.rate
+
+            if time.monotonic() + wait_time > deadline:
+                return False
+
+            await asyncio.sleep(min(wait_time, 0.1))
+
+    async def __aenter__(self) -> "RateLimiter":
+        """Context manager entry - acquire token."""
+        if not await self.acquire():
+            raise BiblosResourceError(
+                message=f"Rate limiter '{self.name}' timeout",
+                resource_type="rate_limiter",
+                context=ErrorContext.from_current_span(
+                    operation="rate_limit_acquire",
+                    component=self.name,
+                ),
+            )
+        return self
+
+    async def __aexit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_val: Optional[BaseException],
+        exc_tb: Any,
+    ) -> bool:
+        """Context manager exit - no action needed."""
+        return False
+
+    def get_metrics(self) -> Dict[str, Any]:
+        """Get current rate limiter metrics."""
+        return {
+            "name": self.name,
+            "available_tokens": self._tokens,
+            "rate": self.config.rate,
+            "burst": self.config.burst,
+        }
+
+
+def with_rate_limit(
+    name: str,
+    rate: float = 10.0,
+    burst: int = 20,
+) -> Callable[[Callable[P, T]], Callable[P, T]]:
+    """
+    Decorator for adding rate limiting to a function.
+
+    Usage:
+        @with_rate_limit("api", rate=10.0, burst=20)
+        async def api_call():
+            ...
+    """
+    config = RateLimiterConfig(rate=rate, burst=burst)
+    limiter = RateLimiter(name, config)
+
+    def decorator(func: Callable[P, T]) -> Callable[P, T]:
+        @functools.wraps(func)
+        async def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
+            async with limiter:
+                return await func(*args, **kwargs)
+
+        return wrapper  # type: ignore
+
+    return decorator
+
+
+# =============================================================================
+# FALLBACK SUPPORT
+# =============================================================================
+
+
+@dataclass
+class FallbackResult(Generic[T]):
+    """Result container that tracks whether fallback was used."""
+
+    value: T
+    used_fallback: bool = False
+    original_error: Optional[Exception] = None
+
+
+def with_fallback(
+    fallback_fn: Callable[..., T],
+    exceptions: Optional[Set[Type[Exception]]] = None,
+) -> Callable[[Callable[P, T]], Callable[P, FallbackResult[T]]]:
+    """
+    Decorator that provides graceful degradation via fallback.
+
+    Usage:
+        def cached_result():
+            return cached_data
+
+        @with_fallback(cached_result)
+        async def fetch_fresh_data():
+            return await api.fetch()
+    """
+    catch_exceptions = exceptions or {Exception}
+
+    def decorator(func: Callable[P, T]) -> Callable[P, FallbackResult[T]]:
+        @functools.wraps(func)
+        async def async_wrapper(*args: P.args, **kwargs: P.kwargs) -> FallbackResult[T]:
+            try:
+                result = await func(*args, **kwargs)
+                return FallbackResult(value=result, used_fallback=False)
+            except tuple(catch_exceptions) as e:
+                fallback_result = fallback_fn(*args, **kwargs)
+                if asyncio.iscoroutine(fallback_result):
+                    fallback_result = await fallback_result
+                return FallbackResult(
+                    value=fallback_result,
+                    used_fallback=True,
+                    original_error=e,
+                )
+
+        @functools.wraps(func)
+        def sync_wrapper(*args: P.args, **kwargs: P.kwargs) -> FallbackResult[T]:
+            try:
+                result = func(*args, **kwargs)
+                return FallbackResult(value=result, used_fallback=False)
+            except tuple(catch_exceptions) as e:
+                return FallbackResult(
+                    value=fallback_fn(*args, **kwargs),
+                    used_fallback=True,
+                    original_error=e,
+                )
+
+        if asyncio.iscoroutinefunction(func):
+            return async_wrapper  # type: ignore
+        return sync_wrapper  # type: ignore
+
+    return decorator
+
+
+# =============================================================================
+# ERROR AGGREGATION (for batch processing)
+# =============================================================================
+
+
+@dataclass
+class BatchError:
+    """Single error within a batch operation."""
+
+    index: int
+    item: Any
+    error: Exception
+    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+@dataclass
+class BatchResult(Generic[T]):
+    """
+    Result of a batch operation with partial failure support.
+
+    Allows batch operations to return both successes and failures
+    without stopping on first error.
+    """
+
+    successes: List[T] = field(default_factory=list)
+    errors: List[BatchError] = field(default_factory=list)
+
+    @property
+    def total(self) -> int:
+        """Total items processed."""
+        return len(self.successes) + len(self.errors)
+
+    @property
+    def success_rate(self) -> float:
+        """Percentage of successful operations."""
+        if self.total == 0:
+            return 0.0
+        return len(self.successes) / self.total
+
+    @property
+    def has_errors(self) -> bool:
+        """Check if any errors occurred."""
+        return len(self.errors) > 0
+
+    @property
+    def all_succeeded(self) -> bool:
+        """Check if all operations succeeded."""
+        return len(self.errors) == 0
+
+    def raise_if_errors(self, threshold: float = 0.0) -> None:
+        """
+        Raise aggregated error if error rate exceeds threshold.
+
+        Args:
+            threshold: Maximum acceptable error rate (0.0 to 1.0)
+        """
+        if self.total == 0:
+            return
+
+        error_rate = len(self.errors) / self.total
+        if error_rate > threshold:
+            raise BiblosPipelineError(
+                message=f"Batch operation failed: {len(self.errors)}/{self.total} errors ({error_rate:.1%})",
+                context=ErrorContext.from_current_span(
+                    operation="batch_operation",
+                    component="batch_processor",
+                    metadata={
+                        "success_count": len(self.successes),
+                        "error_count": len(self.errors),
+                        "error_rate": error_rate,
+                    },
+                ),
+            )
+
+
+async def batch_execute(
+    items: List[Any],
+    operation: Callable[[Any], T],
+    max_concurrent: int = 10,
+    stop_on_error: bool = False,
+) -> BatchResult[T]:
+    """
+    Execute operation on multiple items with error aggregation.
+
+    Args:
+        items: Items to process
+        operation: Async function to apply to each item
+        max_concurrent: Maximum concurrent operations
+        stop_on_error: Whether to stop on first error
+
+    Returns:
+        BatchResult with successes and errors
+    """
+    result: BatchResult[T] = BatchResult()
+    semaphore = asyncio.Semaphore(max_concurrent)
+
+    async def process_item(index: int, item: Any) -> None:
+        async with semaphore:
+            try:
+                if asyncio.iscoroutinefunction(operation):
+                    value = await operation(item)
+                else:
+                    value = operation(item)
+                result.successes.append(value)
+            except Exception as e:
+                result.errors.append(BatchError(index=index, item=item, error=e))
+                if stop_on_error:
+                    raise
+
+    try:
+        await asyncio.gather(
+            *(process_item(i, item) for i, item in enumerate(items)),
+            return_exceptions=not stop_on_error,
+        )
+    except Exception:
+        pass  # Errors are captured in result.errors
+
+    return result
+
+
+# =============================================================================
+# HEALTH CHECK INTEGRATION
+# =============================================================================
+
+
+class HealthStatus(Enum):
+    """Health status levels."""
+
+    HEALTHY = "healthy"
+    DEGRADED = "degraded"
+    UNHEALTHY = "unhealthy"
+
+
+@dataclass
+class HealthCheck:
+    """Health check result."""
+
+    name: str
+    status: HealthStatus
+    message: Optional[str] = None
+    latency_ms: Optional[float] = None
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+
+class HealthMonitor:
+    """
+    Centralized health monitoring for resilience components.
+
+    Aggregates health status from circuit breakers, rate limiters,
+    and other resilience patterns.
+    """
+
+    def __init__(self) -> None:
+        self._circuit_breakers: Dict[str, CircuitBreaker] = {}
+        self._sync_circuit_breakers: Dict[str, SyncCircuitBreaker] = {}
+        self._rate_limiters: Dict[str, RateLimiter] = {}
+        self._bulkheads: Dict[str, Bulkhead] = {}
+
+    def register_circuit_breaker(self, breaker: CircuitBreaker) -> None:
+        """Register a circuit breaker for monitoring."""
+        self._circuit_breakers[breaker.name] = breaker
+
+    def register_sync_circuit_breaker(self, breaker: SyncCircuitBreaker) -> None:
+        """Register a sync circuit breaker for monitoring."""
+        self._sync_circuit_breakers[breaker.name] = breaker
+
+    def register_rate_limiter(self, limiter: RateLimiter) -> None:
+        """Register a rate limiter for monitoring."""
+        self._rate_limiters[limiter.name] = limiter
+
+    def register_bulkhead(self, bulkhead: Bulkhead) -> None:
+        """Register a bulkhead for monitoring."""
+        self._bulkheads[bulkhead.name] = bulkhead
+
+    def get_health(self) -> Dict[str, Any]:
+        """Get aggregated health status."""
+        checks: List[HealthCheck] = []
+
+        # Check circuit breakers
+        for name, breaker in self._circuit_breakers.items():
+            state = breaker.state
+            status = (
+                HealthStatus.HEALTHY if state == CircuitState.CLOSED
+                else HealthStatus.DEGRADED if state == CircuitState.HALF_OPEN
+                else HealthStatus.UNHEALTHY
+            )
+            checks.append(HealthCheck(
+                name=f"circuit_breaker:{name}",
+                status=status,
+                metadata=breaker.get_metrics(),
+            ))
+
+        # Check sync circuit breakers
+        for name, breaker in self._sync_circuit_breakers.items():
+            state = breaker.state
+            status = (
+                HealthStatus.HEALTHY if state == CircuitState.CLOSED
+                else HealthStatus.DEGRADED if state == CircuitState.HALF_OPEN
+                else HealthStatus.UNHEALTHY
+            )
+            checks.append(HealthCheck(
+                name=f"sync_circuit_breaker:{name}",
+                status=status,
+                metadata=breaker.get_metrics(),
+            ))
+
+        # Determine overall status
+        if any(c.status == HealthStatus.UNHEALTHY for c in checks):
+            overall = HealthStatus.UNHEALTHY
+        elif any(c.status == HealthStatus.DEGRADED for c in checks):
+            overall = HealthStatus.DEGRADED
+        else:
+            overall = HealthStatus.HEALTHY
+
+        return {
+            "status": overall.value,
+            "checks": [
+                {
+                    "name": c.name,
+                    "status": c.status.value,
+                    "message": c.message,
+                    "metadata": c.metadata,
+                }
+                for c in checks
+            ],
+        }
+
+
+# Global health monitor instance
+_health_monitor: Optional[HealthMonitor] = None
+
+
+def get_health_monitor() -> HealthMonitor:
+    """Get or create global health monitor."""
+    global _health_monitor
+    if _health_monitor is None:
+        _health_monitor = HealthMonitor()
+    return _health_monitor

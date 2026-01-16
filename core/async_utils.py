@@ -482,3 +482,373 @@ def async_cached(
         return wrapper
 
     return decorator
+
+
+# =============================================================================
+# STREAMING & MEMORY-EFFICIENT ITERATION
+# =============================================================================
+
+
+async def async_chunked_iter(
+    items: List[T],
+    chunk_size: int = 100,
+) -> AsyncIterator[List[T]]:
+    """
+    Async iterator that yields items in chunks.
+
+    Memory-efficient for processing large lists.
+
+    Usage:
+        async for chunk in async_chunked_iter(items, chunk_size=100):
+            await process_batch(chunk)
+    """
+    for i in range(0, len(items), chunk_size):
+        yield items[i:i + chunk_size]
+        # Allow other tasks to run between chunks
+        await asyncio.sleep(0)
+
+
+async def async_buffered_iter(
+    source: AsyncIterator[T],
+    buffer_size: int = 10,
+) -> AsyncIterator[T]:
+    """
+    Async iterator with buffered prefetching.
+
+    Prefetches items to reduce latency in processing pipelines.
+
+    Usage:
+        async for item in async_buffered_iter(slow_source(), buffer_size=5):
+            process(item)
+    """
+    buffer: asyncio.Queue[T | None] = asyncio.Queue(maxsize=buffer_size)
+    done = asyncio.Event()
+
+    async def producer() -> None:
+        try:
+            async for item in source:
+                await buffer.put(item)
+            await buffer.put(None)  # Sentinel
+        finally:
+            done.set()
+
+    producer_task = asyncio.create_task(producer())
+
+    try:
+        while True:
+            item = await buffer.get()
+            if item is None:
+                break
+            yield item
+    finally:
+        producer_task.cancel()
+        try:
+            await producer_task
+        except asyncio.CancelledError:
+            pass
+
+
+# =============================================================================
+# LAZY INITIALIZATION
+# =============================================================================
+
+
+class LazyAsync(Generic[T]):
+    """
+    Lazy async initialization wrapper.
+
+    Defers expensive initialization until first access.
+
+    Usage:
+        db = LazyAsync(create_database_connection)
+
+        # Later, when needed:
+        connection = await db.get()
+    """
+
+    def __init__(
+        self,
+        factory: Callable[[], Awaitable[T]],
+        cleanup: Optional[Callable[[T], Awaitable[None]]] = None,
+    ):
+        self._factory = factory
+        self._cleanup = cleanup
+        self._value: Optional[T] = None
+        self._lock = asyncio.Lock()
+        self._initialized = False
+
+    async def get(self) -> T:
+        """Get or create the value."""
+        if self._initialized:
+            return self._value  # type: ignore
+
+        async with self._lock:
+            # Double-check after acquiring lock
+            if self._initialized:
+                return self._value  # type: ignore
+
+            self._value = await self._factory()
+            self._initialized = True
+            return self._value
+
+    async def reset(self) -> None:
+        """Reset and optionally cleanup the value."""
+        async with self._lock:
+            if self._initialized and self._cleanup and self._value is not None:
+                await self._cleanup(self._value)
+            self._value = None
+            self._initialized = False
+
+    @property
+    def is_initialized(self) -> bool:
+        """Check if value has been initialized."""
+        return self._initialized
+
+
+# =============================================================================
+# PRIORITY TASK EXECUTION
+# =============================================================================
+
+
+@dataclass(order=True)
+class PrioritizedTask:
+    """Task with priority for queue ordering."""
+
+    priority: int
+    task_id: str = field(compare=False)
+    coro: Awaitable[Any] = field(compare=False)
+
+
+class PriorityTaskQueue:
+    """
+    Priority-based async task queue.
+
+    Higher priority (lower number) tasks execute first.
+
+    Usage:
+        queue = PriorityTaskQueue(max_workers=5)
+        await queue.start()
+
+        await queue.submit(coro1, priority=1)  # High priority
+        await queue.submit(coro2, priority=10)  # Low priority
+
+        await queue.stop()
+    """
+
+    def __init__(self, max_workers: int = 5):
+        self.max_workers = max_workers
+        self._queue: asyncio.PriorityQueue[PrioritizedTask] = asyncio.PriorityQueue()
+        self._workers: List[asyncio.Task] = []
+        self._running = False
+        self._task_counter = 0
+
+    async def start(self) -> None:
+        """Start worker tasks."""
+        if self._running:
+            return
+
+        self._running = True
+        for i in range(self.max_workers):
+            worker = asyncio.create_task(self._worker(i))
+            self._workers.append(worker)
+
+    async def stop(self, timeout: float = 10.0) -> None:
+        """Stop all workers gracefully."""
+        self._running = False
+
+        # Cancel all workers
+        for worker in self._workers:
+            worker.cancel()
+
+        # Wait for workers to finish
+        await asyncio.gather(*self._workers, return_exceptions=True)
+        self._workers.clear()
+
+    async def submit(
+        self,
+        coro: Awaitable[T],
+        priority: int = 5,
+    ) -> None:
+        """Submit a task with priority (lower = higher priority)."""
+        self._task_counter += 1
+        task = PrioritizedTask(
+            priority=priority,
+            task_id=f"task_{self._task_counter}",
+            coro=coro,
+        )
+        await self._queue.put(task)
+
+    async def _worker(self, worker_id: int) -> None:
+        """Worker coroutine that processes tasks from queue."""
+        while self._running:
+            try:
+                task = await asyncio.wait_for(
+                    self._queue.get(),
+                    timeout=1.0,
+                )
+                try:
+                    await task.coro
+                except Exception as e:
+                    # Log error but continue processing
+                    pass
+                finally:
+                    self._queue.task_done()
+            except asyncio.TimeoutError:
+                continue
+            except asyncio.CancelledError:
+                break
+
+
+# =============================================================================
+# DEBOUNCE & COALESCE
+# =============================================================================
+
+
+def debounce(
+    wait_seconds: float,
+) -> Callable[[Callable[P, Awaitable[T]]], Callable[P, Awaitable[Optional[T]]]]:
+    """
+    Debounce async function calls.
+
+    Only executes after wait_seconds of no calls.
+
+    Usage:
+        @debounce(0.5)
+        async def save_draft(content: str):
+            await save_to_db(content)
+    """
+    def decorator(
+        func: Callable[P, Awaitable[T]],
+    ) -> Callable[P, Awaitable[Optional[T]]]:
+        pending_task: Optional[asyncio.Task] = None
+        lock = asyncio.Lock()
+
+        @functools.wraps(func)
+        async def wrapper(*args: P.args, **kwargs: P.kwargs) -> Optional[T]:
+            nonlocal pending_task
+
+            async with lock:
+                if pending_task and not pending_task.done():
+                    pending_task.cancel()
+                    try:
+                        await pending_task
+                    except asyncio.CancelledError:
+                        pass
+
+                async def delayed_call() -> T:
+                    await asyncio.sleep(wait_seconds)
+                    return await func(*args, **kwargs)
+
+                pending_task = asyncio.create_task(delayed_call())
+
+            try:
+                return await pending_task
+            except asyncio.CancelledError:
+                return None
+
+        return wrapper
+
+    return decorator
+
+
+def coalesce(
+    window_seconds: float,
+    key_fn: Optional[Callable[..., str]] = None,
+) -> Callable[[Callable[P, Awaitable[T]]], Callable[P, Awaitable[T]]]:
+    """
+    Coalesce multiple calls within a time window.
+
+    Returns same result for identical calls within window.
+
+    Usage:
+        @coalesce(1.0, key_fn=lambda user_id: str(user_id))
+        async def fetch_user(user_id: int) -> User:
+            return await db.get_user(user_id)
+    """
+    pending: Dict[str, asyncio.Task[T]] = {}
+
+    def decorator(func: Callable[P, Awaitable[T]]) -> Callable[P, Awaitable[T]]:
+        @functools.wraps(func)
+        async def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
+            # Generate key
+            if key_fn:
+                key = key_fn(*args, **kwargs)
+            else:
+                key = str((args, tuple(sorted(kwargs.items()))))
+
+            # Check if there's a pending call for this key
+            if key in pending and not pending[key].done():
+                return await pending[key]
+
+            # Create new task
+            async def execute() -> T:
+                try:
+                    return await func(*args, **kwargs)
+                finally:
+                    # Clean up after window expires
+                    await asyncio.sleep(window_seconds)
+                    pending.pop(key, None)
+
+            task = asyncio.create_task(execute())
+            pending[key] = task
+            return await task
+
+        return wrapper
+
+    return decorator
+
+
+# =============================================================================
+# ASYNC CONTEXT STACK
+# =============================================================================
+
+
+class AsyncContextStack:
+    """
+    Manage multiple async context managers as a stack.
+
+    Useful for managing multiple resources that need coordinated cleanup.
+
+    Usage:
+        async with AsyncContextStack() as stack:
+            db = await stack.enter(database_connection())
+            cache = await stack.enter(cache_connection())
+            # Both cleaned up automatically
+    """
+
+    def __init__(self) -> None:
+        self._contexts: List[Any] = []
+        self._values: List[Any] = []
+
+    async def enter(self, context_manager: Any) -> Any:
+        """Enter a context manager and track it."""
+        value = await context_manager.__aenter__()
+        self._contexts.append(context_manager)
+        self._values.append(value)
+        return value
+
+    async def __aenter__(self) -> "AsyncContextStack":
+        return self
+
+    async def __aexit__(
+        self,
+        exc_type: Optional[type],
+        exc_val: Optional[BaseException],
+        exc_tb: Any,
+    ) -> bool:
+        """Exit all context managers in reverse order."""
+        exceptions: List[Exception] = []
+
+        for context in reversed(self._contexts):
+            try:
+                await context.__aexit__(exc_type, exc_val, exc_tb)
+            except Exception as e:
+                exceptions.append(e)
+
+        self._contexts.clear()
+        self._values.clear()
+
+        if exceptions:
+            raise exceptions[0]
+
+        return False

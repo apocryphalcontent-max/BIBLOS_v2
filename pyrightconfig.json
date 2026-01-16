@@ -1,0 +1,33 @@
+{
+  "include": [
+    "agents",
+    "api",
+    "cli",
+    "core",
+    "data",
+    "db",
+    "di",
+    "integrations",
+    "ml",
+    "observability",
+    "pipeline",
+    "evaluation",
+    "scripts",
+    "tests"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/__pycache__",
+    "**/.git",
+    "**/.venv",
+    "**/.hypothesis"
+  ],
+  "extraPaths": ["."],
+  "pythonVersion": "3.11",
+  "pythonPlatform": "All",
+  "typeCheckingMode": "basic",
+  "reportMissingImports": "warning",
+  "reportMissingTypeStubs": "none",
+  "reportUnusedImport": "warning",
+  "reportUnusedVariable": "warning"
+}

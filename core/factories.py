@@ -357,9 +357,9 @@ class MLEngineFactory:
     async def create_gnn_model(config: Optional[MLEngineConfig] = None) -> Any:
         """Create a GNN model for cross-reference prediction."""
         config = config or MLEngineConfig()
-        from ml.models.gnn import GNNCrossRefPredictor
+        from ml.models.gnn_discovery import CrossRefGNN
 
-        model = GNNCrossRefPredictor(device=config.device)
+        model = CrossRefGNN(device=config.device)
         return model
 
     @staticmethod
