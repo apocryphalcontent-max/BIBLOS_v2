@@ -236,6 +236,12 @@ class CrossReferenceSchema(BaseSchema):
     patristic_support: bool = False
     metadata: Dict[str, Any] = field(default_factory=dict)
 
+    # Mutual transformation metrics
+    mutual_influence_score: float = 0.0  # Harmonic mean of bidirectional shift
+    source_semantic_shift: float = 0.0   # How much source verse meaning changed
+    target_semantic_shift: float = 0.0   # How much target verse meaning changed
+    transformation_type: str = "MINIMAL" # RADICAL, MODERATE, MINIMAL
+
     def validate(self) -> List[str]:
         """Validate the cross-reference schema."""
         errors = []
