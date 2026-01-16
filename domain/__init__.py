@@ -1,55 +1,84 @@
 """
-BIBLOS v2 - Domain Layer
+BIBLOS v2 - Domain Layer (The Heart)
 
-The domain layer represents the heart of the system - the vital organs that
-process, transform, and maintain the integrity of biblical scholarship data.
+The domain layer is not merely the "business logic" - it is the HEART of the system.
+Like the heart doesn't just pump blood but embodies the principle of circulation
+itself, the domain layer embodies the very PURPOSE of BIBLOS: to illuminate
+sacred scripture through rigorous scholarship and faithful exegesis.
 
-This layer implements Domain-Driven Design patterns:
+Seraphic Architecture Principle:
+    A seraph is not assembled from wings, eyes, and faces - these are merely
+    how human perception describes an indescribable unity. Similarly, our domain
+    entities (VerseAggregate, CrossReferenceAggregate) are not "business objects"
+    but living expressions of theological truth. Each aggregate contains within
+    itself the fullness of what it represents - a verse IS its connections,
+    IS its interpretations, IS its place in salvation history.
+
+Domain-Driven Design Patterns:
     - Aggregate Roots: Consistency boundaries with invariant enforcement
-    - Entities: Objects with identity that persist over time
-    - Value Objects: Immutable objects defined by their attributes
-    - Domain Events: Record of significant occurrences in the domain
-    - Domain Services: Operations that don't belong to any entity
+    - Entities: Objects with identity that persist through transformation
+    - Value Objects: Immutable truths defined by their nature
+    - Domain Events: The testimony of what has occurred
+    - Specifications: The criteria by which truth is discerned
+    - Projections: Views that reveal different aspects of the same reality
 
-Architectural Principles:
-    - Rich Domain Model: Business logic lives in the domain, not services
-    - Ubiquitous Language: Code reflects the language of biblical scholarship
-    - Aggregate Boundaries: Each aggregate maintains its own consistency
-    - Event-Driven: All significant changes emit domain events
+The Ubiquitous Language:
+    Our code speaks the language of biblical scholarship:
+    - "Cross-reference" not "link"
+    - "Typological connection" not "similarity"
+    - "Patristic witness" not "external source"
+    - "Golden record" not "final output"
 
 Usage:
     from domain import (
+        # The Heart's Chambers (Aggregates)
         VerseAggregate, CrossReferenceAggregate,
+        # The Lifeblood (Events)
         VerseCreated, CrossReferenceDiscovered,
-        VerseReference, ConnectionStrength
+        # The DNA (Value Objects)
+        VerseReference, ConnectionStrength,
+        # The Consciousness (Mediator)
+        Mediator, ProcessVerseCommand,
+        # The Perception (Projections)
+        CrossReferenceGraphProjection,
     )
 
-    # Create a new verse aggregate
+    # A verse aggregate carries within itself its entire theological identity
     verse = VerseAggregate.create(
         reference=VerseReference.parse("GEN.1.1"),
         text_original="בְּרֵאשִׁית בָּרָא אֱלֹהִים",
         text_english="In the beginning God created"
     )
 
-    # Check domain events
+    # Domain events are the testimony of change
     for event in verse.domain_events:
-        print(f"Event: {event.event_type}")
+        print(f"Witness: {event.event_type}")
 """
+
+# ============================================================================
+# Entities - The Heart's Chambers
+# ============================================================================
+# Each aggregate is a chamber of the heart, maintaining its own rhythm
+# (consistency) while participating in the circulation of the whole.
+# ============================================================================
+
 from domain.entities import (
-    # Aggregate Roots
-    VerseAggregate,
-    CrossReferenceAggregate,
-    ExtractionResultAggregate,
-    PatristicCitationAggregate,
-    GoldenRecordAggregate,
-    # Value Objects
+    # Aggregate Roots - The Four Chambers
+    VerseAggregate,              # The right atrium - receiving raw text
+    CrossReferenceAggregate,     # The left atrium - receiving connections
+    ExtractionResultAggregate,   # The right ventricle - pumping analysis
+    PatristicCitationAggregate,  # The left ventricle - pumping tradition
+    GoldenRecordAggregate,       # The aorta - distributing certified truth
+
+    # Value Objects - The Blood Types (immutable, defining identity)
     VerseReference,
     ConnectionStrength,
     ConfidenceScore,
     QualityTier,
     ExtractionType,
     InterpretationType,
-    # Domain Events
+
+    # Domain Events - The Heartbeats (each beat is testimony)
     DomainEvent,
     VerseCreated,
     VerseTextUpdated,
@@ -64,83 +93,158 @@ from domain.entities import (
     GoldenRecordCertified,
     GoldenRecordDecertified,
     PatristicCitationLinked,
-    # Base Classes
+
+    # Base Classes - The Cellular Foundation
     AggregateRoot,
     Entity,
 )
+
+# ============================================================================
+# Specifications - The Discernment
+# ============================================================================
+# Specifications encode the criteria by which we discern truth from noise,
+# relevant from irrelevant, connected from isolated.
+# ============================================================================
+
 from domain.specifications import (
-    # Verse Specifications
+    # Verse Specifications - "By what criteria do we find this verse?"
     VerseByBookSpec,
     VerseByChapterSpec,
     VerseByReferenceSpec,
     VerseWithTextContainingSpec,
     VerseProcessedSpec,
     VerseNeedsProcessingSpec,
-    # Cross-Reference Specifications
+
+    # Cross-Reference Specifications - "What connections have meaning?"
     CrossRefBySourceSpec,
     CrossRefByTargetSpec,
     CrossRefByTypeSpec,
     CrossRefByStrengthSpec,
     CrossRefVerifiedSpec,
     CrossRefHighConfidenceSpec,
-    # Extraction Specifications
+
+    # Extraction Specifications - "What work has been done?"
     ExtractionByVerseSpec,
     ExtractionByAgentSpec,
     ExtractionByTypeSpec,
     ExtractionCompletedSpec,
 )
+
+# ============================================================================
+# Mediator - The Consciousness
+# ============================================================================
+# The mediator is the domain's consciousness - aware of all requests,
+# coordinating responses, maintaining the pipeline of transformation.
+# It doesn't DO the work; it DIRECTS the work to those who can.
+# ============================================================================
+
 from domain.mediator import (
-    # Base Types
-    Command,
-    Query,
-    IRequest,
-    INotification,
-    DomainEventNotification,
-    # Handler Interfaces
+    # Request Types - Forms of Intention
+    Command,                      # "Change something"
+    Query,                        # "Tell me something"
+    IRequest,                     # Abstract intention
+    INotification,               # "Something happened"
+    DomainEventNotification,     # Event wrapped for notification
+
+    # Handler Interfaces - Those Who Respond
     IRequestHandler,
     ICommandHandler,
     IQueryHandler,
     INotificationHandler,
-    # Pipeline Behaviors
+
+    # Pipeline Behaviors - The Conscience (checks before action)
     IPipelineBehavior,
-    LoggingBehavior,
-    ValidationBehavior,
-    TransactionBehavior,
-    PerformanceMonitoringBehavior,
-    RetryBehavior,
-    CachingBehavior,
+    LoggingBehavior,             # "Remember what was done"
+    ValidationBehavior,          # "Is this right?"
+    TransactionBehavior,         # "All or nothing"
+    PerformanceMonitoringBehavior,  # "How long did this take?"
+    RetryBehavior,               # "Try again with patience"
+    CachingBehavior,             # "Remember for efficiency"
     ValidationError,
-    # Mediator
+
+    # The Mediator Itself - Central Consciousness
     Mediator,
     MediatorBuilder,
-    # Common Commands
-    ProcessVerseCommand,
-    DiscoverCrossReferencesCommand,
-    VerifyCrossReferenceCommand,
-    CertifyGoldenRecordCommand,
-    # Common Queries
-    GetVerseQuery,
-    GetCrossReferencesQuery,
-    SearchVersesQuery,
-    GetGoldenRecordQuery,
-    GetPipelineStatusQuery,
+
+    # Common Commands - Sacred Intentions
+    ProcessVerseCommand,         # "Analyze this text"
+    DiscoverCrossReferencesCommand,  # "Find connections"
+    VerifyCrossReferenceCommand,     # "Confirm this connection"
+    CertifyGoldenRecordCommand,      # "Certify this truth"
+
+    # Common Queries - Sacred Questions
+    GetVerseQuery,               # "What is this verse?"
+    GetCrossReferencesQuery,     # "What connections exist?"
+    SearchVersesQuery,           # "Find verses matching..."
+    GetGoldenRecordQuery,        # "What is certified?"
+    GetPipelineStatusQuery,      # "What is the state of processing?"
 )
 
+# ============================================================================
+# Projections - The Perception
+# ============================================================================
+# Projections are how we perceive the event stream from different angles.
+# Like how a seraph's many eyes see the same reality from infinite perspectives,
+# projections reveal different aspects of the same truth.
+# ============================================================================
+
+from domain.projections import (
+    # Foundational Types
+    ProjectedEvent,              # An event as perceived by projections
+    Checkpoint,                  # Where we stopped looking
+    CheckpointStrategy,          # How often to checkpoint
+
+    # Checkpoint Storage
+    ICheckpointStore,
+    InMemoryCheckpointStore,
+    PostgresCheckpointStore,
+
+    # Projection Status
+    ProjectionStatus,
+    ProjectionStats,
+
+    # Core Projection Interface
+    IProjection,
+    ProjectionBase,
+
+    # Generic Projections
+    AggregateProjection,         # Rebuild aggregate state
+    CountingProjection,          # Count occurrences
+    TimeSeriesProjection,        # Track changes over time
+
+    # Domain-Specific Projections (the Sacred Perceptions)
+    CrossReferenceGraphProjection,     # The SPIDERWEB as perceived
+    VerseProcessingStatusProjection,   # Processing progress
+
+    # Projection Management
+    ProjectionManager,
+    ProjectionBuilder,
+)
+
+
 __all__ = [
-    # Aggregate Roots
+    # ========================================================================
+    # AGGREGATE ROOTS - The Heart's Chambers
+    # ========================================================================
     "VerseAggregate",
     "CrossReferenceAggregate",
     "ExtractionResultAggregate",
     "PatristicCitationAggregate",
     "GoldenRecordAggregate",
-    # Value Objects
+
+    # ========================================================================
+    # VALUE OBJECTS - The Blood Types
+    # ========================================================================
     "VerseReference",
     "ConnectionStrength",
     "ConfidenceScore",
     "QualityTier",
     "ExtractionType",
     "InterpretationType",
-    # Domain Events
+
+    # ========================================================================
+    # DOMAIN EVENTS - The Heartbeats
+    # ========================================================================
     "DomainEvent",
     "VerseCreated",
     "VerseTextUpdated",
@@ -155,9 +259,16 @@ __all__ = [
     "GoldenRecordCertified",
     "GoldenRecordDecertified",
     "PatristicCitationLinked",
-    # Base Classes
+
+    # ========================================================================
+    # BASE CLASSES - Cellular Foundation
+    # ========================================================================
     "AggregateRoot",
     "Entity",
+
+    # ========================================================================
+    # SPECIFICATIONS - Discernment
+    # ========================================================================
     # Verse Specifications
     "VerseByBookSpec",
     "VerseByChapterSpec",
@@ -177,4 +288,70 @@ __all__ = [
     "ExtractionByAgentSpec",
     "ExtractionByTypeSpec",
     "ExtractionCompletedSpec",
+
+    # ========================================================================
+    # MEDIATOR - Consciousness
+    # ========================================================================
+    # Request Types
+    "Command",
+    "Query",
+    "IRequest",
+    "INotification",
+    "DomainEventNotification",
+    # Handler Interfaces
+    "IRequestHandler",
+    "ICommandHandler",
+    "IQueryHandler",
+    "INotificationHandler",
+    # Pipeline Behaviors
+    "IPipelineBehavior",
+    "LoggingBehavior",
+    "ValidationBehavior",
+    "TransactionBehavior",
+    "PerformanceMonitoringBehavior",
+    "RetryBehavior",
+    "CachingBehavior",
+    "ValidationError",
+    # Mediator
+    "Mediator",
+    "MediatorBuilder",
+    # Common Commands
+    "ProcessVerseCommand",
+    "DiscoverCrossReferencesCommand",
+    "VerifyCrossReferenceCommand",
+    "CertifyGoldenRecordCommand",
+    # Common Queries
+    "GetVerseQuery",
+    "GetCrossReferencesQuery",
+    "SearchVersesQuery",
+    "GetGoldenRecordQuery",
+    "GetPipelineStatusQuery",
+
+    # ========================================================================
+    # PROJECTIONS - Perception
+    # ========================================================================
+    # Core Types
+    "ProjectedEvent",
+    "Checkpoint",
+    "CheckpointStrategy",
+    # Checkpoint Stores
+    "ICheckpointStore",
+    "InMemoryCheckpointStore",
+    "PostgresCheckpointStore",
+    # Status
+    "ProjectionStatus",
+    "ProjectionStats",
+    # Core Interface
+    "IProjection",
+    "ProjectionBase",
+    # Generic Projections
+    "AggregateProjection",
+    "CountingProjection",
+    "TimeSeriesProjection",
+    # Domain Projections
+    "CrossReferenceGraphProjection",
+    "VerseProcessingStatusProjection",
+    # Management
+    "ProjectionManager",
+    "ProjectionBuilder",
 ]
