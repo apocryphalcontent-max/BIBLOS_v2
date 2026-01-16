@@ -541,6 +541,84 @@ class NecessityCalculatorConfig:
 
 
 @dataclass
+class LXXExtractorConfig:
+    """
+    Configuration for the LXX Christological Extractor.
+
+    The Third Impossible Oracle: Discovers Christological content uniquely
+    present in the Septuagint but absent from or muted in the Masoretic Text.
+    """
+    # Corpus paths
+    lxx_corpus_path: str = field(
+        default_factory=lambda: os.getenv("LXX_CORPUS_PATH", "data/corpora/lxx")
+    )
+    mt_corpus_path: str = field(
+        default_factory=lambda: os.getenv("MT_CORPUS_PATH", "data/corpora/mt")
+    )
+    catalog_path: str = field(
+        default_factory=lambda: os.getenv("LXX_CATALOG_PATH", "data/lxx_christological_catalog.json")
+    )
+
+    # Detection thresholds
+    alignment_threshold: float = field(
+        default_factory=lambda: float(os.getenv("LXX_ALIGNMENT_THRESHOLD", "0.7"))
+    )
+    min_divergence_score: float = field(
+        default_factory=lambda: float(os.getenv("LXX_MIN_DIVERGENCE_SCORE", "0.3"))
+    )
+    christological_threshold: float = field(
+        default_factory=lambda: float(os.getenv("LXX_CHRISTOLOGICAL_THRESHOLD", "0.5"))
+    )
+
+    # Evidence gathering
+    include_manuscripts: bool = field(
+        default_factory=lambda: os.getenv("LXX_INCLUDE_MANUSCRIPTS", "true").lower() == "true"
+    )
+    include_nt_quotations: bool = field(
+        default_factory=lambda: os.getenv("LXX_INCLUDE_NT_QUOTATIONS", "true").lower() == "true"
+    )
+    include_patristic: bool = field(
+        default_factory=lambda: os.getenv("LXX_INCLUDE_PATRISTIC", "true").lower() == "true"
+    )
+    max_patristic_witnesses: int = field(
+        default_factory=lambda: int(os.getenv("LXX_MAX_PATRISTIC_WITNESSES", "10"))
+    )
+
+    # Caching
+    cache_enabled: bool = field(
+        default_factory=lambda: os.getenv("LXX_CACHE_ENABLED", "true").lower() == "true"
+    )
+    cache_ttl_seconds: int = field(
+        default_factory=lambda: int(os.getenv("LXX_CACHE_TTL", "604800"))
+    )
+
+    # Performance
+    batch_size: int = field(
+        default_factory=lambda: int(os.getenv("LXX_BATCH_SIZE", "50"))
+    )
+    parallel_analysis: bool = field(
+        default_factory=lambda: os.getenv("LXX_PARALLEL_ANALYSIS", "true").lower() == "true"
+    )
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert to dictionary for diagnostics."""
+        return {
+            "lxx_corpus_path": self.lxx_corpus_path,
+            "mt_corpus_path": self.mt_corpus_path,
+            "alignment_threshold": self.alignment_threshold,
+            "min_divergence_score": self.min_divergence_score,
+            "christological_threshold": self.christological_threshold,
+            "include_manuscripts": self.include_manuscripts,
+            "include_nt_quotations": self.include_nt_quotations,
+            "include_patristic": self.include_patristic,
+            "cache_enabled": self.cache_enabled,
+            "cache_ttl_seconds": self.cache_ttl_seconds,
+            "batch_size": self.batch_size,
+            "parallel_analysis": self.parallel_analysis,
+        }
+
+
+@dataclass
 class APIConfig:
     """API server configuration."""
     host: str = field(default_factory=lambda: os.getenv("API_HOST", "0.0.0.0"))

@@ -407,6 +407,13 @@ def _display_validation_summary(results: dict):
 
 def main():
     """Main entry point."""
+    # Register sub-command modules
+    try:
+        from cli import lxx_commands
+        lxx_commands.register_commands(app)
+    except ImportError as e:
+        logger.warning(f"Could not load LXX commands: {e}")
+
     app()
 
 

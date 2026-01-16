@@ -45,6 +45,21 @@ from ml.engines.necessity_calculator import (
     InterVerseNecessityCalculator,
 )
 
+from ml.engines.lxx_extractor import (
+    # Enums
+    ManuscriptPriority,
+    DivergenceType,
+    ChristologicalCategory,
+    # Dataclasses
+    ManuscriptWitness,
+    NTQuotation,
+    PatristicWitness,
+    LXXDivergence,
+    LXXAnalysisResult,
+    # Main class
+    LXXChristologicalExtractor,
+)
+
 __all__ = [
     # OmniContextualResolver exports
     "EliminationReason",
@@ -76,4 +91,16 @@ __all__ = [
     "DependencyGraph",
     # NecessityCalculator main class
     "InterVerseNecessityCalculator",
+    # LXXChristologicalExtractor enums
+    "ManuscriptPriority",
+    "DivergenceType",
+    "ChristologicalCategory",
+    # LXXChristologicalExtractor dataclasses
+    "ManuscriptWitness",
+    "NTQuotation",
+    "PatristicWitness",
+    "LXXDivergence",
+    "LXXAnalysisResult",
+    # LXXChristologicalExtractor main class
+    "LXXChristologicalExtractor",
 ]
