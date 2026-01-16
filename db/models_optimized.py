@@ -36,40 +36,16 @@ class Base(DeclarativeBase):
     pass
 
 
-class Testament(enum.Enum):
-    """Testament enumeration."""
-    OT = "OT"
-    NT = "NT"
+# Import canonical enums from data/schemas for system-wide uniformity
+from data.schemas import (
+    Testament,
+    ConnectionType,
+    ConnectionStrength as Strength,  # Alias for backwards compatibility
+    ProcessingStatus,
+)
 
-
-class ConnectionType(enum.Enum):
-    """Cross-reference connection types."""
-    THEMATIC = "thematic"
-    VERBAL = "verbal"
-    CONCEPTUAL = "conceptual"
-    HISTORICAL = "historical"
-    TYPOLOGICAL = "typological"
-    PROPHETIC = "prophetic"
-    LITURGICAL = "liturgical"
-    NARRATIVE = "narrative"
-    GENEALOGICAL = "genealogical"
-    GEOGRAPHICAL = "geographical"
-
-
-class Strength(enum.Enum):
-    """Connection strength levels."""
-    STRONG = "strong"
-    MODERATE = "moderate"
-    WEAK = "weak"
-
-
-class ProcessingStatus(enum.Enum):
-    """Extraction processing status."""
-    PENDING = "pending"
-    IN_PROGRESS = "in_progress"
-    COMPLETED = "completed"
-    FAILED = "failed"
-    NEEDS_REVIEW = "needs_review"
+# Also export StrengthLevel alias
+StrengthLevel = Strength
 
 
 class Book(Base):

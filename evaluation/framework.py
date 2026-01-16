@@ -31,7 +31,7 @@ try:
 except ImportError:
     MLFLOW_AVAILABLE = False
 
-from agents.base_v2 import (
+from agents.base import (
     BaseExtractionAgent,
     ExtractionResult,
     ExtractionContext,

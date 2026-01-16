@@ -12,13 +12,16 @@ Optimization Changes:
 5. Metrics tracking for connection utilization
 6. Graceful degradation when non-critical services fail
 """
-from typing import Dict, Any, Optional, Callable
+from typing import Dict, Any, Optional, Callable, List
 from dataclasses import dataclass, field
 from enum import Enum
 import asyncio
 import logging
 import os
 import time
+
+# Use canonical resilience patterns from core
+from core.resilience import SyncCircuitBreaker, SyncCircuitBreakerConfig
 
 
 logger = logging.getLogger("biblos.db.connection_pool")
@@ -33,78 +36,16 @@ class ConnectionStatus(Enum):
     CIRCUIT_OPEN = "circuit_open"
 
 
-class CircuitState(Enum):
-    """Circuit breaker state."""
-    CLOSED = "closed"      # Normal operation
-    OPEN = "open"          # Blocking requests
-    HALF_OPEN = "half_open"  # Testing recovery
-
-
-@dataclass
-class CircuitBreaker:
-    """
-    Circuit breaker for connection fault tolerance.
-
-    Prevents cascading failures by stopping requests to unhealthy services.
-    """
-    failure_threshold: int = 5
-    recovery_timeout: int = 30
-    success_threshold: int = 3
-    _failures: int = 0
-    _successes: int = 0
-    _state: CircuitState = CircuitState.CLOSED
-    _last_failure_time: float = 0
-
-    def record_failure(self) -> None:
-        """Record a failure and potentially open the circuit."""
-        self._failures += 1
-        self._successes = 0
-        self._last_failure_time = time.time()
-
-        if self._failures >= self.failure_threshold:
-            self._state = CircuitState.OPEN
-            logger.warning(
-                f"Circuit breaker OPENED after {self._failures} failures"
-            )
-
-    def record_success(self) -> None:
-        """Record a success and potentially close the circuit."""
-        self._successes += 1
-
-        if self._state == CircuitState.HALF_OPEN:
-            if self._successes >= self.success_threshold:
-                self._state = CircuitState.CLOSED
-                self._failures = 0
-                logger.info("Circuit breaker CLOSED after recovery")
-        else:
-            self._failures = 0
-
-    def can_execute(self) -> bool:
-        """Check if requests can be executed."""
-        if self._state == CircuitState.CLOSED:
-            return True
-
-        if self._state == CircuitState.OPEN:
-            # Check if recovery timeout has passed
-            if time.time() - self._last_failure_time > self.recovery_timeout:
-                self._state = CircuitState.HALF_OPEN
-                self._successes = 0
-                logger.info("Circuit breaker HALF_OPEN - testing recovery")
-                return True
-            return False
-
-        # HALF_OPEN - allow limited requests
-        return True
-
-    @property
-    def state(self) -> CircuitState:
-        """Get current circuit state."""
-        return self._state
-
-    @property
-    def failure_count(self) -> int:
-        """Get current failure count."""
-        return self._failures
+# Factory function for creating circuit breakers with default config
+def _create_circuit_breaker() -> SyncCircuitBreaker:
+    """Create a circuit breaker with default connection pool config."""
+    return SyncCircuitBreaker(
+        config=SyncCircuitBreakerConfig(
+            failure_threshold=5,
+            success_threshold=3,
+            recovery_timeout_seconds=30.0,
+        )
+    )
 
 
 @dataclass
@@ -130,7 +71,7 @@ class ConnectionState:
     health_check_failures: int = 0
     total_connections: int = 0
     active_connections: int = 0
-    circuit_breaker: CircuitBreaker = field(default_factory=CircuitBreaker)
+    circuit_breaker: SyncCircuitBreaker = field(default_factory=_create_circuit_breaker)
 
 
 @dataclass

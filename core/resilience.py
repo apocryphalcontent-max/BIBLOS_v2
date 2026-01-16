@@ -520,3 +520,131 @@ def resilient(
         return wrapped
 
     return decorator
+
+
+# =============================================================================
+# Synchronous Circuit Breaker (for connection pool management)
+# =============================================================================
+
+
+@dataclass
+class SyncCircuitBreakerConfig:
+    """Configuration for synchronous circuit breaker."""
+
+    failure_threshold: int = 5
+    success_threshold: int = 3
+    recovery_timeout_seconds: float = 30.0
+
+    def __post_init__(self) -> None:
+        if self.failure_threshold < 1:
+            raise ValueError("failure_threshold must be >= 1")
+        if self.success_threshold < 1:
+            raise ValueError("success_threshold must be >= 1")
+        if self.recovery_timeout_seconds <= 0:
+            raise ValueError("recovery_timeout_seconds must be > 0")
+
+
+class SyncCircuitBreaker:
+    """
+    Synchronous circuit breaker for connection pool management.
+
+    Unlike the async CircuitBreaker, this uses simple methods instead
+    of context managers, making it suitable for embedding in dataclasses
+    and for use in connection pools where the check-before-execute pattern
+    is preferred.
+
+    Usage:
+        breaker = SyncCircuitBreaker("database")
+
+        if breaker.can_execute():
+            try:
+                result = do_operation()
+                breaker.record_success()
+            except Exception:
+                breaker.record_failure()
+                raise
+    """
+
+    def __init__(
+        self,
+        name: str = "",
+        config: Optional[SyncCircuitBreakerConfig] = None,
+    ):
+        self.name = name
+        self.config = config or SyncCircuitBreakerConfig()
+        self._state = CircuitState.CLOSED
+        self._failure_count = 0
+        self._success_count = 0
+        self._last_failure_time: float = 0.0
+
+    @property
+    def state(self) -> CircuitState:
+        """Get current circuit state with automatic timeout check."""
+        if self._state == CircuitState.OPEN:
+            if self._should_attempt_reset():
+                return CircuitState.HALF_OPEN
+        return self._state
+
+    @property
+    def failure_count(self) -> int:
+        """Get current failure count."""
+        return self._failure_count
+
+    def _should_attempt_reset(self) -> bool:
+        """Check if enough time has passed to attempt reset."""
+        if self._last_failure_time == 0:
+            return True
+        elapsed = time.time() - self._last_failure_time
+        return elapsed >= self.config.recovery_timeout_seconds
+
+    def can_execute(self) -> bool:
+        """Check if requests can be executed."""
+        state = self.state  # Use property to trigger timeout check
+
+        if state == CircuitState.CLOSED:
+            return True
+
+        if state == CircuitState.OPEN:
+            return False
+
+        # HALF_OPEN - allow test request
+        return True
+
+    def record_success(self) -> None:
+        """Record a successful call."""
+        self._success_count += 1
+
+        if self._state == CircuitState.HALF_OPEN:
+            if self._success_count >= self.config.success_threshold:
+                self._reset()
+        else:
+            # Decay failure count on success
+            self._failure_count = max(0, self._failure_count - 1)
+
+    def record_failure(self) -> None:
+        """Record a failed call."""
+        self._failure_count += 1
+        self._success_count = 0
+        self._last_failure_time = time.time()
+
+        if self._state == CircuitState.HALF_OPEN:
+            self._state = CircuitState.OPEN
+        elif self._failure_count >= self.config.failure_threshold:
+            self._state = CircuitState.OPEN
+
+    def _reset(self) -> None:
+        """Reset circuit to closed state."""
+        self._state = CircuitState.CLOSED
+        self._failure_count = 0
+        self._success_count = 0
+        self._last_failure_time = 0.0
+
+    def get_metrics(self) -> Dict[str, Any]:
+        """Get current circuit metrics."""
+        return {
+            "name": self.name,
+            "state": self.state.value,
+            "failure_count": self._failure_count,
+            "success_count": self._success_count,
+            "last_failure": self._last_failure_time if self._last_failure_time > 0 else None,
+        }

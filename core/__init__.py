@@ -59,6 +59,29 @@ from core.validation import (
     VerseIdValidationError,
     VALID_BOOK_CODES,
 )
+# Bootstrap and factories
+from core.bootstrap import (
+    Application,
+    ApplicationConfig,
+    ApplicationPhase,
+    ApplicationLifecycleHook,
+    bootstrap,
+    get_application,
+    run_application,
+)
+from core.factories import (
+    Factory,
+    Builder,
+    PipelineFactory,
+    PipelineConfig,
+    AgentFactory,
+    AgentConfig,
+    DatabaseClientFactory,
+    DatabaseConfig,
+    MLEngineFactory,
+    MLEngineConfig,
+    GoldenRecordBuilder,
+)
 
 __all__ = [
     # Errors

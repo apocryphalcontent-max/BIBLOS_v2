@@ -37,7 +37,7 @@ from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import add_messages
 from pydantic import BaseModel, Field
 
-from agents.base_v2 import (
+from agents.base import (
     AgentConfig,
     AgentPhase,
     BaseExtractionAgent,

@@ -18,7 +18,9 @@ from agents.base import (
     ProcessingStatus,
 )
 from agents.registry import AgentRegistry
-from agents.orchestrator import AgentOrchestrator
+# Use LangGraphOrchestrator as the canonical orchestrator, with AgentOrchestrator alias
+from agents.langgraph_orchestrator import LangGraphOrchestrator, OrchestrationConfig
+AgentOrchestrator = LangGraphOrchestrator  # Backwards compatibility alias
 
 # Scraper agents for content population
 from agents.scrapers import (
@@ -40,7 +42,10 @@ __all__ = [
     "ExtractionType",
     "ProcessingStatus",
     "AgentRegistry",
-    "AgentOrchestrator",
+    # Orchestrators
+    "LangGraphOrchestrator",
+    "OrchestrationConfig",
+    "AgentOrchestrator",  # Backwards compatibility alias
     # Scraper agents
     "BaseScraperAgent",
     "ScraperConfig",

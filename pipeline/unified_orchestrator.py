@@ -8,8 +8,6 @@ import time
 import logging
 from typing import Dict, List, Optional, Set, Any, Coroutine
 from enum import Enum
-from dataclasses import dataclass, field
-from datetime import datetime
 from collections import defaultdict
 from uuid import uuid4
 
@@ -21,57 +19,12 @@ from pipeline.phases.intertextual import IntertextualPhase
 from pipeline.phases.cross_reference import CrossReferencePhase
 from pipeline.phases.validation import ValidationPhase
 
+# Use canonical resilience patterns from core
+from core.resilience import CircuitBreaker, CircuitBreakerConfig
+from core.errors import BiblosResourceError
+
 
 logger = logging.getLogger(__name__)
-
-
-class CircuitState(Enum):
-    """Circuit breaker states for component health."""
-    CLOSED = "closed"      # Normal operation
-    OPEN = "open"          # Failing, reject calls
-    HALF_OPEN = "half_open"  # Testing recovery
-
-    @property
-    def allows_requests(self) -> bool:
-        return self in {CircuitState.CLOSED, CircuitState.HALF_OPEN}
-
-
-@dataclass
-class CircuitBreaker:
-    """Circuit breaker for component failure isolation."""
-    component_name: str
-    state: CircuitState = CircuitState.CLOSED
-    failure_count: int = 0
-    failure_threshold: int = 5
-    reset_timeout_seconds: int = 60
-    last_failure_time: Optional[datetime] = None
-
-    def record_failure(self) -> None:
-        """Record a failure and potentially open circuit."""
-        self.failure_count += 1
-        self.last_failure_time = datetime.utcnow()
-        if self.failure_count >= self.failure_threshold:
-            self.state = CircuitState.OPEN
-
-    def record_success(self) -> None:
-        """Record success and close circuit if half-open."""
-        if self.state == CircuitState.HALF_OPEN:
-            self.state = CircuitState.CLOSED
-        self.failure_count = 0
-
-    def should_allow_request(self) -> bool:
-        """Check if request should be allowed."""
-        if self.state == CircuitState.CLOSED:
-            return True
-        if self.state == CircuitState.OPEN:
-            # Check if reset timeout has passed
-            if self.last_failure_time:
-                elapsed = (datetime.utcnow() - self.last_failure_time).total_seconds()
-                if elapsed >= self.reset_timeout_seconds:
-                    self.state = CircuitState.HALF_OPEN
-                    return True
-            return False
-        return True  # HALF_OPEN allows one request
 
 
 class OrchestratorMetric(Enum):
@@ -96,9 +49,8 @@ class OrchestratorMetric(Enum):
         }[self]
 
 
-class CircuitOpenError(Exception):
-    """Raised when circuit breaker is open."""
-    pass
+# Alias for backwards compatibility
+CircuitOpenError = BiblosResourceError
 
 
 class UnifiedOrchestrator:
@@ -166,15 +118,20 @@ class UnifiedOrchestrator:
             ValidationPhase(self)
         ]
 
-        # Circuit breakers for each component
+        # Circuit breakers for each component (using canonical core.resilience)
+        default_config = CircuitBreakerConfig(
+            failure_threshold=5,
+            success_threshold=2,
+            timeout_seconds=60.0,
+        )
         self._circuit_breakers: Dict[str, CircuitBreaker] = {
-            "neo4j": CircuitBreaker("neo4j"),
-            "postgres": CircuitBreaker("postgres"),
-            "vector_store": CircuitBreaker("vector_store"),
-            "omni_resolver": CircuitBreaker("omni_resolver"),
-            "lxx_extractor": CircuitBreaker("lxx_extractor"),
-            "typology_engine": CircuitBreaker("typology_engine"),
-            "gnn_model": CircuitBreaker("gnn_model"),
+            "neo4j": CircuitBreaker("neo4j", default_config),
+            "postgres": CircuitBreaker("postgres", default_config),
+            "vector_store": CircuitBreaker("vector_store", default_config),
+            "omni_resolver": CircuitBreaker("omni_resolver", default_config),
+            "lxx_extractor": CircuitBreaker("lxx_extractor", default_config),
+            "typology_engine": CircuitBreaker("typology_engine", default_config),
+            "gnn_model": CircuitBreaker("gnn_model", default_config),
         }
 
         # Metrics tracking
@@ -191,24 +148,23 @@ class UnifiedOrchestrator:
 
     def get_circuit_breaker(self, component: str) -> CircuitBreaker:
         """Get circuit breaker for a component."""
-        return self._circuit_breakers.get(component, CircuitBreaker(component))
+        if component not in self._circuit_breakers:
+            # Create new breaker for unknown components
+            self._circuit_breakers[component] = CircuitBreaker(
+                component,
+                CircuitBreakerConfig(failure_threshold=5, timeout_seconds=60.0)
+            )
+        return self._circuit_breakers[component]
 
     async def _execute_with_circuit_breaker(
         self,
         component: str,
         coro: Coroutine
     ) -> Any:
-        """Execute coroutine with circuit breaker protection."""
+        """Execute coroutine with circuit breaker protection using async context manager."""
         breaker = self.get_circuit_breaker(component)
-        if not breaker.should_allow_request():
-            raise CircuitOpenError(f"Circuit open for {component}")
-        try:
-            result = await coro
-            breaker.record_success()
-            return result
-        except Exception as e:
-            breaker.record_failure()
-            raise
+        async with breaker:
+            return await coro
 
     async def process_verse(
         self,
@@ -345,12 +301,8 @@ class UnifiedOrchestrator:
         return metrics
 
     def get_circuit_breaker_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get status of all circuit breakers."""
-        status = {}
-        for component, breaker in self._circuit_breakers.items():
-            status[component] = {
-                "state": breaker.state.value,
-                "failure_count": breaker.failure_count,
-                "last_failure": breaker.last_failure_time.isoformat() if breaker.last_failure_time else None
-            }
-        return status
+        """Get status of all circuit breakers using canonical get_metrics()."""
+        return {
+            component: breaker.get_metrics()
+            for component, breaker in self._circuit_breakers.items()
+        }

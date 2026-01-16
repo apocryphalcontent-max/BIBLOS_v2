@@ -10,11 +10,12 @@ Provides unified access to:
 Follows Dependency Inversion Principle with abstract interfaces
 in db.interfaces that can be implemented by different backends.
 """
-from db.models import Base, Book, Verse, CrossReference, PatristicCitation, ExtractionResult
-from db.postgres import PostgresClient, get_db_session
-from db.neo4j_client import Neo4jClient
+# Use optimized versions of core database components
+from db.models_optimized import Base, Book, Verse, CrossReference, PatristicCitation, ExtractionResult
+from db.postgres_optimized import PostgresClient, get_db_session
+from db.neo4j_optimized import Neo4jClient
 from db.qdrant_client import QdrantVectorStore
-from db.connection_pool import ConnectionManager
+from db.connection_pool_optimized import ConnectionManager
 
 # Event Sourcing components
 from db.events import (

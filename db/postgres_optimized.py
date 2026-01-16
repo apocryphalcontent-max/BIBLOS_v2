@@ -29,7 +29,7 @@ from sqlalchemy import select, update, delete, func, text, and_, or_
 from sqlalchemy.orm import selectinload, joinedload
 from sqlalchemy.dialects.postgresql import insert
 
-from db.models import Base, Book, Verse, CrossReference, PatristicCitation, ExtractionResult
+from db.models_optimized import Base, Book, Verse, CrossReference, PatristicCitation, ExtractionResult
 
 
 logger = logging.getLogger("biblos.db.postgres")

@@ -49,13 +49,20 @@ class ConnectionStrength(str, Enum):
     WEAK = "weak"
 
 
+# Alias for backwards compatibility
+Strength = ConnectionStrength
+StrengthLevel = ConnectionStrength
+
+
 class ProcessingStatus(str, Enum):
     """Processing status values."""
     PENDING = "pending"
-    PROCESSING = "processing"
+    IN_PROGRESS = "in_progress"  # Alias: PROCESSING
+    PROCESSING = "processing"    # Legacy alias
     COMPLETED = "completed"
     FAILED = "failed"
     SKIPPED = "skipped"
+    NEEDS_REVIEW = "needs_review"
 
 
 class CertificationLevel(str, Enum):
