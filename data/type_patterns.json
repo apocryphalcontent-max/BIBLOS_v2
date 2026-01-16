@@ -1,0 +1,286 @@
+{
+  "sacrificial_lamb": {
+    "type_id": "sacrificial_lamb",
+    "pattern_name": "Sacrificial Lamb",
+    "description": "Innocent lamb sacrificed for others' sins - the central typological pattern of substitutionary atonement",
+    "primary_layer": "WORD",
+    "active_layers": ["WORD", "PHRASE", "PERICOPE"],
+    "hebrew_keywords": ["שֶׂה", "כֶּבֶשׂ", "תָּמִים", "זֶבַח"],
+    "greek_keywords": ["ἀμνός", "ἀρνίον", "πρόβατον", "θυσία"],
+    "semantic_markers": ["sacrifice", "substitution", "innocent", "blood", "atonement"],
+    "canonical_type": "GEN.22.8",
+    "canonical_antitype": "JHN.1.29",
+    "secondary_types": ["EXO.12.3", "ISA.53.7", "LEV.1.10"],
+    "secondary_antitypes": ["1PE.1.19", "REV.5.6", "REV.13.8"],
+    "relation_type": "PREFIGURATION",
+    "correspondence_points": {
+      "innocent": "sinless",
+      "unblemished": "perfect",
+      "substitutionary": "vicarious",
+      "blood_shed": "blood_of_Christ"
+    },
+    "patristic_attestation": {
+      "Chrysostom": ["Homilies on Genesis 47", "Homilies on John 19"],
+      "Cyril of Alexandria": ["Commentary on John 1.29"],
+      "Melito of Sardis": ["On Pascha"],
+      "Origen": ["Commentary on John 1.29"]
+    },
+    "liturgical_usage": ["Pascha", "Divine Liturgy (Agnus Dei)"],
+    "inverse_pattern": null
+  },
+  "adam_christ": {
+    "type_id": "adam_christ",
+    "pattern_name": "Adam-Christ (First/Last Adam)",
+    "description": "Recapitulation and inversion of Adam in Christ - restoration of humanity through the Second Adam",
+    "primary_layer": "COVENANTAL",
+    "active_layers": ["VERSE", "CHAPTER", "BOOK", "COVENANTAL"],
+    "relation_type": "INVERSION",
+    "hebrew_keywords": ["אָדָם"],
+    "greek_keywords": ["Ἀδάμ", "ἄνθρωπος"],
+    "semantic_markers": ["humanity", "fall", "obedience", "death", "life", "creation"],
+    "canonical_type": "GEN.3.6",
+    "canonical_antitype": "ROM.5.19",
+    "secondary_types": ["GEN.2.7", "GEN.3.19"],
+    "secondary_antitypes": ["1CO.15.22", "1CO.15.45", "PHP.2.8"],
+    "correspondence_points": {
+      "from_dust": "from_heaven",
+      "disobedience": "obedience",
+      "death_entered": "life_given",
+      "curse": "blessing",
+      "garden": "cross",
+      "tree_of_death": "tree_of_life"
+    },
+    "patristic_attestation": {
+      "Irenaeus": ["Against Heresies 3.22", "Against Heresies 5.21"],
+      "Athanasius": ["On the Incarnation"],
+      "Gregory of Nyssa": ["Catechetical Oration"],
+      "Justin Martyr": ["Dialogue with Trypho 100"]
+    },
+    "liturgical_usage": ["Pascha", "Feast of the Exaltation of the Cross"],
+    "inverse_pattern": null
+  },
+  "passover_eucharist": {
+    "type_id": "passover_eucharist",
+    "pattern_name": "Passover/Eucharist",
+    "description": "Passover lamb and meal prefiguring the Eucharistic sacrifice and communion",
+    "primary_layer": "PERICOPE",
+    "active_layers": ["WORD", "PHRASE", "VERSE", "PERICOPE"],
+    "hebrew_keywords": ["פֶּסַח", "דָּם", "מַצּוֹת"],
+    "greek_keywords": ["πάσχα", "αἷμα", "ἄζυμος", "εὐχαριστία"],
+    "semantic_markers": ["sacrifice", "blood", "meal", "deliverance", "covenant"],
+    "canonical_type": "EXO.12.1-28",
+    "canonical_antitype": "LUK.22.14-20",
+    "secondary_types": ["NUM.9.1-5"],
+    "secondary_antitypes": ["1CO.5.7", "1CO.11.23-26"],
+    "relation_type": "FULFILLMENT",
+    "correspondence_points": {
+      "lamb": "Christ",
+      "blood_on_doorpost": "blood_of_covenant",
+      "unleavened_bread": "body_of_Christ",
+      "memorial": "anamnesis",
+      "deliverance": "salvation"
+    },
+    "patristic_attestation": {
+      "Chrysostom": ["Homilies on 1 Corinthians 24"],
+      "Cyril of Jerusalem": ["Mystagogical Catecheses 4"],
+      "Justin Martyr": ["Dialogue with Trypho 40"]
+    },
+    "liturgical_usage": ["Pascha", "Divine Liturgy"],
+    "inverse_pattern": null
+  },
+  "isaac_christ": {
+    "type_id": "isaac_christ",
+    "pattern_name": "Isaac/Christ (Akedah)",
+    "description": "The Binding of Isaac as type of Christ's sacrificial obedience",
+    "primary_layer": "PERICOPE",
+    "active_layers": ["WORD", "PHRASE", "VERSE", "PERICOPE", "CHAPTER"],
+    "hebrew_keywords": ["יָחִיד", "עֵצִים", "הַר", "זֶבַח"],
+    "greek_keywords": ["μονογενής", "ξύλον", "ὄρος", "θυσία"],
+    "semantic_markers": ["only_son", "obedience", "sacrifice", "mountain", "wood", "three_days"],
+    "canonical_type": "GEN.22.1-19",
+    "canonical_antitype": "JHN.3.16",
+    "secondary_types": ["GEN.22.2", "GEN.22.8"],
+    "secondary_antitypes": ["HEB.11.17-19", "JHN.19.17"],
+    "relation_type": "PREFIGURATION",
+    "correspondence_points": {
+      "only_son": "only_begotten_Son",
+      "fathers_love": "God_so_loved",
+      "wood": "cross",
+      "moriah": "golgotha",
+      "three_days": "resurrection",
+      "ram_provided": "Lamb_of_God"
+    },
+    "patristic_attestation": {
+      "Chrysostom": ["Homilies on Genesis 47"],
+      "Origen": ["Homilies on Genesis 8"],
+      "Cyril of Alexandria": ["On Adoration in Spirit and Truth"],
+      "Jerome": ["Letter 71"]
+    },
+    "liturgical_usage": ["Pascha Matins Canon"],
+    "inverse_pattern": null
+  },
+  "jonah_resurrection": {
+    "type_id": "jonah_resurrection",
+    "pattern_name": "Jonah/Resurrection",
+    "description": "Jonah's three days in the fish as type of Christ's death and resurrection",
+    "primary_layer": "PERICOPE",
+    "active_layers": ["VERSE", "PERICOPE"],
+    "hebrew_keywords": ["דָּג", "שְׁלוֹשָׁה יָמִים"],
+    "greek_keywords": ["κῆτος", "τρεῖς ἡμέρας", "σημεῖον"],
+    "semantic_markers": ["three_days", "belly", "depths", "deliverance", "sign"],
+    "canonical_type": "JON.1.17",
+    "canonical_antitype": "MAT.12.40",
+    "secondary_types": ["JON.2.1-10"],
+    "secondary_antitypes": ["LUK.11.30"],
+    "relation_type": "PREFIGURATION",
+    "correspondence_points": {
+      "three_days_nights": "three_days_in_tomb",
+      "belly_of_fish": "heart_of_earth",
+      "vomited_forth": "resurrection",
+      "sign_to_nineveh": "sign_to_generation"
+    },
+    "patristic_attestation": {
+      "Chrysostom": ["Homilies on Matthew 43"],
+      "Augustine": ["City of God 18.27"]
+    },
+    "liturgical_usage": ["Pascha Matins"],
+    "inverse_pattern": null
+  },
+  "davidic_kingdom": {
+    "type_id": "davidic_kingdom",
+    "pattern_name": "Davidic Kingdom/Eternal Kingdom",
+    "description": "David's kingdom as type of Christ's eternal reign",
+    "primary_layer": "COVENANTAL",
+    "active_layers": ["VERSE", "CHAPTER", "BOOK", "COVENANTAL"],
+    "hebrew_keywords": ["דָּוִד", "מֶלֶךְ", "כִּסֵּא", "עוֹלָם"],
+    "greek_keywords": ["Δαυίδ", "βασιλεύς", "θρόνος", "αἰών"],
+    "semantic_markers": ["king", "throne", "covenant", "eternal", "seed", "kingdom"],
+    "canonical_type": "2SA.7.12-16",
+    "canonical_antitype": "LUK.1.32-33",
+    "secondary_types": ["PSA.89.3-4", "PSA.110.1"],
+    "secondary_antitypes": ["ACT.2.30", "REV.22.16"],
+    "relation_type": "FULFILLMENT",
+    "correspondence_points": {
+      "david_seed": "Christ_descendant",
+      "throne": "heavenly_throne",
+      "kingdom": "eternal_kingdom",
+      "forever": "age_to_age"
+    },
+    "patristic_attestation": {
+      "Chrysostom": ["Homilies on Psalms"],
+      "Athanasius": ["On the Incarnation"],
+      "Cyril of Alexandria": ["Commentary on Isaiah"]
+    },
+    "liturgical_usage": ["Nativity", "Theophany"],
+    "inverse_pattern": null
+  },
+  "moses_christ": {
+    "type_id": "moses_christ",
+    "pattern_name": "Moses/Christ (Mediator)",
+    "description": "Moses as mediator of Old Covenant prefiguring Christ as mediator of New Covenant",
+    "primary_layer": "COVENANTAL",
+    "active_layers": ["VERSE", "PERICOPE", "BOOK", "COVENANTAL"],
+    "hebrew_keywords": ["מֹשֶׁה", "בְּרִית", "תּוֹרָה"],
+    "greek_keywords": ["Μωϋσῆς", "διαθήκη", "νόμος", "μεσίτης"],
+    "semantic_markers": ["mediator", "covenant", "law", "prophet", "deliverer"],
+    "canonical_type": "EXO.24.3-8",
+    "canonical_antitype": "HEB.8.6",
+    "secondary_types": ["DEU.18.15", "EXO.34.27-28"],
+    "secondary_antitypes": ["HEB.9.15", "ACT.3.22"],
+    "relation_type": "INTENSIFICATION",
+    "correspondence_points": {
+      "mediator": "better_mediator",
+      "covenant": "better_covenant",
+      "blood": "better_sacrifice",
+      "tablets": "hearts_of_flesh"
+    },
+    "patristic_attestation": {
+      "Chrysostom": ["Homilies on Hebrews"],
+      "Cyril of Alexandria": ["Glaphyra on Exodus"]
+    },
+    "liturgical_usage": ["Transfiguration"],
+    "inverse_pattern": null
+  },
+  "bronze_serpent": {
+    "type_id": "bronze_serpent",
+    "pattern_name": "Bronze Serpent/Cross",
+    "description": "Bronze serpent lifted up as type of Christ lifted on the cross",
+    "primary_layer": "PERICOPE",
+    "active_layers": ["VERSE", "PERICOPE"],
+    "hebrew_keywords": ["נְחַשׁ", "נֵס"],
+    "greek_keywords": ["ὄφις", "ὑψόω"],
+    "semantic_markers": ["serpent", "lifted_up", "look", "healing", "salvation"],
+    "canonical_type": "NUM.21.8-9",
+    "canonical_antitype": "JHN.3.14",
+    "secondary_types": [],
+    "secondary_antitypes": ["JHN.12.32"],
+    "relation_type": "PREFIGURATION",
+    "correspondence_points": {
+      "serpent": "form_of_sin",
+      "lifted_up": "crucified",
+      "look_and_live": "believe_and_live",
+      "healing": "salvation"
+    },
+    "patristic_attestation": {
+      "Chrysostom": ["Homilies on John 27"],
+      "Cyril of Alexandria": ["Commentary on John 2"]
+    },
+    "liturgical_usage": ["Exaltation of the Cross"],
+    "inverse_pattern": null
+  },
+  "red_sea_baptism": {
+    "type_id": "red_sea_baptism",
+    "pattern_name": "Red Sea/Baptism",
+    "description": "Crossing the Red Sea as type of Christian baptism",
+    "primary_layer": "PERICOPE",
+    "active_layers": ["VERSE", "PERICOPE"],
+    "hebrew_keywords": ["יַם סוּף", "מַיִם"],
+    "greek_keywords": ["θάλασσα", "ὕδωρ", "βάπτισμα"],
+    "semantic_markers": ["water", "deliverance", "death_to_slavery", "new_life"],
+    "canonical_type": "EXO.14.21-31",
+    "canonical_antitype": "1CO.10.1-2",
+    "secondary_types": [],
+    "secondary_antitypes": ["ROM.6.3-4"],
+    "relation_type": "PREFIGURATION",
+    "correspondence_points": {
+      "water": "baptismal_water",
+      "moses": "Christ",
+      "cloud": "Holy_Spirit",
+      "death_of_egyptians": "death_to_sin",
+      "deliverance": "salvation"
+    },
+    "patristic_attestation": {
+      "Cyril of Jerusalem": ["Mystagogical Catecheses 1"],
+      "Gregory of Nyssa": ["On the Baptism of Christ"]
+    },
+    "liturgical_usage": ["Theophany", "Pascha"],
+    "inverse_pattern": null
+  },
+  "manna_eucharist": {
+    "type_id": "manna_eucharist",
+    "pattern_name": "Manna/Eucharist",
+    "description": "Manna in wilderness as type of Eucharistic bread from heaven",
+    "primary_layer": "VERSE",
+    "active_layers": ["WORD", "VERSE", "PERICOPE"],
+    "hebrew_keywords": ["מָן", "לֶחֶם"],
+    "greek_keywords": ["μάννα", "ἄρτος", "οὐρανός"],
+    "semantic_markers": ["bread", "heaven", "wilderness", "daily", "life"],
+    "canonical_type": "EXO.16.4",
+    "canonical_antitype": "JHN.6.31-35",
+    "secondary_types": ["PSA.78.24"],
+    "secondary_antitypes": ["JHN.6.48-51"],
+    "relation_type": "FULFILLMENT",
+    "correspondence_points": {
+      "bread_from_heaven": "true_bread",
+      "daily": "continuous",
+      "wilderness": "world",
+      "temporary_life": "eternal_life"
+    },
+    "patristic_attestation": {
+      "Chrysostom": ["Homilies on John 45"],
+      "Cyril of Alexandria": ["Commentary on John 6"]
+    },
+    "liturgical_usage": ["Divine Liturgy"],
+    "inverse_pattern": null
+  }
+}

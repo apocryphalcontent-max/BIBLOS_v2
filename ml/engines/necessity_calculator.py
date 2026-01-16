@@ -1109,11 +1109,19 @@ class InterVerseNecessityCalculator:
 
         self.logger = logging.getLogger(__name__)
 
-        # In-memory cache
-        self._cache: Dict[str, NecessityAnalysisResult] = {}
-
-        # Verse data cache
-        self._verse_cache: Dict[str, VerseData] = {}
+        # Import AsyncLRUCache for bounded caching
+        try:
+            from ml.cache import AsyncLRUCache
+            # Bounded cache with memory limits to prevent exhaustion
+            self._cache: Any = AsyncLRUCache(max_size=5000, ttl_seconds=self.config.cache_ttl_seconds if hasattr(self.config, 'cache_ttl_seconds') else 604800)
+            self._verse_cache: Any = AsyncLRUCache(max_size=2000, ttl_seconds=3600)
+            self._use_lru_cache = True
+        except ImportError:
+            # Fallback to Dict with size limit
+            self._cache: Dict[str, NecessityAnalysisResult] = {}
+            self._verse_cache: Dict[str, VerseData] = {}
+            self._use_lru_cache = False
+            self.logger.warning("AsyncLRUCache not available, using unbounded Dict cache")
 
     def _create_default_config(self) -> "NecessityCalculatorConfig":
         """Create default configuration if none provided."""
@@ -1122,7 +1130,11 @@ class InterVerseNecessityCalculator:
             from config import NecessityCalculatorConfig
             return NecessityCalculatorConfig()
         except ImportError:
-            # Create a simple mock config
+            # Create a simple mock config - LOG WARNING for production visibility
+            self.logger.warning(
+                "NecessityCalculatorConfig not available, using fallback MockConfig. "
+                "This should only happen in testing - check your config imports in production."
+            )
             class MockConfig:
                 absolute_threshold = 0.90
                 strong_threshold = 0.70

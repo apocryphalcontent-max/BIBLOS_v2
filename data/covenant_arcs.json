@@ -1,0 +1,161 @@
+{
+  "covenant_arcs": {
+    "adamic": {
+      "covenant_id": "adamic",
+      "covenant_name": "Adamic Covenant",
+      "description": "Covenant with Adam establishing human dominion and relationship with God",
+      "initiation_reference": "GEN.1.26-28",
+      "key_promises": ["dominion", "fruitfulness", "divine_image"],
+      "covenant_signs": [["sabbath", "GEN.2.2-3"]],
+      "phases": {
+        "INITIATION": ["GEN.1.26-28"],
+        "STIPULATION": ["GEN.2.16-17"],
+        "WARNING": ["GEN.2.17"],
+        "FULFILLMENT": ["ROM.5.12-21"]
+      },
+      "type_events": [
+        ["Creation of humanity", "GEN.1.27"],
+        ["Garden placement", "GEN.2.15"]
+      ],
+      "fulfillment_references": ["ROM.5.19", "1CO.15.45-49"],
+      "arc_span": ["GEN", "ROM"],
+      "superseded_by": null,
+      "supersedes": null,
+      "participant_scope": "humanity",
+      "conditional": true
+    },
+    "noahic": {
+      "covenant_id": "noahic",
+      "covenant_name": "Noahic Covenant",
+      "description": "Covenant with Noah establishing global preservation and divine restraint",
+      "initiation_reference": "GEN.9.8-17",
+      "key_promises": ["preservation", "seasons", "no_global_flood"],
+      "covenant_signs": [["rainbow", "GEN.9.12-13"]],
+      "phases": {
+        "INITIATION": ["GEN.9.8-17"],
+        "PROMISE": ["GEN.9.11"],
+        "SIGN": ["GEN.9.12-13"],
+        "STIPULATION": ["GEN.9.3-6"]
+      },
+      "type_events": [
+        ["Flood deliverance", "GEN.7.1-24"],
+        ["Ark salvation", "GEN.7.7"]
+      ],
+      "fulfillment_references": ["1PE.3.20-21"],
+      "arc_span": ["GEN", "1PE"],
+      "superseded_by": null,
+      "supersedes": null,
+      "participant_scope": "creation",
+      "conditional": false
+    },
+    "abrahamic": {
+      "covenant_id": "abrahamic",
+      "covenant_name": "Abrahamic Covenant",
+      "description": "Covenant of promise with Abraham and his seed",
+      "initiation_reference": "GEN.12.1-3",
+      "key_promises": ["land", "seed", "blessing", "nation"],
+      "covenant_signs": [["circumcision", "GEN.17.11"]],
+      "phases": {
+        "INITIATION": ["GEN.12.1-3"],
+        "PROMISE": ["GEN.12.2-3", "GEN.15.5", "GEN.17.4-8"],
+        "SIGN": ["GEN.17.10-14"],
+        "RENEWAL": ["GEN.22.15-18"]
+      },
+      "type_events": [
+        ["Call of Abraham", "GEN.12.1"],
+        ["Covenant ceremony", "GEN.15.9-21"],
+        ["Binding of Isaac", "GEN.22.1-19"],
+        ["Promise of seed", "GEN.15.5"]
+      ],
+      "fulfillment_references": ["GAL.3.8", "GAL.3.14", "GAL.3.29", "ROM.4.13", "HEB.11.8-19"],
+      "arc_span": ["GEN", "GAL"],
+      "superseded_by": "new",
+      "supersedes": null,
+      "participant_scope": "nation",
+      "conditional": false
+    },
+    "mosaic": {
+      "covenant_id": "mosaic",
+      "covenant_name": "Mosaic Covenant (Sinai)",
+      "description": "Covenant of law given through Moses at Sinai",
+      "initiation_reference": "EXO.19.3-8",
+      "key_promises": ["chosen_people", "priestly_kingdom", "holy_nation"],
+      "covenant_signs": [["sabbath", "EXO.31.13-17"]],
+      "phases": {
+        "INITIATION": ["EXO.19.3-8", "EXO.24.3-8"],
+        "STIPULATION": ["EXO.20.1-17", "EXO.21.1-23.33"],
+        "PROMISE": ["EXO.19.5-6"],
+        "WARNING": ["LEV.26.14-39", "DEU.28.15-68"],
+        "RENEWAL": ["DEU.29.1"],
+        "SIGN": ["EXO.31.13-17"]
+      },
+      "type_events": [
+        ["Exodus deliverance", "EXO.14.21-31"],
+        ["Sinai theophany", "EXO.19.16-25"],
+        ["Tabernacle dedication", "EXO.40.34-38"],
+        ["Day of Atonement", "LEV.16.1-34"]
+      ],
+      "fulfillment_references": ["HEB.8.6-13", "2CO.3.6-18", "GAL.3.19-25"],
+      "arc_span": ["EXO", "HEB"],
+      "superseded_by": "new",
+      "supersedes": null,
+      "participant_scope": "nation",
+      "conditional": true
+    },
+    "davidic": {
+      "covenant_id": "davidic",
+      "covenant_name": "Davidic Covenant",
+      "description": "Covenant establishing David's dynasty and eternal kingdom",
+      "initiation_reference": "2SA.7.12-16",
+      "key_promises": ["eternal_dynasty", "throne", "kingdom", "house", "son"],
+      "covenant_signs": [["temple", "2SA.7.13"]],
+      "phases": {
+        "INITIATION": ["2SA.7.8-16"],
+        "PROMISE": ["2SA.7.12-16", "PSA.89.3-4", "PSA.110.1-4"],
+        "RENEWAL": ["1KI.9.4-5"],
+        "WARNING": ["1KI.9.6-9"]
+      },
+      "type_events": [
+        ["David chosen", "1SA.16.1-13"],
+        ["Nathan's oracle", "2SA.7.1-17"],
+        ["Solomon's temple", "1KI.8.1-66"],
+        ["Royal psalms", "PSA.2.7"]
+      ],
+      "fulfillment_references": ["LUK.1.32-33", "ACT.2.30-36", "REV.22.16", "MAT.1.1"],
+      "arc_span": ["2SA", "REV"],
+      "superseded_by": "new",
+      "supersedes": null,
+      "participant_scope": "nation",
+      "conditional": true
+    },
+    "new": {
+      "covenant_id": "new",
+      "covenant_name": "New Covenant",
+      "description": "Covenant in Christ's blood fulfilling all prior covenants",
+      "initiation_reference": "JER.31.31-34",
+      "key_promises": ["internal_law", "forgiveness", "knowledge_of_God", "Holy_Spirit"],
+      "covenant_signs": [
+        ["baptism", "MAT.28.19"],
+        ["eucharist", "LUK.22.20"]
+      ],
+      "phases": {
+        "INITIATION": ["LUK.22.19-20", "MAT.26.26-28"],
+        "PROMISE": ["JER.31.31-34", "EZK.36.26-27"],
+        "FULFILLMENT": ["HEB.8.8-12", "HEB.9.15", "2CO.3.6"],
+        "SIGN": ["MAT.28.19", "1CO.11.23-26"]
+      },
+      "type_events": [
+        ["Last Supper", "LUK.22.14-20"],
+        ["Crucifixion", "JHN.19.30"],
+        ["Pentecost", "ACT.2.1-4"],
+        ["Great Commission", "MAT.28.19-20"]
+      ],
+      "fulfillment_references": ["HEB.8.6-13", "HEB.9.15", "HEB.12.24", "LUK.22.20"],
+      "arc_span": ["JER", "REV"],
+      "superseded_by": null,
+      "supersedes": "mosaic",
+      "participant_scope": "humanity",
+      "conditional": false
+    }
+  }
+}

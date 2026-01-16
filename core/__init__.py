@@ -50,6 +50,15 @@ from core.config_validator import (
     validate_config,
     require_env,
 )
+from core.validation import (
+    validate_verse_id,
+    is_valid_verse_id,
+    normalize_verse_id,
+    validate_book_code,
+    parse_verse_range,
+    VerseIdValidationError,
+    VALID_BOOK_CODES,
+)
 
 __all__ = [
     # Errors
@@ -87,4 +96,12 @@ __all__ = [
     "ValidationResult",
     "validate_config",
     "require_env",
+    # Input validation
+    "validate_verse_id",
+    "is_valid_verse_id",
+    "normalize_verse_id",
+    "validate_book_code",
+    "parse_verse_range",
+    "VerseIdValidationError",
+    "VALID_BOOK_CODES",
 ]

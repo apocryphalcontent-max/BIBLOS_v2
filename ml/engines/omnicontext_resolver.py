@@ -1439,3 +1439,12 @@ class OmniContextualResolver:
         await self._resolution_cache.clear()
         self._initialized = False
         logger.info("OmniContextualResolver cleaned up")
+
+    async def __aenter__(self) -> "OmniContextualResolver":
+        """Async context manager entry - initializes the resolver."""
+        await self.initialize()
+        return self
+
+    async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
+        """Async context manager exit - cleans up resources."""
+        await self.cleanup()

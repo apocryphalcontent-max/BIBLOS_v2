@@ -41,14 +41,16 @@ class DatabaseConfig:
     # Neo4j settings
     neo4j_uri: str = field(default_factory=lambda: os.getenv("NEO4J_URI", "bolt://localhost:7687"))
     neo4j_user: str = field(default_factory=lambda: os.getenv("NEO4J_USER", "neo4j"))
-    neo4j_password: str = field(default_factory=lambda: os.getenv("NEO4J_PASSWORD", "password"))
+    # SECURITY: No hardcoded password defaults - must be set via environment variable
+    neo4j_password: str = field(default_factory=lambda: os.getenv("NEO4J_PASSWORD", ""))
     neo4j_database: str = field(default_factory=lambda: os.getenv("NEO4J_DATABASE", "biblos"))
 
     # PostgreSQL settings
     postgres_host: str = field(default_factory=lambda: os.getenv("POSTGRES_HOST", "localhost"))
     postgres_port: int = field(default_factory=lambda: int(os.getenv("POSTGRES_PORT", "5432")))
     postgres_user: str = field(default_factory=lambda: os.getenv("POSTGRES_USER", "biblos"))
-    postgres_password: str = field(default_factory=lambda: os.getenv("POSTGRES_PASSWORD", "password"))
+    # SECURITY: No hardcoded password defaults - must be set via environment variable
+    postgres_password: str = field(default_factory=lambda: os.getenv("POSTGRES_PASSWORD", ""))
     postgres_database: str = field(default_factory=lambda: os.getenv("POSTGRES_DATABASE", "biblos"))
 
     # Redis settings
@@ -61,6 +63,34 @@ class DatabaseConfig:
     pool_size: int = field(default_factory=lambda: int(os.getenv("DB_POOL_SIZE", "10")))
     max_overflow: int = field(default_factory=lambda: int(os.getenv("DB_MAX_OVERFLOW", "20")))
     pool_timeout: int = field(default_factory=lambda: int(os.getenv("DB_POOL_TIMEOUT", "30")))
+
+    def validate_credentials(self, environment: str) -> None:
+        """
+        Validate that required credentials are set.
+
+        In production/staging, raises ValueError if database passwords are empty.
+        In development/testing, logs warnings.
+        """
+        logger = logging.getLogger(__name__)
+        missing = []
+
+        if not self.neo4j_password:
+            missing.append("NEO4J_PASSWORD")
+        if not self.postgres_password:
+            missing.append("POSTGRES_PASSWORD")
+
+        if missing:
+            message = f"Database credentials not set: {', '.join(missing)}"
+            if environment in ("production", "staging"):
+                raise ValueError(
+                    f"CRITICAL SECURITY ERROR: {message}. "
+                    "Set these environment variables before starting in production."
+                )
+            else:
+                logger.warning(
+                    f"{message}. This is acceptable for local development, "
+                    "but ensure credentials are set in production."
+                )
 
     @property
     def postgres_url(self) -> str:
@@ -619,6 +649,63 @@ class LXXExtractorConfig:
 
 
 @dataclass
+class FractalTypologyConfig:
+    """
+    Configuration for HyperFractalTypologyEngine (Fourth Impossible Oracle).
+
+    Controls fractal typology analysis across 7 layers, from individual words
+    to covenant arcs spanning testaments.
+    """
+    # Strength thresholds
+    min_layer_strength: float = field(
+        default_factory=lambda: float(os.getenv("FRACTAL_MIN_LAYER_STRENGTH", "0.3"))
+    )
+    min_composite_strength: float = field(
+        default_factory=lambda: float(os.getenv("FRACTAL_MIN_COMPOSITE_STRENGTH", "0.5"))
+    )
+    min_phrase_similarity: float = field(
+        default_factory=lambda: float(os.getenv("FRACTAL_MIN_PHRASE_SIMILARITY", "0.6"))
+    )
+
+    # Layer weights
+    weight_word_layer: float = 0.10
+    weight_phrase_layer: float = 0.12
+    weight_verse_layer: float = 0.15
+    weight_pericope_layer: float = 0.18
+    weight_chapter_layer: float = 0.15
+    weight_book_layer: float = 0.12
+    weight_covenantal_layer: float = 0.18
+
+    # Bonuses
+    depth_bonus_per_layer: float = 0.025
+    max_depth_bonus: float = 0.15
+    patristic_bonus_per_witness: float = 0.01
+    max_patristic_bonus: float = 0.10
+
+    # Integration toggles
+    enable_mutual_transformation: bool = field(
+        default_factory=lambda: os.getenv("FRACTAL_ENABLE_MUTUAL_TRANSFORMATION", "true").lower() == "true"
+    )
+    enable_necessity_enrichment: bool = field(
+        default_factory=lambda: os.getenv("FRACTAL_ENABLE_NECESSITY", "true").lower() == "true"
+    )
+
+    # Caching
+    cache_type_patterns: bool = True
+    cache_ttl_seconds: int = field(
+        default_factory=lambda: int(os.getenv("FRACTAL_CACHE_TTL", "86400"))
+    )
+
+    # Pattern and arc paths
+    type_patterns_path: str = field(
+        default_factory=lambda: os.getenv("FRACTAL_TYPE_PATTERNS_PATH", "data/type_patterns.json")
+    )
+    covenant_arcs_path: str = field(
+        default_factory=lambda: os.getenv("FRACTAL_COVENANT_ARCS_PATH", "data/covenant_arcs.json")
+    )
+
+
+@dataclass
 class APIConfig:
     """API server configuration."""
     host: str = field(default_factory=lambda: os.getenv("API_HOST", "0.0.0.0"))
@@ -656,11 +743,14 @@ class Config:
     necessity_calculator: NecessityCalculatorConfig = field(default_factory=NecessityCalculatorConfig)
 
     def __post_init__(self):
-        """Create directories if they don't exist."""
+        """Create directories if they don't exist and validate configuration."""
         for path in [self.data_dir, self.output_dir, self.cache_dir,
                      self.ml.models_dir, self.ml.embeddings_dir,
                      self.ml.checkpoints_dir, self.logging.log_dir]:
             path.mkdir(parents=True, exist_ok=True)
+
+        # Validate database credentials based on environment
+        self.database.validate_credentials(self.env.value)
 
     @property
     def is_production(self) -> bool:

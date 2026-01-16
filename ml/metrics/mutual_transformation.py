@@ -162,6 +162,9 @@ class MutualTransformationMetric:
         print(f"Type: {score.transformation_type}")
     """
 
+    # Maximum cache size to prevent unbounded memory growth
+    MAX_CACHE_SIZE = 5000
+
     def __init__(self, config: Optional[MutualTransformationConfig] = None):
         """
         Initialize the metric with optional configuration.
@@ -170,12 +173,51 @@ class MutualTransformationMetric:
             config: Configuration for thresholds and behavior.
         """
         self.config = config or MutualTransformationConfig()
+        # Bounded cache with LRU eviction
         self._embedding_cache: Dict[str, np.ndarray] = {}
+        self._cache_order: List[str] = []  # For LRU tracking
         logger.info(
             f"MutualTransformationMetric initialized with "
             f"radical_threshold={self.config.radical_threshold}, "
             f"moderate_threshold={self.config.moderate_threshold}"
         )
+
+    def _cache_embedding(self, key: str, embedding: np.ndarray) -> None:
+        """
+        Cache an embedding with LRU eviction.
+
+        Args:
+            key: Cache key for the embedding.
+            embedding: The embedding to cache.
+        """
+        if not self.config.cache_embeddings:
+            return
+
+        # Evict oldest entries if cache is full
+        while len(self._embedding_cache) >= self.MAX_CACHE_SIZE:
+            if self._cache_order:
+                oldest_key = self._cache_order.pop(0)
+                self._embedding_cache.pop(oldest_key, None)
+
+        self._embedding_cache[key] = embedding
+        self._cache_order.append(key)
+
+    def _get_cached_embedding(self, key: str) -> Optional[np.ndarray]:
+        """
+        Get a cached embedding, updating LRU order.
+
+        Args:
+            key: Cache key to look up.
+
+        Returns:
+            Cached embedding or None if not found.
+        """
+        embedding = self._embedding_cache.get(key)
+        if embedding is not None and key in self._cache_order:
+            # Move to end (most recently used)
+            self._cache_order.remove(key)
+            self._cache_order.append(key)
+        return embedding
 
     async def measure_transformation(
         self,
@@ -504,4 +546,5 @@ class MutualTransformationMetric:
     def clear_cache(self) -> None:
         """Clear embedding cache."""
         self._embedding_cache.clear()
+        self._cache_order.clear()
         logger.debug("Embedding cache cleared")

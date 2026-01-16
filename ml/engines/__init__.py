@@ -60,6 +60,36 @@ from ml.engines.lxx_extractor import (
     LXXChristologicalExtractor,
 )
 
+from ml.engines.fractal_typology import (
+    # Enums
+    TypologyLayer,
+    TransformationType,
+    PatternType,
+    # Dataclasses
+    FractalTypologyConfig,
+    TypologyConnection,
+    FractalTypologyResult,
+    # Main class
+    HyperFractalTypologyEngine,
+)
+
+from ml.engines.prophetic_prover import (
+    # Enums
+    FulfillmentType,
+    IndependenceLevel,
+    SpecificityFactor,
+    EvidenceStrength,
+    # Dataclasses
+    ProbabilityEstimation,
+    ProphecyFulfillmentPair,
+    IndependenceAnalysis,
+    BayesianResult,
+    PropheticProofResult,
+    PropheticProverConfig,
+    # Main class
+    PropheticNecessityProver,
+)
+
 __all__ = [
     # OmniContextualResolver exports
     "EliminationReason",
@@ -103,4 +133,28 @@ __all__ = [
     "LXXAnalysisResult",
     # LXXChristologicalExtractor main class
     "LXXChristologicalExtractor",
+    # FractalTypologyEngine enums
+    "TypologyLayer",
+    "TransformationType",
+    "PatternType",
+    # FractalTypologyEngine dataclasses
+    "FractalTypologyConfig",
+    "TypologyConnection",
+    "FractalTypologyResult",
+    # FractalTypologyEngine main class
+    "HyperFractalTypologyEngine",
+    # PropheticNecessityProver enums
+    "FulfillmentType",
+    "IndependenceLevel",
+    "SpecificityFactor",
+    "EvidenceStrength",
+    # PropheticNecessityProver dataclasses
+    "ProbabilityEstimation",
+    "ProphecyFulfillmentPair",
+    "IndependenceAnalysis",
+    "BayesianResult",
+    "PropheticProofResult",
+    "PropheticProverConfig",
+    # PropheticNecessityProver main class
+    "PropheticNecessityProver",
 ]
