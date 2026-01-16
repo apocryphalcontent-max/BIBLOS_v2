@@ -1,14 +1,46 @@
 """
-BIBLOS v2 - Core Module
+BIBLOS v2 - Core Module (The Nervous System)
+
+The core module is the organism's central nervous system - coordinating signals
+between all organs, managing lifecycle, and ensuring coherent behavior.
 
 Provides foundational components for the entire system:
-- Unified error handling
-- Resilience patterns (circuit breaker, retry)
-- Async utilities
-- Configuration validation
-- Type definitions
+- Unified error handling (pain signals)
+- Resilience patterns (immune system: circuit breaker, retry)
+- Async utilities (neural pathways)
+- Configuration validation (sensory validation)
+- Type definitions (cellular blueprints)
+- Application lifecycle (autonomic nervous system)
+- Factory abstractions (stem cells)
 
 All modules should import from core for consistent behavior.
+
+Architectural Role:
+    The core doesn't DO work - it COORDINATES work. Like the nervous system,
+    it doesn't digest food or pump blood, but without it, nothing functions.
+    Each component here is designed to be dependency-free from other BIBLOS
+    modules, making it the stable foundation everything else builds upon.
+
+Usage:
+    from core import (
+        # Lifecycle
+        Application, ApplicationBuilder,
+        # Error handling
+        BiblosError, safe_execute,
+        # Resilience
+        CircuitBreaker, with_retry,
+        # Factories
+        SystemFactory, GoldenRecordBuilder,
+    )
+
+    # Create application with builder
+    app = await (
+        ApplicationBuilder()
+        .with_environment("production")
+        .with_module(DatabaseModule())
+        .with_module(PipelineModule())
+        .build()
+    )
 """
 
 from core.errors import (
@@ -114,32 +146,136 @@ from core.types import (
     MISSING,
     UNSET,
 )
-# Bootstrap and factories
+
+# ============================================================================
+# Bootstrap - The Autonomic Nervous System
+# ============================================================================
+# These components manage application lifecycle, from heartbeat to shutdown.
+# Like the autonomic nervous system, they operate without conscious thought,
+# ensuring the organism functions even when attention is elsewhere.
+# ============================================================================
+
 from core.bootstrap import (
+    # Core Application
     Application,
     ApplicationConfig,
     ApplicationPhase,
-    ApplicationLifecycleHook,
-    bootstrap,
+    # Lifecycle Stages (fine-grained control)
+    StartupStage,
+    ShutdownStage,
+    LifecycleEvent,
+    # Lifecycle Hook Interfaces
+    ILifecycleHook,
+    LifecycleHookBase,
+    # Service Module Interfaces
+    IServiceModule,
+    ServiceModuleBase,
+    # Background Service Interfaces
+    IBackgroundService,
+    BackgroundServiceBase,
+    # Health Aggregation
+    AggregateHealthStatus,
+    AggregateHealthReport,
+    HealthAggregator,
+    # Feature Flags
+    FeatureFlag,
+    # Builder Pattern
+    ApplicationBuilder,
+    # Global Application Access
     get_application,
-    run_application,
-)
-from core.factories import (
-    Factory,
-    Builder,
-    PipelineFactory,
-    PipelineConfig,
-    AgentFactory,
-    AgentConfig,
-    DatabaseClientFactory,
-    DatabaseConfig,
-    MLEngineFactory,
-    MLEngineConfig,
-    GoldenRecordBuilder,
+    set_application,
+    # Built-in Modules
+    DatabaseModule,
+    EventSourcingModule,
+    PipelineModule,
+    MediatorModule,
+    # Built-in Lifecycle Hooks
+    LoggingLifecycleHook,
+    TelemetryLifecycleHook,
+    # Built-in Background Services
+    HealthMonitorService,
 )
 
+# Legacy aliases for backward compatibility
+ApplicationLifecycleHook = LifecycleHookBase
+bootstrap = ApplicationBuilder  # Alias for old bootstrap function
+
+
+def run_application(app: Application) -> None:
+    """
+    Synchronous wrapper to run an application.
+
+    This is a convenience function for scripts that don't use async/await.
+    For production use, prefer the async pattern with ApplicationBuilder.
+    """
+    import asyncio
+    asyncio.run(app.run())
+
+
+# ============================================================================
+# Factories - The Stem Cells
+# ============================================================================
+# Factories create the specialized cells (components) of the organism.
+# Like stem cells, they can produce any type needed, following the blueprints
+# (configurations) they're given. The SystemFactory is the bone marrow,
+# coordinating all production.
+# ============================================================================
+
+from core.factories import (
+    # Factory Interfaces (ISP-compliant protocols)
+    IFactory,
+    IAsyncFactory,
+    IConfigurableFactory,
+    IPooledFactory,
+    IBuilder,
+    # Factory Base Classes
+    FactoryBase,
+    AsyncFactoryBase,
+    BuilderBase,
+    # Object Pooling (reusable expensive objects)
+    ObjectPoolState,
+    PooledObject,
+    ObjectPool,
+    # Factory Registry (factory discovery)
+    FactoryRegistry,
+    get_factory_registry,
+    # Pipeline Factory
+    PipelinePhaseSet,
+    PipelineConfig,
+    IPipelineFactory,
+    PipelineFactory,
+    # Agent Factory
+    AgentCategory,
+    AgentConfig,
+    IAgentFactory,
+    AgentFactory,
+    # Database Client Factory
+    DatabaseType,
+    DatabaseConfig,
+    IDatabaseClientFactory,
+    DatabaseClientFactory,
+    # ML Engine Factory
+    MLDeviceType,
+    MLEngineConfig,
+    IMLEngineFactory,
+    MLEngineFactory,
+    # Golden Record (the sacred output)
+    QualityTier,
+    GoldenRecord,
+    GoldenRecordBuilder,
+    # System Factory (composite factory)
+    SystemFactory,
+)
+
+# Legacy aliases for backward compatibility
+Factory = FactoryBase
+Builder = BuilderBase
+
+
 __all__ = [
-    # Errors
+    # ========================================================================
+    # ERRORS - Pain Signals
+    # ========================================================================
     "BiblosError",
     "BiblosConfigError",
     "BiblosDatabaseError",
@@ -153,7 +289,10 @@ __all__ = [
     "ErrorSeverity",
     "error_handler",
     "safe_execute",
-    # Resilience
+
+    # ========================================================================
+    # RESILIENCE - Immune System
+    # ========================================================================
     "CircuitBreaker",
     "CircuitState",
     "RetryPolicy",
@@ -174,7 +313,10 @@ __all__ = [
     "batch_execute",
     "resilient",
     "get_health_monitor",
-    # Async
+
+    # ========================================================================
+    # ASYNC UTILITIES - Neural Pathways
+    # ========================================================================
     "AsyncTaskGroup",
     "AsyncBatcher",
     "AsyncThrottler",
@@ -189,12 +331,18 @@ __all__ = [
     "async_buffered_iter",
     "debounce",
     "coalesce",
-    # Config
+
+    # ========================================================================
+    # CONFIGURATION - Sensory Validation
+    # ========================================================================
     "ConfigValidator",
     "ValidationResult",
     "validate_config",
     "require_env",
-    # Input validation
+
+    # ========================================================================
+    # INPUT VALIDATION - Gating Functions
+    # ========================================================================
     "validate_verse_id",
     "is_valid_verse_id",
     "normalize_verse_id",
@@ -202,24 +350,129 @@ __all__ = [
     "parse_verse_range",
     "VerseIdValidationError",
     "VALID_BOOK_CODES",
-    # Bootstrap
+
+    # ========================================================================
+    # TYPES - Cellular Blueprints
+    # ========================================================================
+    "VerseId",
+    "BookCode",
+    "WordId",
+    "ConnectionTypeLiteral",
+    "StrengthLiteral",
+    "StatusLiteral",
+    "Confidence",
+    "VerseDict",
+    "WordDict",
+    "CrossReferenceDict",
+    "ExtractionResultDict",
+    "GoldenRecordDict",
+    "InferenceCandidateDict",
+    "Validatable",
+    "Serializable",
+    "ExtractionAgent",
+    "DatabaseClient",
+    "VectorStore",
+    "EmbeddingModel",
+    "PipelinePhase",
+    "Result",
+    "is_verse_id",
+    "is_connection_type",
+    "is_strength",
+    "is_confidence",
+    "MISSING",
+    "UNSET",
+
+    # ========================================================================
+    # BOOTSTRAP - Autonomic Nervous System
+    # ========================================================================
+    # Core Application
     "Application",
     "ApplicationConfig",
     "ApplicationPhase",
-    "ApplicationLifecycleHook",
-    "bootstrap",
+    # Lifecycle Stages
+    "StartupStage",
+    "ShutdownStage",
+    "LifecycleEvent",
+    # Lifecycle Hooks
+    "ILifecycleHook",
+    "LifecycleHookBase",
+    "ApplicationLifecycleHook",  # Legacy alias
+    # Service Modules
+    "IServiceModule",
+    "ServiceModuleBase",
+    # Background Services
+    "IBackgroundService",
+    "BackgroundServiceBase",
+    # Health Aggregation
+    "AggregateHealthStatus",
+    "AggregateHealthReport",
+    "HealthAggregator",
+    # Feature Flags
+    "FeatureFlag",
+    # Builder
+    "ApplicationBuilder",
+    "bootstrap",  # Legacy alias
+    # Global Access
     "get_application",
+    "set_application",
     "run_application",
-    # Factories
-    "Factory",
-    "Builder",
-    "PipelineFactory",
+    # Built-in Modules
+    "DatabaseModule",
+    "EventSourcingModule",
+    "PipelineModule",
+    "MediatorModule",
+    # Built-in Hooks
+    "LoggingLifecycleHook",
+    "TelemetryLifecycleHook",
+    # Built-in Services
+    "HealthMonitorService",
+
+    # ========================================================================
+    # FACTORIES - Stem Cells
+    # ========================================================================
+    # Factory Interfaces
+    "IFactory",
+    "IAsyncFactory",
+    "IConfigurableFactory",
+    "IPooledFactory",
+    "IBuilder",
+    # Factory Base Classes
+    "FactoryBase",
+    "AsyncFactoryBase",
+    "BuilderBase",
+    "Factory",  # Legacy alias
+    "Builder",  # Legacy alias
+    # Object Pooling
+    "ObjectPoolState",
+    "PooledObject",
+    "ObjectPool",
+    # Factory Registry
+    "FactoryRegistry",
+    "get_factory_registry",
+    # Pipeline Factory
+    "PipelinePhaseSet",
     "PipelineConfig",
-    "AgentFactory",
+    "IPipelineFactory",
+    "PipelineFactory",
+    # Agent Factory
+    "AgentCategory",
     "AgentConfig",
-    "DatabaseClientFactory",
+    "IAgentFactory",
+    "AgentFactory",
+    # Database Client Factory
+    "DatabaseType",
     "DatabaseConfig",
-    "MLEngineFactory",
+    "IDatabaseClientFactory",
+    "DatabaseClientFactory",
+    # ML Engine Factory
+    "MLDeviceType",
     "MLEngineConfig",
+    "IMLEngineFactory",
+    "MLEngineFactory",
+    # Golden Record
+    "QualityTier",
+    "GoldenRecord",
     "GoldenRecordBuilder",
+    # System Factory
+    "SystemFactory",
 ]
