@@ -29,6 +29,14 @@ from data.schemas import (
     validate_connection_type
 )
 
+# Import mutual transformation metric
+from ml.metrics.mutual_transformation import (
+    MutualTransformationMetric,
+    MutualTransformationScore,
+    TransformationType,
+    MutualTransformationConfig,
+)
+
 # Import core error types for specific exception handling
 from core.errors import (
     BiblosError,
@@ -91,7 +99,7 @@ class CrossReferenceCandidate:
     confidence: float
     embedding_similarity: float
     semantic_similarity: float
-    features: Dict[str, float] = field(default_factory=dict)
+    features: Dict[str, Any] = field(default_factory=dict)  # Changed to Any for mixed value types
     evidence: List[str] = field(default_factory=list)
 
     def __post_init__(self):
@@ -238,6 +246,11 @@ class InferencePipeline:
         self._embedding_cache: OrderedDict[str, np.ndarray] = OrderedDict()
         self._text_cache: OrderedDict[str, np.ndarray] = OrderedDict()  # For semantic similarity
         self._initialized = False
+
+        # Mutual transformation metric for measuring bidirectional semantic shift
+        self._mutual_transformation_metric = MutualTransformationMetric()
+        # Cache for embeddings before GNN refinement
+        self._pre_gnn_embeddings: Dict[str, np.ndarray] = {}
 
     def _cache_embedding(self, key: str, embedding: np.ndarray) -> None:
         """Add embedding to cache with LRU eviction."""
@@ -930,7 +943,12 @@ class InferencePipeline:
         candidates: List[CrossReferenceCandidate],
         context: Optional[Dict[str, Any]]
     ) -> List[CrossReferenceCandidate]:
-        """Refine candidate scores using GNN model."""
+        """
+        Refine candidate scores using GNN model and compute mutual transformation.
+
+        This method now captures embeddings before and after GNN refinement
+        to measure the mutual transformation between connected verses.
+        """
         if not self._gnn_model or not candidates:
             return candidates
 
@@ -939,10 +957,26 @@ class InferencePipeline:
             nodes = [verse_id] + [c.target_verse for c in candidates]
             edges = [(0, i + 1) for i in range(len(candidates))]
 
-            # Get GNN predictions
+            # Step 1: Capture embeddings BEFORE GNN refinement
+            pre_gnn_embeddings: Dict[str, np.ndarray] = {}
+            source_embedding = self._get_cached_embedding(verse_id)
+            if source_embedding is not None:
+                pre_gnn_embeddings[verse_id] = source_embedding.copy()
+
+            for candidate in candidates:
+                target_emb = self._get_cached_embedding(candidate.target_verse)
+                if target_emb is not None:
+                    pre_gnn_embeddings[candidate.target_verse] = target_emb.copy()
+
+            # Step 2: Get GNN predictions (this refines the embeddings)
             gnn_scores = await self._gnn_model.predict(nodes, edges)
 
-            # Update candidate scores
+            # Step 3: Capture embeddings AFTER GNN refinement
+            post_gnn_embeddings: Dict[str, np.ndarray] = {}
+            if hasattr(self._gnn_model, 'get_all_embeddings'):
+                post_gnn_embeddings = self._gnn_model.get_all_embeddings()
+
+            # Step 4: Update candidate scores and compute mutual transformation
             for i, candidate in enumerate(candidates):
                 if i < len(gnn_scores):
                     # Blend GNN score with original confidence
@@ -951,6 +985,48 @@ class InferencePipeline:
                         candidate.confidence * 0.6 + gnn_score * 0.4
                     )
                     candidate.features["gnn_score"] = float(gnn_score)
+
+                # Compute mutual transformation if we have both before/after embeddings
+                target_id = candidate.target_verse
+                if (verse_id in pre_gnn_embeddings and
+                    target_id in pre_gnn_embeddings and
+                    verse_id in post_gnn_embeddings and
+                    target_id in post_gnn_embeddings):
+
+                    try:
+                        mt_score = await self._mutual_transformation_metric.measure_transformation(
+                            source_verse=verse_id,
+                            target_verse=target_id,
+                            source_before=pre_gnn_embeddings[verse_id],
+                            source_after=post_gnn_embeddings[verse_id],
+                            target_before=pre_gnn_embeddings[target_id],
+                            target_after=post_gnn_embeddings[target_id],
+                        )
+
+                        # Store mutual transformation results in features
+                        candidate.features["mutual_influence"] = mt_score.mutual_influence
+                        candidate.features["source_shift"] = mt_score.source_shift
+                        candidate.features["target_shift"] = mt_score.target_shift
+                        candidate.features["transformation_type"] = mt_score.transformation_type.value
+                        candidate.features["directionality"] = mt_score.directionality
+
+                        # Boost confidence for high mutual influence (RADICAL connections)
+                        if mt_score.transformation_type == TransformationType.RADICAL:
+                            candidate.confidence = min(1.0, candidate.confidence * 1.15)
+                        elif mt_score.transformation_type == TransformationType.MODERATE:
+                            candidate.confidence = min(1.0, candidate.confidence * 1.05)
+
+                        logger.debug(
+                            f"Mutual transformation {verse_id} <-> {target_id}: "
+                            f"influence={mt_score.mutual_influence:.4f}, "
+                            f"type={mt_score.transformation_type.value}"
+                        )
+
+                    except Exception as mt_error:
+                        logger.warning(f"Mutual transformation computation failed: {mt_error}")
+                        # Set default values on failure
+                        candidate.features["mutual_influence"] = 0.0
+                        candidate.features["transformation_type"] = "MINIMAL"
 
         except Exception as e:
             logger.warning(f"GNN refinement failed: {e}")

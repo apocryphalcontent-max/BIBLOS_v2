@@ -269,7 +269,29 @@ class ResultPostprocessor:
             result["target_testament"] = "OT" if target_book in self.OT_BOOKS else "NT"
             result["cross_testament"] = result["source_testament"] != result["target_testament"]
 
-            # Add strength classification
+            # Apply mutual influence adjustment to confidence
+            features = result.get("features", {})
+            mutual_influence = features.get("mutual_influence", 0.0)
+            transformation_type = features.get("transformation_type", "MINIMAL")
+
+            # Boost confidence based on mutual transformation
+            # High mutual_influence (>0.4) = RADICAL = boost 10-15%
+            # Moderate (0.2-0.4) = boost 5%
+            # Low (<0.2) = neutral (no penalty)
+            base_confidence = result.get("confidence", 0.5)
+            if transformation_type == "RADICAL" and mutual_influence > 0.4:
+                result["confidence"] = min(1.0, base_confidence * 1.15)
+            elif transformation_type == "MODERATE" and mutual_influence > 0.2:
+                result["confidence"] = min(1.0, base_confidence * 1.05)
+            # MINIMAL: no adjustment (neutral factor)
+
+            # Store mutual transformation metadata
+            result["mutual_influence_score"] = mutual_influence
+            result["transformation_type"] = transformation_type
+            result["source_semantic_shift"] = features.get("source_shift", 0.0)
+            result["target_semantic_shift"] = features.get("target_shift", 0.0)
+
+            # Add strength classification (after confidence adjustment)
             confidence = result.get("confidence", 0.5)
             if confidence >= 0.8:
                 result["strength"] = "strong"

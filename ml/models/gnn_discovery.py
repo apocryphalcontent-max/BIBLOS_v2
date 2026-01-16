@@ -117,6 +117,11 @@ class CrossRefGNN(nn.Module if TORCH_GEOMETRIC_AVAILABLE else object):
             for i in range(num_layers)
         ])
 
+        # Embedding cache for mutual transformation metric
+        self._node_embeddings: Dict[str, np.ndarray] = {}
+        self._verse_to_index: Dict[str, int] = {}
+        self._last_embeddings: Optional['torch.Tensor'] = None
+
     def forward(
         self,
         x: 'torch.Tensor',
@@ -262,3 +267,78 @@ class CrossRefGNN(nn.Module if TORCH_GEOMETRIC_AVAILABLE else object):
         # Sort by confidence and return top_k
         predictions.sort(key=lambda x: x.confidence, reverse=True)
         return predictions[:top_k]
+
+    def cache_embeddings(
+        self,
+        verse_ids: List[str],
+        embeddings: 'torch.Tensor'
+    ) -> None:
+        """
+        Cache node embeddings for later retrieval.
+
+        Used by the mutual transformation metric to access embeddings
+        before and after GNN refinement.
+
+        Args:
+            verse_ids: List of verse identifiers.
+            embeddings: Tensor of embeddings [num_verses, embedding_dim].
+        """
+        self._verse_to_index = {vid: i for i, vid in enumerate(verse_ids)}
+        self._last_embeddings = embeddings.detach()
+
+        # Also store as numpy for direct access
+        emb_numpy = embeddings.detach().cpu().numpy()
+        for vid, idx in self._verse_to_index.items():
+            self._node_embeddings[vid] = emb_numpy[idx]
+
+    def get_node_embedding(
+        self,
+        verse_id: str
+    ) -> Optional[np.ndarray]:
+        """
+        Get cached embedding for a specific verse.
+
+        Args:
+            verse_id: The verse identifier (e.g., "GEN.1.1").
+
+        Returns:
+            Numpy array of embedding or None if not cached.
+        """
+        return self._node_embeddings.get(verse_id)
+
+    def get_all_embeddings(self) -> Dict[str, np.ndarray]:
+        """
+        Get all cached embeddings.
+
+        Returns:
+            Dictionary mapping verse_id to embedding.
+        """
+        return self._node_embeddings.copy()
+
+    def clear_embedding_cache(self) -> None:
+        """Clear the embedding cache."""
+        self._node_embeddings.clear()
+        self._verse_to_index.clear()
+        self._last_embeddings = None
+
+    def get_embeddings_for_pair(
+        self,
+        source_id: str,
+        target_id: str
+    ) -> Tuple[Optional[np.ndarray], Optional[np.ndarray]]:
+        """
+        Get embeddings for a verse pair.
+
+        Convenience method for mutual transformation metric.
+
+        Args:
+            source_id: Source verse identifier.
+            target_id: Target verse identifier.
+
+        Returns:
+            Tuple of (source_embedding, target_embedding).
+        """
+        return (
+            self._node_embeddings.get(source_id),
+            self._node_embeddings.get(target_id)
+        )

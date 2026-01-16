@@ -257,6 +257,41 @@ class ObservabilityConfig:
 
 
 @dataclass
+class MutualTransformationConfig:
+    """
+    Configuration for the Mutual Transformation Metric.
+
+    Controls thresholds and behavior for measuring bidirectional
+    semantic shift between connected verses.
+    """
+    # Classification thresholds
+    radical_threshold: float = field(
+        default_factory=lambda: float(os.getenv("MTM_RADICAL_THRESHOLD", "0.4"))
+    )
+    moderate_threshold: float = field(
+        default_factory=lambda: float(os.getenv("MTM_MODERATE_THRESHOLD", "0.2"))
+    )
+
+    # Scoring adjustments
+    directionality_weight: float = field(
+        default_factory=lambda: float(os.getenv("MTM_DIRECTIONALITY_WEIGHT", "0.1"))
+    )
+
+    # Feature flags
+    enable_semantic_decomposition: bool = field(
+        default_factory=lambda: os.getenv("MTM_SEMANTIC_DECOMPOSITION", "true").lower() == "true"
+    )
+    cache_embeddings: bool = field(
+        default_factory=lambda: os.getenv("MTM_CACHE_EMBEDDINGS", "true").lower() == "true"
+    )
+
+    # Confidence boost for high mutual influence
+    high_influence_boost: float = field(
+        default_factory=lambda: float(os.getenv("MTM_HIGH_INFLUENCE_BOOST", "0.15"))
+    )
+
+
+@dataclass
 class APIConfig:
     """API server configuration."""
     host: str = field(default_factory=lambda: os.getenv("API_HOST", "0.0.0.0"))
@@ -288,6 +323,7 @@ class Config:
     logging: LoggingConfig = field(default_factory=LoggingConfig)
     api: APIConfig = field(default_factory=APIConfig)
     observability: ObservabilityConfig = field(default_factory=ObservabilityConfig)
+    mutual_transformation: MutualTransformationConfig = field(default_factory=MutualTransformationConfig)
 
     def __post_init__(self):
         """Create directories if they don't exist."""
