@@ -79,6 +79,41 @@ from core.validation import (
     VerseIdValidationError,
     VALID_BOOK_CODES,
 )
+from core.types import (
+    # Type aliases
+    VerseId,
+    BookCode,
+    WordId,
+    ConnectionTypeLiteral,
+    StrengthLiteral,
+    StatusLiteral,
+    Confidence,
+    # TypedDicts
+    VerseDict,
+    WordDict,
+    CrossReferenceDict,
+    ExtractionResultDict,
+    GoldenRecordDict,
+    InferenceCandidateDict,
+    # Protocols
+    Validatable,
+    Serializable,
+    ExtractionAgent,
+    DatabaseClient,
+    VectorStore,
+    EmbeddingModel,
+    PipelinePhase,
+    # Result type
+    Result,
+    # Type guards
+    is_verse_id,
+    is_connection_type,
+    is_strength,
+    is_confidence,
+    # Sentinels
+    MISSING,
+    UNSET,
+)
 # Bootstrap and factories
 from core.bootstrap import (
     Application,

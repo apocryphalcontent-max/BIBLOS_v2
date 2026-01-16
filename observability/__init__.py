@@ -89,6 +89,44 @@ except ImportError:
     configure_structlog = lambda *args, **kwargs: None
     shutdown_logging = lambda: None
 
+try:
+    from .audit import (
+        AuditLogger,
+        AuditEvent,
+        AuditAction,
+        AuditSeverity,
+        get_audit_logger,
+        audit_logger,
+    )
+except ImportError:
+    AuditLogger = type('AuditLogger', (), {})
+    AuditEvent = type('AuditEvent', (), {})
+    AuditAction = type('AuditAction', (), {})
+    AuditSeverity = type('AuditSeverity', (), {})
+    get_audit_logger = lambda: None
+    audit_logger = None
+
+try:
+    from .slo import (
+        SLOTracker,
+        SLO,
+        SLOType,
+        SLOStatus,
+        SLOStatusReport,
+        get_slo_tracker,
+        slo_tracker,
+        setup_default_slos,
+    )
+except ImportError:
+    SLOTracker = type('SLOTracker', (), {})
+    SLO = type('SLO', (), {})
+    SLOType = type('SLOType', (), {})
+    SLOStatus = type('SLOStatus', (), {})
+    SLOStatusReport = type('SLOStatusReport', (), {})
+    get_slo_tracker = lambda: None
+    slo_tracker = None
+    setup_default_slos = lambda: None
+
 __all__ = [
     # Tracing
     "setup_tracing",
@@ -117,6 +155,22 @@ __all__ = [
     "LoggingConfig",
     "configure_structlog",
     "shutdown_logging",
+    # Audit
+    "AuditLogger",
+    "AuditEvent",
+    "AuditAction",
+    "AuditSeverity",
+    "get_audit_logger",
+    "audit_logger",
+    # SLO
+    "SLOTracker",
+    "SLO",
+    "SLOType",
+    "SLOStatus",
+    "SLOStatusReport",
+    "get_slo_tracker",
+    "slo_tracker",
+    "setup_default_slos",
     # Combined setup
     "setup_observability",
     "shutdown_observability",
