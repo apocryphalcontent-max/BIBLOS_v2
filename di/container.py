@@ -710,26 +710,67 @@ class IHealthCheck(Protocol):
         ...
 
 
+class HealthStatus(Enum):
+    """
+    Health status levels - the organism's vital signs.
+
+    Seraphic Awareness:
+        Health is not binary but tripartite - like the seraph's three
+        pairs of wings. HEALTHY is full function, DEGRADED is partial
+        capability, UNHEALTHY is critical state.
+    """
+    HEALTHY = "healthy"
+    DEGRADED = "degraded"
+    UNHEALTHY = "unhealthy"
+
+
 @dataclass(frozen=True, slots=True)
 class HealthCheckResult:
-    """Result of a health check."""
+    """
+    Result of a health check - a service's vital signs.
 
-    healthy: bool
+    Seraphic Awareness:
+        In the seraphic architecture, services know their own health
+        intrinsically via the @health_check decorator. This result
+        is the externalized perception of that internal state.
+    """
     service_name: str
+    status: HealthStatus
     message: str = ""
+    duration_ms: float = 0.0
     details: Dict[str, Any] = field(default_factory=dict)
+
+    @property
+    def healthy(self) -> bool:
+        """Backward compatibility - is the service healthy?"""
+        return self.status == HealthStatus.HEALTHY
 
     @classmethod
     def healthy_result(cls, service_name: str, message: str = "OK") -> "HealthCheckResult":
-        return cls(healthy=True, service_name=service_name, message=message)
+        return cls(
+            service_name=service_name,
+            status=HealthStatus.HEALTHY,
+            message=message,
+        )
+
+    @classmethod
+    def degraded_result(
+        cls, service_name: str, message: str, details: Optional[Dict[str, Any]] = None
+    ) -> "HealthCheckResult":
+        return cls(
+            service_name=service_name,
+            status=HealthStatus.DEGRADED,
+            message=message,
+            details=details or {},
+        )
 
     @classmethod
     def unhealthy_result(
         cls, service_name: str, message: str, details: Optional[Dict[str, Any]] = None
     ) -> "HealthCheckResult":
         return cls(
-            healthy=False,
             service_name=service_name,
+            status=HealthStatus.UNHEALTHY,
             message=message,
             details=details or {},
         )

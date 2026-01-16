@@ -75,6 +75,7 @@ from di.container import (
 
     # Health check interface
     IHealthCheck,
+    HealthStatus,
     HealthCheckResult,
 
     # Service provider abstraction
@@ -151,6 +152,7 @@ __all__ = [
 
     # Health Check Interface
     "IHealthCheck",
+    "HealthStatus",
     "HealthCheckResult",
 
     # Core Abstractions
