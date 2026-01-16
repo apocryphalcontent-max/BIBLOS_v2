@@ -10,10 +10,21 @@ limits by leveraging computational access to the complete biblical canon.
 from ml.engines.omnicontext_resolver import (
     # Enums
     EliminationReason,
+    SemanticDomain,
+    GrammaticalCategory,
+    VerbSemantic,
+    PatristicEra,
+    ConciliarAuthority,
+    LXXDivergenceType,
+    ConfidenceLevel,
     # Dataclasses
     EliminationStep,
     SemanticFieldEntry,
     CompatibilityResult,
+    LXXMTDivergence,
+    PatristicWitness as OmniPatristicWitness,  # Alias to avoid conflict with lxx_extractor
+    ConciliarDefinition,
+    OccurrenceData,
     AbsoluteMeaningResult,
     # Main class
     OmniContextualResolver,
@@ -63,12 +74,17 @@ from ml.engines.lxx_extractor import (
 from ml.engines.fractal_typology import (
     # Enums
     TypologyLayer,
-    TransformationType,
-    PatternType,
+    TypeAntitypeRelation,
+    CorrespondenceType,
+    PatristicConfidence,
+    CovenantPhase,
     # Dataclasses
-    FractalTypologyConfig,
-    TypologyConnection,
+    TypePattern,
+    LayerConnection,
+    CovenantArc,
+    SelfSimilarityAnalysis,
     FractalTypologyResult,
+    FractalTypologyConfig,
     # Main class
     HyperFractalTypologyEngine,
 )
@@ -91,12 +107,25 @@ from ml.engines.prophetic_prover import (
 )
 
 __all__ = [
-    # OmniContextualResolver exports
+    # OmniContextualResolver exports - Enums
     "EliminationReason",
+    "SemanticDomain",
+    "GrammaticalCategory",
+    "VerbSemantic",
+    "PatristicEra",
+    "ConciliarAuthority",
+    "LXXDivergenceType",
+    "ConfidenceLevel",
+    # OmniContextualResolver exports - Dataclasses
     "EliminationStep",
     "SemanticFieldEntry",
     "CompatibilityResult",
+    "LXXMTDivergence",
+    "OmniPatristicWitness",
+    "ConciliarDefinition",
+    "OccurrenceData",
     "AbsoluteMeaningResult",
+    # OmniContextualResolver exports - Main class
     "OmniContextualResolver",
     # NecessityCalculator enums
     "NecessityType",
@@ -135,12 +164,17 @@ __all__ = [
     "LXXChristologicalExtractor",
     # FractalTypologyEngine enums
     "TypologyLayer",
-    "TransformationType",
-    "PatternType",
+    "TypeAntitypeRelation",
+    "CorrespondenceType",
+    "PatristicConfidence",
+    "CovenantPhase",
     # FractalTypologyEngine dataclasses
-    "FractalTypologyConfig",
-    "TypologyConnection",
+    "TypePattern",
+    "LayerConnection",
+    "CovenantArc",
+    "SelfSimilarityAnalysis",
     "FractalTypologyResult",
+    "FractalTypologyConfig",
     # FractalTypologyEngine main class
     "HyperFractalTypologyEngine",
     # PropheticNecessityProver enums
