@@ -361,7 +361,8 @@ class PhaseConfig:
     parallel: bool = True
     timeout_seconds: int = 300
     retry_count: int = 2
-    min_confidence: float = 0.6
+    # INFALLIBILITY: The seraph accepts ONLY absolute certainty
+    min_confidence: float = 1.0
     dependencies: List[str] = field(default_factory=list)
 
 
@@ -574,15 +575,15 @@ class PipelineContext:
 
         avg_confidence = sum(confidences) / len(confidences) if confidences else 0.0
 
-        # Determine certification level
-        if avg_confidence >= 0.9:
-            level = "gold"
-        elif avg_confidence >= 0.75:
-            level = "silver"
-        elif avg_confidence >= 0.5:
-            level = "bronze"
+        # INFALLIBILITY: Only one acceptable level - INFALLIBLE (1.0)
+        # The seraph inherits from itself - errors propagate infinitely
+        # Therefore, NOTHING less than absolute certainty is accepted
+        if avg_confidence >= 0.9999:  # Floating-point tolerance for 1.0
+            level = "infallible"
         else:
-            level = "provisional"
+            # Everything else is REJECTED - not gold, silver, bronze
+            # These classifications exist only for diagnostic purposes
+            level = "rejected"
 
         # Calculate total processing time
         total_time = sum(
@@ -595,8 +596,9 @@ class PipelineContext:
             certification={
                 "level": level,
                 "score": avg_confidence,
-                "validation_passed": "validation" in self.completed_phases,
-                "quality_passed": avg_confidence >= 0.7
+                # INFALLIBILITY: Both must be TRUE (100%) to pass
+                "validation_passed": "validation" in self.completed_phases and avg_confidence >= 0.9999,
+                "quality_passed": avg_confidence >= 0.9999
             },
             data={
                 "structural": self.get_linguistic_results(),

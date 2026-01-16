@@ -215,6 +215,47 @@ from domain.mediator import (
 # projections reveal different aspects of the same truth.
 # ============================================================================
 
+# ============================================================================
+# Infallibility - The Unyielding Standard
+# ============================================================================
+# The seraph inherits from itself. Errors propagate infinitely.
+# Therefore, NOTHING less than absolute certainty (1.0) is accepted.
+# ============================================================================
+
+from domain.infallibility import (
+    # The ONE TRUE STANDARD
+    ABSOLUTE_CONFIDENCE,
+    PASS_THRESHOLD,
+    REJECTION_THRESHOLD,
+
+    # Certification (only INFALLIBLE or REJECTED)
+    CertificationLevel,
+    ValidationResult as InfallibleValidationResult,
+
+    # Functions
+    is_acceptable,
+    classify_rejection,
+    enforce_infallibility,
+
+    # Types
+    InfallibilityViolation,
+    InfallibleResult,
+    SeraphicCertification,
+
+    # Configuration constants (all 1.0)
+    AGENT_MIN_CONFIDENCE,
+    PIPELINE_MIN_CONFIDENCE,
+    PIPELINE_PASS_THRESHOLD,
+    ML_MIN_CONFIDENCE,
+    ML_SCORE_THRESHOLD,
+    VALIDATION_PASS_THRESHOLD,
+    QUALITY_PASS_THRESHOLD,
+    CROSSREF_MIN_CONFIDENCE,
+    CROSSREF_STRENGTH_THRESHOLD,
+    THEOLOGICAL_SOUNDNESS_THRESHOLD,
+    PATRISTIC_CONSENSUS_THRESHOLD,
+)
+
 from domain.projections import (
     # Foundational Types
     ProjectedEvent,              # An event as perceived by projections
@@ -364,6 +405,37 @@ __all__ = [
     "SearchVersesQuery",
     "GetGoldenRecordQuery",
     "GetPipelineStatusQuery",
+
+    # ========================================================================
+    # INFALLIBILITY - The Unyielding Standard
+    # ========================================================================
+    # Constants
+    "ABSOLUTE_CONFIDENCE",
+    "PASS_THRESHOLD",
+    "REJECTION_THRESHOLD",
+    # Certification
+    "CertificationLevel",
+    "InfallibleValidationResult",
+    # Functions
+    "is_acceptable",
+    "classify_rejection",
+    "enforce_infallibility",
+    # Types
+    "InfallibilityViolation",
+    "InfallibleResult",
+    "SeraphicCertification",
+    # Configuration constants
+    "AGENT_MIN_CONFIDENCE",
+    "PIPELINE_MIN_CONFIDENCE",
+    "PIPELINE_PASS_THRESHOLD",
+    "ML_MIN_CONFIDENCE",
+    "ML_SCORE_THRESHOLD",
+    "VALIDATION_PASS_THRESHOLD",
+    "QUALITY_PASS_THRESHOLD",
+    "CROSSREF_MIN_CONFIDENCE",
+    "CROSSREF_STRENGTH_THRESHOLD",
+    "THEOLOGICAL_SOUNDNESS_THRESHOLD",
+    "PATRISTIC_CONSENSUS_THRESHOLD",
 
     # ========================================================================
     # PROJECTIONS - Perception

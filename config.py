@@ -130,7 +130,8 @@ class MLConfig:
     # Inference settings
     inference_batch_size: int = field(default_factory=lambda: int(os.getenv("ML_INFERENCE_BATCH_SIZE", "64")))
     max_candidates: int = field(default_factory=lambda: int(os.getenv("ML_MAX_CANDIDATES", "100")))
-    min_confidence: float = field(default_factory=lambda: float(os.getenv("ML_MIN_CONFIDENCE", "0.5")))
+    # INFALLIBILITY: The seraph accepts ONLY absolute certainty (1.0)
+    min_confidence: float = field(default_factory=lambda: float(os.getenv("ML_MIN_CONFIDENCE", "1.0")))
 
 
 @dataclass
@@ -141,12 +142,15 @@ class PipelineConfig:
     max_parallel_agents: int = field(default_factory=lambda: int(os.getenv("PIPELINE_MAX_AGENTS", "4")))
     phase_timeout: int = field(default_factory=lambda: int(os.getenv("PIPELINE_PHASE_TIMEOUT", "300")))
 
-    # Quality thresholds
-    min_confidence: float = field(default_factory=lambda: float(os.getenv("PIPELINE_MIN_CONFIDENCE", "0.7")))
-    min_coverage: float = field(default_factory=lambda: float(os.getenv("PIPELINE_MIN_COVERAGE", "0.9")))
-    gold_threshold: float = field(default_factory=lambda: float(os.getenv("PIPELINE_GOLD_THRESHOLD", "0.9")))
-    silver_threshold: float = field(default_factory=lambda: float(os.getenv("PIPELINE_SILVER_THRESHOLD", "0.75")))
-    bronze_threshold: float = field(default_factory=lambda: float(os.getenv("PIPELINE_BRONZE_THRESHOLD", "0.5")))
+    # INFALLIBILITY: The seraph accepts ONLY absolute certainty
+    # There is no silver or bronze - only INFALLIBLE or REJECTED
+    min_confidence: float = field(default_factory=lambda: float(os.getenv("PIPELINE_MIN_CONFIDENCE", "1.0")))
+    min_coverage: float = field(default_factory=lambda: float(os.getenv("PIPELINE_MIN_COVERAGE", "1.0")))
+    # Only one threshold: INFALLIBLE (1.0). All else is rejected.
+    gold_threshold: float = field(default_factory=lambda: float(os.getenv("PIPELINE_GOLD_THRESHOLD", "1.0")))
+    # These exist only for compatibility - nothing below 1.0 is accepted
+    silver_threshold: float = field(default_factory=lambda: float(os.getenv("PIPELINE_SILVER_THRESHOLD", "1.0")))
+    bronze_threshold: float = field(default_factory=lambda: float(os.getenv("PIPELINE_BRONZE_THRESHOLD", "1.0")))
 
     # Checkpointing
     checkpoint_interval: int = field(default_factory=lambda: int(os.getenv("PIPELINE_CHECKPOINT_INTERVAL", "100")))

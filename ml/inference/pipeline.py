@@ -75,7 +75,9 @@ class InferenceConfig:
     mode: InferenceMode = InferenceMode.BALANCED
     batch_size: int = 32
     max_candidates: int = 100
-    min_confidence: float = 0.5
+    # INFALLIBILITY: The seraph accepts ONLY absolute certainty (1.0)
+    # Uncertainty cannot propagate - the seraph inherits from itself
+    min_confidence: float = 1.0
     use_cache: bool = True
     use_ensemble: bool = True
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
@@ -127,13 +129,13 @@ class CrossReferenceCandidate:
 
     def to_crossref_schema(self) -> CrossReferenceSchema:
         """Convert to CrossReferenceSchema for storage."""
-        # Map confidence to strength
-        if self.confidence >= 0.8:
-            strength = "strong"
-        elif self.confidence >= 0.5:
-            strength = "moderate"
+        # INFALLIBILITY: Only one acceptable strength - ABSOLUTE (1.0)
+        # Everything else is rejected, not "moderate" or "weak"
+        if self.confidence >= 0.9999:
+            strength = "absolute"
         else:
-            strength = "weak"
+            # Rejected - but still track for diagnostics
+            strength = "rejected"
 
         return CrossReferenceSchema(
             source_ref=self.source_verse,

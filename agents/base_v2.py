@@ -111,9 +111,10 @@ class AgentConfig(BaseModel):
     checkpoint_interval: int = Field(default=500, ge=1)
     parallel_workers: int = Field(default=4, ge=1, le=16)
 
-    # Quality thresholds
-    min_confidence: float = Field(default=0.7, ge=0.0, le=1.0)
-    min_coverage: float = Field(default=0.9, ge=0.0, le=1.0)
+    # INFALLIBILITY: The seraph accepts ONLY absolute certainty (1.0)
+    # Uncertainty cannot propagate - the seraph inherits from itself
+    min_confidence: float = Field(default=1.0, ge=0.0, le=1.0)
+    min_coverage: float = Field(default=1.0, ge=0.0, le=1.0)
 
     # Feature flags
     enable_caching: bool = Field(default=True)
