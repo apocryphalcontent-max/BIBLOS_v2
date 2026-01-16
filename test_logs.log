@@ -1,449 +1,113 @@
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [ WARNING] biblos.ml.validators.theological_constraints:687 - Chronological violation: MAT.1.1 (39) >= GEN.1.1 (0)
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [ WARNING] biblos.ml.validators.theological_constraints:687 - Chronological violation: EXO.12.1 (1) >= GEN.1.1 (0)
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:07:09 [ WARNING] biblos.ml.validators.theological_constraints:687 - Chronological violation: MAT.1.1 (39) >= GEN.1.1 (0)
-2026-01-16 02:07:09 [ WARNING] biblos.ml.validators.theological_constraints:1285 - IMPOSSIBLE constraint violation
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1251 - Composite modifier from 3 constraints: 1.265
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:1240 - IMPOSSIBLE constraint violation - returning 0.0
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1251 - Composite modifier from 2 constraints: 0.900
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1283 - Constraint passed
-2026-01-16 02:07:09 [   DEBUG] biblos.ml.validators.theological_constraints:1251 - Composite modifier from 4 constraints: 1.500
-2026-01-16 02:07:09 [    INFO] biblos.ml.validators.theological_constraints:616 - TheologicalConstraintValidator initialized with min_patristic_witnesses=2
-2026-01-16 02:07:09 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: λόγος in JHN.1.1 (greek)
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 8 occurrences of 'λόγος'
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 5 semantic meanings
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: שָׁמַיִם in GEN.1.1 (hebrew)
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 0 occurrences of 'שָׁמַיִם'
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 1 semantic meanings
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: λόγος in JHN.1.1 (greek)
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 8 occurrences of 'λόγος'
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 5 semantic meanings
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:332 - Cache hit for resolution: רוּחַ:GEN.1.2:hebrew
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:335 - Resolving absolute meaning: רוּחַ in GEN.1.2 (hebrew)
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:340 - Found 10 occurrences of 'רוּחַ'
+2026-01-16 02:18:10 [   DEBUG] ml.engines.omnicontext_resolver:344 - Extracted 4 semantic meanings
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:1441 - OmniContextualResolver cleaned up
+2026-01-16 02:18:10 [   DEBUG] asyncio:631 - Using proactor: IocpProactor
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:293 - Initializing OmniContextualResolver
+2026-01-16 02:18:10 [    INFO] ml.engines.omnicontext_resolver:299 - OmniContextualResolver initialized

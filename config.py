@@ -372,6 +372,70 @@ class TheologicalConstraintConfig:
 
 
 @dataclass
+class OmniContextualConfig:
+    """
+    Configuration for the Omni-Contextual Resolver Engine.
+
+    The First Impossible Oracle: Determines absolute word meaning via
+    eliminative reasoning across all biblical occurrences.
+    """
+    # Analysis limits
+    max_occurrences_full_analysis: int = field(
+        default_factory=lambda: int(os.getenv("OMNI_MAX_OCCURRENCES", "500"))
+    )
+    sample_size_large_words: int = field(
+        default_factory=lambda: int(os.getenv("OMNI_SAMPLE_SIZE", "200"))
+    )
+
+    # Confidence thresholds
+    elimination_confidence_threshold: float = field(
+        default_factory=lambda: float(os.getenv("OMNI_ELIMINATION_THRESHOLD", "0.7"))
+    )
+    semantic_similarity_threshold: float = field(
+        default_factory=lambda: float(os.getenv("OMNI_SIMILARITY_THRESHOLD", "0.8"))
+    )
+
+    # Scoring weights
+    parallel_support_weight: float = field(
+        default_factory=lambda: float(os.getenv("OMNI_PARALLEL_WEIGHT", "0.3"))
+    )
+    theological_weight_multiplier: float = field(
+        default_factory=lambda: float(os.getenv("OMNI_THEOLOGICAL_MULTIPLIER", "1.2"))
+    )
+
+    # Caching configuration
+    cache_semantic_ranges: bool = field(
+        default_factory=lambda: os.getenv("OMNI_CACHE_RANGES", "true").lower() == "true"
+    )
+    cache_ttl_hours: int = field(
+        default_factory=lambda: int(os.getenv("OMNI_CACHE_TTL_HOURS", "168"))
+    )
+
+    # Performance tuning
+    enable_embedding_clustering: bool = field(
+        default_factory=lambda: os.getenv("OMNI_EMBEDDING_CLUSTERING", "true").lower() == "true"
+    )
+    max_parallel_lookups: int = field(
+        default_factory=lambda: int(os.getenv("OMNI_MAX_PARALLEL", "10"))
+    )
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert to dictionary for engine initialization."""
+        return {
+            "max_occurrences_full_analysis": self.max_occurrences_full_analysis,
+            "sample_size_large_words": self.sample_size_large_words,
+            "elimination_confidence_threshold": self.elimination_confidence_threshold,
+            "semantic_similarity_threshold": self.semantic_similarity_threshold,
+            "parallel_support_weight": self.parallel_support_weight,
+            "theological_weight_multiplier": self.theological_weight_multiplier,
+            "cache_semantic_ranges": self.cache_semantic_ranges,
+            "cache_ttl_hours": self.cache_ttl_hours,
+            "enable_embedding_clustering": self.enable_embedding_clustering,
+            "max_parallel_lookups": self.max_parallel_lookups,
+        }
+
+
+@dataclass
 class APIConfig:
     """API server configuration."""
     host: str = field(default_factory=lambda: os.getenv("API_HOST", "0.0.0.0"))
@@ -405,6 +469,7 @@ class Config:
     observability: ObservabilityConfig = field(default_factory=ObservabilityConfig)
     mutual_transformation: MutualTransformationConfig = field(default_factory=MutualTransformationConfig)
     theological_constraint: TheologicalConstraintConfig = field(default_factory=TheologicalConstraintConfig)
+    omni_contextual: OmniContextualConfig = field(default_factory=OmniContextualConfig)
 
     def __post_init__(self):
         """Create directories if they don't exist."""
