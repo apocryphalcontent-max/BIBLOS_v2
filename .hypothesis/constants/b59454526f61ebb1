@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\transformers\models\mpnet\tokenization_mpnet.py
+# hypothesis_version: 6.150.2
+
+[100, 13312, 19903, 19968, 40959, 63744, 64255, 65533, 131072, 173791, 173824, 177983, 177984, 178207, 178208, 183983, 194560, 195103, ' ##', '##', '-', '</s>', '<mask>', '<pad>', '<s>', 'MPNetTokenizer', 'Mn', 'NFC', 'NFD', '[UNK]', 'attention_mask', 'input_ids', 'r', 'utf-8', 'vocab.txt', 'vocab_file', 'w']

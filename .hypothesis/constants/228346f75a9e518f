@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sentence_transformers\models\Dense.py
+# hypothesis_version: 6.150.2
+
+['Dense({})', 'activation_function', 'bias', 'config.json', 'cpu', 'in_features', 'out_features', 'pytorch_model.bin', 'sentence_embedding', 'w']

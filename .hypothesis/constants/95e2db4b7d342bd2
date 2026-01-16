@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\accelerate\utils\transformer_engine.py
+# hypothesis_version: 6.150.2
+
+['LayerNorm', '__func__', 'amax_compute_algo', 'amax_history_len', 'fp8_format']

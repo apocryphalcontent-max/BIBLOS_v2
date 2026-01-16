@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\transformers\tokenization_utils.py
+# hypothesis_version: 6.150.2
+
+[123, 126, '(', '(.+?)', ')|', 'C', 'P', 'Zs', 'added_tokens.json', 'added_tokens_decoder', 'do_lower_case', 'normalized', 'special', 'split_special_tokens', 'use_source_tokenizer', '|']

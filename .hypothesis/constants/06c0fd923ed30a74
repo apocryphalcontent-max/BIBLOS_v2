@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\accelerate\utils\offload.py
+# hypothesis_version: 6.150.2
+
+['.', 'bfloat16', 'cpu', 'dtype', 'index.json', 'int16', 'pt', 'r', 'safetensors_file', 'shape', 'torch.bfloat16', 'utf-8', 'w', 'w+', 'weight_name']

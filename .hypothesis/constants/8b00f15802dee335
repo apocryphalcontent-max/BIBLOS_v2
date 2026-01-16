@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\observability\metrics.py
+# hypothesis_version: 6.150.2
+
+[0.0, 0.005, 0.01, 0.025, 0.05, 0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99, 1.0, 2.5, 5.0, 10.0, 30.0, 60.0, 30000, 60000, '.', '1', '1.0.0', '2.0.0', 'BiblosMetrics', 'ENVIRONMENT', 'OTEL_CONSOLE_EXPORT', 'OTEL_METRICS_ENABLED', 'T', 'Total API requests', 'Total cache hits', 'Total cache misses', 'UNKNOWN', 'agent', 'biblos-v2', 'biblos_batch_size', 'book', 'cache_type', 'completed', 'confidence', 'connection_type', 'database', 'development', 'embedding', 'endpoint', 'error', 'extraction_type', 'failed', 'false', 'gnn', 'method', 'model', 'operation', 'phase', 'postgres', 's', 'shutdown', 'source_book', 'status', 'status_code', 'target_book', 'true', 'unknown']

@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\prompt_toolkit\lexers\pygments.py
+# hypothesis_version: 6.150.2
+
+[100, 500, '<[/a-zA-Z]', 'HTML', 'JavaScript', 'PygmentsLexer', 'Python', 'Python 3', 'RegexSync', 'SyncFromStart', 'SyntaxSync', '\\bfunction\\b', '^', '^\\s*(class|def)\\s+', 'class:']

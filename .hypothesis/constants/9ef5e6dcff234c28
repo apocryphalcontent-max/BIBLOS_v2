@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\transformers\integrations\accelerate.py
+# hypothesis_version: 6.150.2
+
+['device', 'empty', 'full', 'meta', 'nn.Module', 'ones', 'requires_grad', 'torch.device', 'zeros']

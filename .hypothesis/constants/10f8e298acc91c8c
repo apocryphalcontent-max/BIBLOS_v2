@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\transformers\models\bert\tokenization_bert_fast.py
+# hypothesis_version: 6.150.2
+
+['BertTokenizerFast', '[CLS]', '[MASK]', '[PAD]', '[SEP]', '[UNK]', 'handle_chinese_chars', 'lowercase', 'strip_accents', 'tokenizer.json', 'tokenizer_file', 'type', 'vocab.txt', 'vocab_file']

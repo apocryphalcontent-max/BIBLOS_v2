@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\transformers\modeling_flash_attention_utils.py
+# hypothesis_version: 6.150.2
+
+[0.0, '0', '1', 'causal', 'deterministic', 'device', 'dropout', 'dropout_p', 'dtype', 'flash_attention_2', 'flash_attention_3', 'flash_attn_func', 'mps', 's_aux', 'sliding_window', 'softcap', 'softmax_scale', 'window_size']

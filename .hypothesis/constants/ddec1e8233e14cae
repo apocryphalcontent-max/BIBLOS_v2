@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\tf\dataset\modify.py
+# hypothesis_version: 6.150.2
+
+[',', ', ', 'Add features: ', 'Add types: ', 'Already occurs', 'Delete features: ', 'Delete types: ', 'Merge features: ', 'Merge types: ', 'No lower bound given', 'No upper bound given', 'Not in data set', 'Output directory: ', 'Replace slot type: ', 'add features ...', 'add types ...', 'all done', 'applying updates ...', 'delete features ...', 'delete types ...', 'done', 'edge', 'edgeFeatures', 'edgeValues', 'edges', 'features: ', 'int', 'max node: ', 'merge features ...', 'merge types ...', 'node', 'nodeFeatures', 'nodeFrom', 'nodeSlots', 'nodeTo', 'nodes', 'not empty: ', 'sectionFeatures', 'sectionTypes', 'str', 'structureFeatures', 'structureTypes', 'types: ', 'valueType', 'version']

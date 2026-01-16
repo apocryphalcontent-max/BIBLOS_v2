@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sentence_transformers\evaluation\BinaryClassificationEvaluator.py
+# hypothesis_version: 6.150.2
+
+[100, ' dataset', ':', 'Cosine-Similarity', 'Dot-Product', 'Euclidean-Distance', 'Manhattan-Distance', '_', '_results.csv', 'a', 'accuracy', 'accuracy_threshold', 'ap', 'cossim', 'cossim_accuracy', 'cossim_ap', 'cossim_f1', 'cossim_f1_threshold', 'cossim_precision', 'cossim_recall', 'dot', 'dot_accuracy', 'dot_ap', 'dot_f1', 'dot_f1_threshold', 'dot_precision', 'dot_recall', 'epoch', 'euclidean', 'euclidean_accuracy', 'euclidean_ap', 'euclidean_f1', 'euclidean_precision', 'euclidean_recall', 'f1', 'f1_threshold', 'manhattan', 'manhattan_accuracy', 'manhattan_ap', 'manhattan_f1', 'manhattan_precision', 'manhattan_recall', 'precision', 'recall', 'steps', 'utf-8', 'w']

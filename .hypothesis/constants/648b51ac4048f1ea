@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sklearn\utils\discovery.py
+# hypothesis_version: 6.150.2
+
+['.', '._', 'BaseEstimator', 'Display', '_', '__abstractmethods__', 'classifier', 'cluster', 'conftest', 'estimator_checks', 'experimental', 'externals', 'regressor', 'setup', 'sklearn.', 'tests', 'transformer']

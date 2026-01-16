@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sentence_transformers\evaluation\InformationRetrievalEvaluator.py
+# hypothesis_version: 6.150.2
+
+[1.0, 100, 50000, ' after epoch {}:', ' dataset', ',', ':', 'Accuracy@{}: {:.2f}%', 'Corpus Chunks', 'Corpus: {}\n', 'MAP@{}: {:.4f}', 'MRR@{}: {:.4f}', 'NDCG@{}: {:.4f}', 'Queries: {}', 'Recall@{}: {:.2f}%', 'Score-Function: {}', '_', '_results.csv', 'a', 'accuracy@k', 'corpus_id', 'cos_sim', 'dot_score', 'epoch', 'map@k', 'mrr@k', 'ndcg@k', 'precision@k', 'recall@k', 'score', 'steps', 'utf-8', 'w', '{}-Accuracy@{}', '{}-MAP@{}', '{}-MRR@{}', '{}-NDCG@{}', '{}-Precision@{}', '{}-Recall@{}']

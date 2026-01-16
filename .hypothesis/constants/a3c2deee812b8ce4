@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sklearn\metrics\cluster\_supervised.py
+# hypothesis_version: 6.150.2
+
+[0.0, 1.0, 2.0, 'arithmetic', 'array-like', 'average_method', 'beta', 'boolean', 'contingency', 'continuous', 'coo', 'csc', 'csr', 'deprecated', 'dtype', 'eps', 'float64', 'geometric', 'labels', 'labels_pred', 'labels_true', 'left', 'max', 'min', 'no_validation', 'sparse', 'sparse matrix']

@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\agents\scrapers\text_cleaner.py
+# hypothesis_version: 6.150.2
+
+[0.0, 0.05, 0.1, 1.0, 100, '\x00', ' {2,}', '"', "'", '(\\w+)-\\s*\\n\\s*(\\w+)', '.json', '.md', '.txt', '0', '1', 'I', 'NFC', 'O', '\\1\\2', '\\brn\\b', '\\n{3,}', '^\\s*[,.;:!?]\\s*$', 'check_context', 'ff', 'ffi', 'ffl', 'fi', 'fl', 'in_word', 'l', 'line_count', 'original_length', 'pattern', 'processed', 'r', 'rn', 'standalone', 'text_cleaner', 'utf-8', 'vv', 'w', 'word_count', '|', '«', '»', 'Ã ', 'Ã¢', 'Ã¨', 'Ã©', 'Ã´', 'Ã¶', 'Ã¼', 'à', 'â', 'â€', 'â€"', 'â€œ', 'â€™', 'è', 'é', 'ô', 'ö', 'ü', 'ά', 'έ', 'ή', 'ί', 'ό', 'ύ', 'ώ', '–', '—', '„', '‹', '›', 'ﬀ', 'ﬁ', 'ﬂ', 'ﬃ', 'ﬄ']

@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sentence_transformers\models\WeightedLayerPooling.py
+# hypothesis_version: 6.150.2
+
+['all_layer_embeddings', 'config.json', 'cpu', 'layer_start', 'num_hidden_layers', 'pytorch_model.bin', 'token_embeddings', 'w']

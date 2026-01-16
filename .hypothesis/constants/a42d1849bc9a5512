@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\transformers\pytorch_utils.py
+# hypothesis_version: 6.150.2
+
+[0.02, '1.12', '1.13', '2.0', '2.1', '2.2', '2.3', '2.4', '2.5', '2.6', '2.8', 'cpu', 'cuda', 'mps', 'xla', 'xpu']

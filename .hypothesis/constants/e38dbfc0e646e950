@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\ml\models\gnn_discovery.py
+# hypothesis_version: 6.150.2
+
+[0.2, 0.5, 100, 256, 768, 'biblos.ml.models.gnn', 'conceptual', 'genealogical', 'geographical', 'historical', 'liturgical', 'narrative', 'prophetic', 'thematic', 'torch.Tensor', 'typological', 'verbal']

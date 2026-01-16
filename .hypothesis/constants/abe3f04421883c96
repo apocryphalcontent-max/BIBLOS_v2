@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\core\async_utils.py
+# hypothesis_version: 6.150.2
+
+[1.0, 10.0, 30.0, 300.0, 100, 1000, 'AsyncTaskGroup', 'AsyncThrottler', 'P', 'Rate limiter timeout', 'T', 'batch.batch_count', 'batch.batch_size', 'batch.chunk_size', 'batch.process', 'batch.results_count', 'batch.total_items']

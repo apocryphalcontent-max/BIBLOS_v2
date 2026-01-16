@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sentence_transformers\evaluation\MSEEvaluator.py
+# hypothesis_version: 6.150.2
+
+[100, ' after epoch {}:', ' dataset', ':', 'MSE', 'MSE (*100):\t{:4f}', '_results.csv', 'a', 'epoch', 'mse_evaluation_', 'steps', 'utf-8', 'w']

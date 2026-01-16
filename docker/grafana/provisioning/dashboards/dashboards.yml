@@ -1,0 +1,18 @@
+# Grafana Dashboard Provisioning Configuration
+# =============================================================================
+
+apiVersion: 1
+
+providers:
+  - name: 'BIBLOS v2 Dashboards'
+    orgId: 1
+    folder: 'BIBLOS v2'
+    folderUid: 'biblos-v2'
+    type: file
+    disableDeletion: false
+    editable: true
+    updateIntervalSeconds: 30
+    allowUiUpdates: true
+    options:
+      path: /etc/grafana/provisioning/dashboards
+      foldersFromFilesStructure: false

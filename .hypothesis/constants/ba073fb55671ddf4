@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sympy\logic\inference.py
+# hypothesis_version: 6.150.2
+
+['dpll', 'dpll2', 'minisat22', 'pycosat', 'pysat', 'z3']

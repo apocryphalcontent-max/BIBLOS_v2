@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\prompt_toolkit\cursor_shapes.py
+# hypothesis_version: 6.150.2
+
+['BEAM', 'BLINKING_BEAM', 'BLINKING_BLOCK', 'BLINKING_UNDERLINE', 'BLOCK', 'CursorShape', 'CursorShapeConfig', 'UNDERLINE', '_NEVER_CHANGE']

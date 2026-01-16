@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\agents\base.py
+# hypothesis_version: 6.150.2
+
+[0.0, 0.7, 0.9, 80.0, 1000.0, 300, 500, 1000, 4096, '032x', '; ', 'Additional context', 'ExtractionResult', 'Failed validation', 'T', 'Validation failed', 'agent.name', 'agent_error', 'agent_name', 'avg_confidence', 'avg_time_ms', 'batch.failed', 'batch.size', 'batch.successful', 'cache.hit', 'cache.key', 'completed', 'confidence', 'context', 'data', 'error.code', 'error.type', 'errors', 'extraction_type', 'failed', 'gpt-4-turbo-preview', 'metadata', 'processing_time_ms', 'resource_error', 'result.confidence', 'result.data_keys', 'result.error_count', 'result.status', 'result.warning_count', 'status', 'success', 'success_rate', 'successful', 'text', 'timeout', 'timestamp', 'tool.name', 'total_processed', 'total_time_ms', 'trace_id', 'unexpected', 'validation.passed', 'validation.warning', 'validation_error', 'verse.id', 'verse.text_length', 'verse_id', 'warnings']

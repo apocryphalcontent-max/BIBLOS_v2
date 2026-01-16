@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\transformers\quantizers\quantizer_aqlm.py
+# hypothesis_version: 6.150.2
+
+['1.0.2', 'PreTrainedModel', 'aqlm', 'torch.dtype']

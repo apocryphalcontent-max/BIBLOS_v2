@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\scipy\stats\distributions.py
+# hypothesis_version: 6.150.2
+
+['entropy', 'levy_stable', 'rv_continuous', 'rv_discrete', 'rv_histogram']

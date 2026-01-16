@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sentence_transformers\models\Pooling.py
+# hypothesis_version: 6.150.2
+
+[-1000000000.0, 1e-09, '+', 'Pooling({})', 'attention_mask', 'cls', 'cls_token_embeddings', 'config.json', 'include_prompt', 'lasttoken', 'max', 'mean', 'mean_sqrt_len_tokens', 'prompt_length', 'sentence_embedding', 'token_embeddings', 'token_weights_sum', 'w', 'weightedmean']

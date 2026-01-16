@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\ml\embeddings\ensemble.py
+# hypothesis_version: 6.150.2
+
+[0.0, 0.15, 0.25, 0.35, 1.5, 384, 768, 1000, 10000, 50000, '[\\u0590-\\u05FF]', '[\\u0700-\\u074F]', '[\\u2C80-\\u2CFF]', '[a-zA-Z]', 'base_weight', 'cop', 'cpu', 'dimensions', 'el', 'en', 'grc', 'greek', 'hbo', 'he', 'hebrew', 'hit_rate', 'languages', 'memory_items', 'minilm', 'mixed', 'model_id', 'mpnet', 'syc', 'total_hits', 'total_misses']

@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sklearn\metrics\_pairwise_distances_reduction\_dispatcher.py
+# hypothesis_version: 6.150.2
+
+['c_contiguous', 'csr', 'distance', 'euclidean', 'flags', 'hamming', 'mahalanobis', 'pyfunc', 'sqeuclidean', 'uniform']

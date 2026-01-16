@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\pipeline\recovery.py
+# hypothesis_version: 6.150.2
+
+[0.5, 100, 168, 1000, 3600, 10000, '%Y-%m-%d %H:00', '+', '-', 'Checkpoint', 'DLQEntry', 'Unknown error', 'auto_reprocess', 'biblos-phases', 'biblos.recovery', 'biblos:checkpoint:', 'by_error_type', 'by_hour', 'by_source_topic', 'checkpoint_id', 'checkpoints_created', 'consumer_id', 'correlation_id', 'dlq_entries_total', 'dlq_summary', 'error', 'final_retry_count', 'healthy', 'initialized', 'last_message_id', 'length', 'message_id', 'metadata', 'metrics', 'newest_entry', 'oldest_entry', 'original_event_type', 'original_message_id', 'original_payload', 'processed_count', 'recoveries_performed', 'recovery', 'request', 'running', 'source_topic', 'stale_cleanup', 'time_since_delivered', 'timestamp', 'topic', 'total_entries', 'unknown', 'value']

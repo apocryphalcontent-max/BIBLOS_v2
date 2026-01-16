@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\opentelemetry\propagators\b3\__init__.py
+# hypothesis_version: 6.150.2
+
+['-', '0', '1', 'True', '[\\da-fA-F]{16}', 'b3', 'd', 'true', 'x-b3-flags', 'x-b3-sampled', 'x-b3-spanid', 'x-b3-traceid']

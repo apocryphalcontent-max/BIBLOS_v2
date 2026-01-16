@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sentence_transformers\models\CNN.py
+# hypothesis_version: 6.150.2
+
+[256, 'cnn_config.json', 'cpu', 'kernel_sizes', 'out_channels', 'pytorch_model.bin', 'r', 'token_embeddings', 'w']

@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\ml\models\classifier.py
+# hypothesis_version: 6.150.2
+
+[0.0, 0.3, 0.5, 512, 768, 'conceptual', 'genealogical', 'geographical', 'historical', 'liturgical', 'narrative', 'prophetic', 'thematic', 'torch.Tensor', 'typological', 'unknown', 'verbal']

@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\ml\config.py
+# hypothesis_version: 6.150.2
+
+[0.0001, 0.01, 0.15, 0.2, 0.25, 0.35, 1.0, 100, 256, 384, 512, 768, 1000, 3600, 100000, 'BIBLOS_ML_', '__', 'all-MiniLM-L6-v2', 'all-mpnet-base-v2', 'biblos-v2', 'conceptual', 'cpu', 'cuda', 'custom-ancient-greek', 'data', 'el', 'en', 'env_nested_delimiter', 'env_prefix', 'genealogical', 'geographical', 'grc', 'greek', 'hbo', 'he', 'hebrew', 'historical', 'liturgical', 'logs', 'mean', 'minilm', 'mixed', 'mlruns/artifacts', 'models', 'models/production', 'mpnet', 'mps', 'narrative', 'prophetic', 'sqlite:///mlruns.db', 'thematic', 'typological', 'verbal']

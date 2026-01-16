@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\transformers\quantizers\quantizer_higgs.py
+# hypothesis_version: 6.150.2
+
+['.', '.bias', '.weight', 'PreTrainedModel', 'cpu', 'disk', 'flute-kernel', 'torch.Tensor', 'torch.device', 'torch.dtype', 'tune_metadata', 'weight']

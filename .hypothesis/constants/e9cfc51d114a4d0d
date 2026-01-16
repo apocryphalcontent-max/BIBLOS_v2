@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\agents\linguistic\__init__.py
+# hypothesis_version: 6.150.2
+
+['GrammateuAgent', 'MorphologosAgent', 'SemantikosAgent', 'SyntaktikosAgent']

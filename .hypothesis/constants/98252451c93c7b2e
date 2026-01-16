@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\core\errors.py
+# hypothesis_version: 6.150.2
+
+['016x', '032x', 'AGENT_ERROR', 'BIBLOS_ERROR', 'BiblosError', 'CONFIG_ERROR', 'DATABASE_ERROR', 'ErrorContext', 'ML_ERROR', 'P', 'PIPELINE_ERROR', 'RESOURCE_ERROR', 'T', 'TIMEOUT_ERROR', 'VALIDATION_ERROR', 'agent_name', 'cause', 'component', 'context', 'critical', 'debug', 'error', 'error.code', 'error.component', 'error.operation', 'error.recoverable', 'error.severity', 'error_code', 'fatal', 'info', 'input_data', 'message', 'metadata', 'operation', 'phase_name', 'recoverable', 'severity', 'span_id', 'stack_trace', 'suggestions', 'timestamp', 'trace_id', 'unknown', 'verse_id', 'warning']

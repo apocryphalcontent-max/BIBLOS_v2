@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\transformers\generation\continuous_batching\requests.py
+# hypothesis_version: 6.150.2
+
+['\n)', ',\n\t', 'RequestState(\n\t', 'cpu', 'cuda', 'decoding', 'failed', 'finished', 'mps', 'pending', 'prefilling', 'prefilling_split']

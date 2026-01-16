@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\ml\cache.py
+# hypothesis_version: 6.150.2
+
+[0.0, 3600.0, 512, 1000, 1024, 10000, 'T', '__sizeof__', 'avg_access_time_ms', 'cache.hit', 'entry_count', 'evictions', 'hit_rate', 'hits', 'misses', 'total_size_bytes']

@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\transformers\loss\loss_grounding_dino.py
+# hypothesis_version: 6.150.2
+
+[1e-08, 0.25, 2.0, '_enc', 'auxiliary_outputs', 'boxes', 'cardinality', 'class_labels', 'label_maps', 'labels', 'logits', 'loss_bbox', 'loss_ce', 'loss_giou', 'none', 'pred_boxes', 'text_mask']

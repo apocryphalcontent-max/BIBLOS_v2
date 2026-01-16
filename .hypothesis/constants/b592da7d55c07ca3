@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\tf\ner\variants.py
+# hypothesis_version: 6.150.2
+
+[100, '\n</body>\n</html>\n', '  ...', '  Occurrences:', ' +([^A-Za-z])', '#', "'s", "([’']) +", '-', '-----', '</code>', '</code> or <code>', '<code>', 'Set up analiticcl', '\\1', '`', '` or `', 'analiticcl', 'begin', 'candidate', 'chunk', 'cyan', 'end', 'goldenrod', 'input', 'lightgreen', 'occurences', 'offset', 'row', 's', 'score', 'text', 'text-orig-full', 'trigger', 'variant', 'variants', 'w', 'yellow', '«css»']

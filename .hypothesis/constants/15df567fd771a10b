@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\tf\convert\mql.py
+# hypothesis_version: 6.150.2
+
+[1000, 50000, 100000, 1000000, '\n]\n', '\n]\nGO\n', '"', '";', '"{}"', "'", "'{}'", '(?:\\\\x..)+', '({})', ',', ',\n\t', ':', ':=', ':="', ';', '=', 'CREATE ENUMERATION', 'CREATE OBJECT', 'CREATE OBJECT\n', 'CREATE OBJECT TYPE', 'Computed', 'DEFAULT', 'Data', 'Done', 'FROM MONADS', 'FROM SET', 'GO', 'LIST OF id_d', 'Making TF data ...', 'NIL', 'Nil', 'No objects found', 'WITH ID_D', 'WITH OBJECT TYPE', 'Warp', 'Writing enumerations', '[', '\\"', ']', '__', '__levels__', 'all', 'ascii', 'default', 'edge', 'feats', 'features ...', 'id_d', 'int', 'integer', 'integer DEFAULT 0', 'latin1', 'locations', 'metadata ...', 'monads', 'nil', 'node', 'oslots', 'oslots ...', 'otext', 'otype', 'repoLocation', 'str', 'string', 'string DEFAULT ""', 'utf-8', 'utf8', 'valueType', 'values', 'w', '{', '{} = {}', '{} data: {} objects', '{}_enum', '}']

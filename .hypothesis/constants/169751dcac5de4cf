@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\langgraph\pregel\_algo.py
+# hypothesis_version: 6.150.2
+
+['*', '-', '__dynamic__', '_counter', 'cache_policy', 'callbacks', 'channel_values', 'channel_versions', 'func', 'id', 'input', 'langgraph_node', 'langgraph_path', 'langgraph_step', 'langgraph_triggers', 'metadata', 'retry_policy', 'tags', 'v', 'versions_seen']

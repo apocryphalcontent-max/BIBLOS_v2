@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\agents\linguistic\grammateus.py
+# hypothesis_version: 6.150.2
+
+[0.1, 0.6, 0.7, 1.0, 500, '"', "'", ':', 'AMO', 'DAN', 'DEU', 'EZK', 'HOS', 'ISA', 'JER', 'JOL', 'LAM', 'LEV', 'PRO', 'PSA', 'SNG', '[.!?]', '^(.{10,}).*\\1$', 'according to', 'after', 'anaphora', 'and', 'as it says', 'avg_word_length', 'because', 'behold', 'book', 'but', 'chiasm', 'clauses', 'commandment', 'discourse', 'for', 'fulfilled', 'grammateus', 'has_direct_speech', 'has_quotation', 'inclusio', 'is_quotation', 'it is written', 'law', 'must', 'narrative', 'oracle', 'ordinance', 'parallelism', 'poetry', 'praise', 'prophecy', 'psalm', 'repetition', 'rhetorical_devices', 'said', 'says the lord', 'scripture says', 'selah', 'sentence_count', 'shall', 'song', 'spoken by', 'statute', 'text_type', 'then', 'therefore', 'thus', 'tokens', 'unique_words', 'vision', 'went', 'when', 'word_count']

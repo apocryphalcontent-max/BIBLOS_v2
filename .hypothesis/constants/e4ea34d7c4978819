@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\pipeline\base.py
+# hypothesis_version: 6.150.2
+
+[0.0, 0.5, 0.6, 0.7, 0.75, 0.9, 300, 'PhaseResult', 'agent_count', 'agent_results', 'allographos', 'avg_confidence', 'bronze', 'completed', 'completed_phases', 'confidence', 'cross_references', 'dogmatikos', 'duration', 'error', 'failed', 'gold', 'grammateus', 'harmonikos', 'level', 'liturgikos', 'metadata', 'metrics', 'morphological', 'morphologos', 'paradeigma', 'patrologos', 'pending', 'phase_name', 'provisional', 'quality_passed', 'score', 'semantikos', 'silver', 'status', 'structural', 'syndesmos', 'syntaktikos', 'text', 'theological', 'theologos', 'topos', 'typologos', 'validation', 'validation_passed', 'verse_id']

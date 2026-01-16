@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sentence_transformers\evaluation\TranslationEvaluator.py
+# hypothesis_version: 6.150.2
+
+[100, ' after epoch {}:', ' dataset', '(Score: %.4f)', ':', 'Argmax score:', 'CORRECT', 'INCORRECT', 'Src:', 'Trg:', '_', '_results.csv', 'a', 'epoch', 'i:', 'j:', 'src2trg', 'steps', 'trg2src', 'utf-8', 'vs. correct score:', 'w']

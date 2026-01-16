@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\IPython\core\inputtransformer2.py
+# hypothesis_version: 6.150.2
+
+[500, '!', '!!', '", "', '%', '%%', '%%\\w+\\?', '%s("%s")', '%s(%s)', '(', ')', '*', ',', ', ', '/', ':', ';', '=', '?', '??', '[', '\\', '\\\n', ']', '^(>>>|\\.\\.\\.)( |$)', '^>>>( |$)', '^[ \\t]+', 'complete', 'error', 'exec', 'expected EOF', 'has_side_effects', 'incomplete', 'invalid', 'pinfo', 'pinfo2', 'psearch', '{', '}']

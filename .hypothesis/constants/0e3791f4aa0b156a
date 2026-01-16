@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sentence_transformers\evaluation\RerankingEvaluator.py
+# hypothesis_version: 6.150.2
+
+[100, ' after epoch {}:', ' dataset', ':', 'MAP', 'MAP: {:.2f}', 'MRR@{}', 'MRR@{}: {:.2f}', 'NDCG@{}', 'NDCG@{}: {:.2f}', 'RerankingEvaluator', 'Samples', '_', 'a', 'epoch', 'map', 'mrr', 'ndcg', 'negative', 'positive', 'query', 'steps', 'utf-8', 'w']

@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\transformers\integrations\flash_paged.py
+# hypothesis_version: 6.150.2
+
+['full_attention', 's_aux', 'sliding_attention', 'sliding_window']

@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\tf\ner\helpers.py
+# hypothesis_version: 6.150.2
+
+['(?:\\s|[\u200b\u200c\u200d])+', '.', 'Mn', 'NFD', '[.:@]', '\\W+', '\\s+', '\\w+|\\W', '_', 'c', 'n', 'o', '~']

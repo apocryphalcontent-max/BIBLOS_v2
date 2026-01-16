@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\jedi\inference\helpers.py
+# hypothesis_version: 6.150.2
+
+[',', '.', '...', ':', '\\d.\\d', 'atom', 'await', 'dist-packages', 'dotted_name', 'error_node', 'fstring', 'lib', 'matplotlib', 'name', 'numpy', 'pandas', 'python', 'site-packages', 'tensorflow', 'trailer']

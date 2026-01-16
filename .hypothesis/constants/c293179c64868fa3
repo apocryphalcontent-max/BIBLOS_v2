@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\accelerate\utils\environment.py
+# hypothesis_version: 6.150.2
+
+[',', '.', '0', '1', '550.40.07', ';', '<', '>', 'ACCELERATE_', 'LOCAL_RANK', 'LOCAL_WORLD_SIZE', 'MPI_LOCALNRANKS', 'MPI_LOCALRANKID', 'MV2_COMM_WORLD_RANK', 'MV2_COMM_WORLD_SIZE', 'OMPI_COMM_WORLD_RANK', 'OMPI_COMM_WORLD_SIZE', 'PMI_RANK', 'PMI_SIZE', 'RANK', 'RTX 40', 'WORLD_SIZE', 'Windows', 'f', 'false', 'help', 'local_rank', 'local_world_size', 'n', 'no', 'nvidia-smi', 'off', 'on', 'rank', 't', 'test', 'true', 'world_size', 'y', 'yes']

@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sklearn\utils\_response.py
+# hypothesis_version: 6.150.2
+
+['auto', 'binary', 'decision_function', 'multiclass', 'multilabel-indicator', 'predict', 'predict_log_proba', 'predict_proba']

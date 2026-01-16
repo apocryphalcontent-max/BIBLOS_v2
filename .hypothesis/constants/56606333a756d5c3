@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\tf\search\relations.py
+# hypothesis_version: 6.150.2
+
+[0.4, 0.49, 0.5, 0.8, 0.9, 0.99, 0.999, 10000, '#', '##', '&&', '-', '.', '.f#g.', '.f.', '.f<g.', '.f=g.', '.f>g.', '.f~r~g.', '.g#f.', '.g=f.', '.g~r~f.', '::', ':=', ':>', ':k:', ':k=', ':k>', '<', '<:', '<<', '<k:', '=', '=:', '==', '=k:', '>', '>>', 'I', '[[', ']]', 'acro', 'desc', 'edges', 'f', 'func', 'g', 'k', 'left embeds right', 'left.f # right.g', 'left.f < right.g', 'left.f = right.f', 'left.f = right.g', 'left.f > right.g', 'r', 'spin', '{f}', '{g}', '{r}', '||']

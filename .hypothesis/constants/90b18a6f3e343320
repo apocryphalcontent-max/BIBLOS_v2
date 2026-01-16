@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sentence_transformers\models\Transformer.py
+# hypothesis_version: 6.150.2
+
+['all_layer_embeddings', 'attention_mask', 'config', 'decoder.*', 'do_lower_case', 'input_ids', 'longest_first', 'max_seq_length', 'model_args', 'model_max_length', 'pt', 'text_keys', 'token_embeddings', 'token_type_ids', 'trust_remote_code', 'w']

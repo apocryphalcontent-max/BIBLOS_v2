@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\accelerate\hooks.py
+# hypothesis_version: 6.150.2
+
+['GraphModuleImpl', 'Linear8bitLt', 'SCB', 'UserCpuOffloadHook', '_hf_hook', '_old_forward', 'cpu', 'cuda', 'meta', 'mlu', 'musa', 'npu', 'sdaa', 'to', 'weight', 'xpu']

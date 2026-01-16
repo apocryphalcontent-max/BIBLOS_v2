@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\agents\validation\prosecutor.py
+# hypothesis_version: 6.150.2
+
+[0.02, 0.2, 0.4, 0.7, 0.85, 1.0, 100, ', ', 'agent_results', 'agents', 'agents_challenged', 'assertion', 'assertions', 'by_severity', 'by_type', 'challenge_count', 'challenge_text', 'challenge_type', 'challenges', 'citations', 'claim', 'claims', 'completeness', 'confidence', 'conflicts', 'consistency', 'consistency_report', 'critical', 'critical_count', 'data', 'elenktikos', 'evidence', 'field', 'heuristic', 'interpretation', 'major', 'major_count', 'methodology', 'minor', 'observation', 'patristic_witness', 'patrologos', 'prosecutor', 'references', 'severity', 'sources', 'suggested_action', 'summary', 'target_agent', 'target_field', 'themes', 'theologos', 'total', 'typologos', 'verse_id', 'witness']

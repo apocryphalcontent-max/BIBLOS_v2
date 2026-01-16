@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\tf\ner\triggers.py
+# hypothesis_version: 6.150.2
+
+['!E', '!P', '!T', ',', ', ', '.', '0', 'OK', 'a', 'ab', 'abcd', 'ac', 'ad', 'bc', 'bd', 'cd', 'cdef', 'cef', 'chunk', 'defg', 'different rows', 'efg', 'es', 's', 'same row', 'slot\ttrigger\n', 'w']

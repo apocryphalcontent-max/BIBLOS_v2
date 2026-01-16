@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\observability\__init__.py
+# hypothesis_version: 6.150.2
+
+[1.0, '1.0.0', 'BiblosMetrics', 'INFO', 'LoggingConfig', 'MetricsConfig', 'TracingConfig', 'biblos-v2', 'configure_structlog', 'create_span', 'development', 'get_logger', 'get_meter', 'get_meter_provider', 'get_tracer', 'get_tracer_provider', 'setup_logging', 'setup_metrics', 'setup_observability', 'setup_tracing', 'shutdown_logging', 'shutdown_metrics', 'shutdown_tracing', 'span_decorator']

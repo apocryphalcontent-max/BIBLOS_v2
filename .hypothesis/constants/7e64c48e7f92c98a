@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\ml\training\trainer.py
+# hypothesis_version: 6.150.2
+
+[0.0, 0.0001, 0.01, 1.0, 100, 1000, 'Batch size', 'Config file path', 'MLflow not available', 'Model type to train', 'Number of epochs', '__main__', 'batch_size', 'best_model.pt', 'best_model_path', 'best_val_loss', 'biblos-v2', 'biblos.ml.training', 'biblos_model', 'checkpoints', 'config', 'cpu', 'cuda', 'device', 'epoch', 'epochs', 'error', 'final_train_loss', 'final_val_loss', 'gnn', 'inf', 'learning_rate', 'lr', 'model', 'model_name', 'model_state_dict', 'mps', 'optimizer_state_dict', 'scheduler_state_dict', 'sqlite:///mlruns.db', 'to', 'total_epochs', 'train_loss', 'val_loss']

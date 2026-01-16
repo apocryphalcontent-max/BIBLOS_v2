@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\ml\training\dataset.py
+# hypothesis_version: 6.150.2
+
+[512, 10000, 'BiblosDataset', 'biblos.ml.dataset', 'data/training', 'metadata', 'r', 'text', 'texts', 'utf-8', 'verse_id', 'verse_ids']

@@ -1,0 +1,308 @@
+# Prometheus Alert Rules for BIBLOS v2
+# =============================================================================
+
+groups:
+  # ---------------------------------------------------------------------------
+  # BIBLOS Application Alerts
+  # ---------------------------------------------------------------------------
+  - name: biblos_application
+    interval: 30s
+    rules:
+      # API Health
+      - alert: BiblosAPIDown
+        expr: up{job="biblos-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: biblos-api
+        annotations:
+          summary: "BIBLOS API is down"
+          description: "BIBLOS API service has been down for more than 1 minute."
+
+      # Worker Health
+      - alert: BiblosWorkerDown
+        expr: up{job="biblos-worker"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: biblos-worker
+        annotations:
+          summary: "BIBLOS Worker is down"
+          description: "BIBLOS Worker service has been down for more than 1 minute."
+
+      # High Error Rate
+      - alert: BiblosHighErrorRate
+        expr: |
+          (
+            sum(rate(http_requests_total{job="biblos-api", status=~"5.."}[5m]))
+            /
+            sum(rate(http_requests_total{job="biblos-api"}[5m]))
+          ) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+          service: biblos-api
+        annotations:
+          summary: "High error rate on BIBLOS API"
+          description: "Error rate is above 5% for the last 5 minutes."
+
+      # High Latency
+      - alert: BiblosHighLatency
+        expr: |
+          histogram_quantile(0.95,
+            sum(rate(http_request_duration_seconds_bucket{job="biblos-api"}[5m])) by (le)
+          ) > 2
+        for: 5m
+        labels:
+          severity: warning
+          service: biblos-api
+        annotations:
+          summary: "High latency on BIBLOS API"
+          description: "95th percentile latency is above 2 seconds."
+
+      # Pipeline Processing Slow
+      - alert: BiblosPipelineSlow
+        expr: |
+          histogram_quantile(0.95,
+            sum(rate(biblos_pipeline_duration_seconds_bucket[5m])) by (le, phase)
+          ) > 60
+        for: 5m
+        labels:
+          severity: warning
+          service: biblos-pipeline
+        annotations:
+          summary: "Pipeline phase {{ $labels.phase }} is slow"
+          description: "95th percentile pipeline duration is above 60 seconds."
+
+      # Agent Extraction Failures
+      - alert: BiblosAgentFailures
+        expr: |
+          sum(rate(biblos_agent_extraction_errors_total[5m])) by (agent) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          service: biblos-agents
+        annotations:
+          summary: "High failure rate for agent {{ $labels.agent }}"
+          description: "Agent {{ $labels.agent }} is experiencing high failure rate."
+
+  # ---------------------------------------------------------------------------
+  # Database Alerts
+  # ---------------------------------------------------------------------------
+  - name: database_alerts
+    interval: 30s
+    rules:
+      # PostgreSQL Down
+      - alert: PostgresDown
+        expr: pg_up == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: postgres
+        annotations:
+          summary: "PostgreSQL is down"
+          description: "PostgreSQL database has been down for more than 1 minute."
+
+      # PostgreSQL Connection Pool
+      - alert: PostgresConnectionPoolExhausted
+        expr: |
+          pg_stat_activity_count{state="active"}
+          /
+          pg_settings_max_connections > 0.8
+        for: 5m
+        labels:
+          severity: warning
+          service: postgres
+        annotations:
+          summary: "PostgreSQL connection pool near exhaustion"
+          description: "Active connections are above 80% of max_connections."
+
+      # Redis Down
+      - alert: RedisDown
+        expr: redis_up == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: redis
+        annotations:
+          summary: "Redis is down"
+          description: "Redis cache has been down for more than 1 minute."
+
+      # Redis Memory High
+      - alert: RedisMemoryHigh
+        expr: |
+          redis_memory_used_bytes / redis_memory_max_bytes > 0.9
+        for: 5m
+        labels:
+          severity: warning
+          service: redis
+        annotations:
+          summary: "Redis memory usage high"
+          description: "Redis memory usage is above 90%."
+
+      # Neo4j Down
+      - alert: Neo4jDown
+        expr: up{job="neo4j"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: neo4j
+        annotations:
+          summary: "Neo4j is down"
+          description: "Neo4j graph database has been down for more than 1 minute."
+
+      # Qdrant Down
+      - alert: QdrantDown
+        expr: up{job="qdrant"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: qdrant
+        annotations:
+          summary: "Qdrant is down"
+          description: "Qdrant vector database has been down for more than 1 minute."
+
+  # ---------------------------------------------------------------------------
+  # Infrastructure Alerts
+  # ---------------------------------------------------------------------------
+  - name: infrastructure_alerts
+    interval: 30s
+    rules:
+      # High CPU Usage
+      - alert: HighCPUUsage
+        expr: |
+          100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage on {{ $labels.instance }}"
+          description: "CPU usage is above 85% for more than 5 minutes."
+
+      # High Memory Usage
+      - alert: HighMemoryUsage
+        expr: |
+          (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage on {{ $labels.instance }}"
+          description: "Memory usage is above 85% for more than 5 minutes."
+
+      # Disk Space Low
+      - alert: DiskSpaceLow
+        expr: |
+          (node_filesystem_avail_bytes{fstype!~"tmpfs|overlay"} / node_filesystem_size_bytes) * 100 < 15
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Disk space low on {{ $labels.instance }}"
+          description: "Available disk space is below 15%."
+
+      # Container Restart
+      - alert: ContainerRestarting
+        expr: |
+          increase(container_restart_count[10m]) > 3
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Container {{ $labels.container }} is restarting frequently"
+          description: "Container has restarted more than 3 times in the last 10 minutes."
+
+  # ---------------------------------------------------------------------------
+  # ML/Inference Alerts
+  # ---------------------------------------------------------------------------
+  - name: ml_inference_alerts
+    interval: 30s
+    rules:
+      # ML Inference Slow
+      - alert: MLInferenceSlow
+        expr: |
+          histogram_quantile(0.95,
+            sum(rate(biblos_ml_inference_duration_seconds_bucket[5m])) by (le, model)
+          ) > 5
+        for: 5m
+        labels:
+          severity: warning
+          service: ml-inference
+        annotations:
+          summary: "ML inference slow for model {{ $labels.model }}"
+          description: "95th percentile inference time is above 5 seconds."
+
+      # Embedding Generation Errors
+      - alert: EmbeddingGenerationErrors
+        expr: |
+          sum(rate(biblos_embedding_errors_total[5m])) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          service: ml-embeddings
+        annotations:
+          summary: "High embedding generation error rate"
+          description: "Embedding generation is experiencing errors."
+
+      # Cross-Reference Discovery Low Confidence
+      - alert: CrossRefLowConfidence
+        expr: |
+          histogram_quantile(0.50,
+            sum(rate(biblos_crossref_confidence_bucket[5m])) by (le)
+          ) < 0.5
+        for: 10m
+        labels:
+          severity: info
+          service: crossref-discovery
+        annotations:
+          summary: "Cross-reference discovery producing low confidence results"
+          description: "Median confidence of discovered cross-references is below 0.5."
+
+  # ---------------------------------------------------------------------------
+  # Observability Stack Alerts
+  # ---------------------------------------------------------------------------
+  - name: observability_alerts
+    interval: 30s
+    rules:
+      # Prometheus Target Down
+      - alert: PrometheusTargetDown
+        expr: up == 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Prometheus target {{ $labels.job }} is down"
+          description: "Target {{ $labels.instance }} has been down for more than 5 minutes."
+
+      # Jaeger Down
+      - alert: JaegerDown
+        expr: up{job="jaeger"} == 0
+        for: 1m
+        labels:
+          severity: warning
+          service: jaeger
+        annotations:
+          summary: "Jaeger tracing is down"
+          description: "Jaeger tracing service has been down for more than 1 minute."
+
+      # Loki Down
+      - alert: LokiDown
+        expr: up{job="loki"} == 0
+        for: 1m
+        labels:
+          severity: warning
+          service: loki
+        annotations:
+          summary: "Loki log aggregation is down"
+          description: "Loki service has been down for more than 1 minute."
+
+      # OTel Collector Down
+      - alert: OTelCollectorDown
+        expr: up{job="otel-collector"} == 0
+        for: 1m
+        labels:
+          severity: warning
+          service: otel-collector
+        annotations:
+          summary: "OpenTelemetry Collector is down"
+          description: "OTel Collector has been down for more than 1 minute."

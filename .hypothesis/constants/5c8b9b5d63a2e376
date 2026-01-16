@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\integrations\__init__.py
+# hypothesis_version: 6.150.2
+
+['MaculaIntegration', 'MorphologyData', 'VerseData', 'WordData']

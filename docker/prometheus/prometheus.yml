@@ -1,0 +1,209 @@
+# Prometheus Configuration for BIBLOS v2
+# =============================================================================
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'biblos-v2'
+    environment: 'development'
+
+# Alerting configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+          # Add alertmanager targets here when needed
+          # - alertmanager:9093
+
+# Rule files for alerting
+rule_files:
+  - /etc/prometheus/alert_rules.yml
+
+# Scrape configurations
+scrape_configs:
+  # ---------------------------------------------------------------------------
+  # Prometheus self-monitoring
+  # ---------------------------------------------------------------------------
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+    metrics_path: /metrics
+    scrape_interval: 15s
+
+  # ---------------------------------------------------------------------------
+  # BIBLOS v2 API Service
+  # ---------------------------------------------------------------------------
+  - job_name: 'biblos-api'
+    static_configs:
+      - targets: ['api:9091']
+    metrics_path: /metrics
+    scrape_interval: 10s
+    scrape_timeout: 5s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'biblos-api'
+
+  # ---------------------------------------------------------------------------
+  # BIBLOS v2 Worker Service
+  # ---------------------------------------------------------------------------
+  - job_name: 'biblos-worker'
+    static_configs:
+      - targets: ['worker:9092']
+    metrics_path: /metrics
+    scrape_interval: 10s
+    scrape_timeout: 5s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'biblos-worker'
+
+  # ---------------------------------------------------------------------------
+  # OpenTelemetry Collector Metrics
+  # ---------------------------------------------------------------------------
+  - job_name: 'otel-collector'
+    static_configs:
+      - targets: ['otel-collector:8888']
+    metrics_path: /metrics
+    scrape_interval: 15s
+
+  # ---------------------------------------------------------------------------
+  # PostgreSQL Metrics (via postgres-exporter)
+  # ---------------------------------------------------------------------------
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+    metrics_path: /metrics
+    scrape_interval: 15s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'postgres'
+
+  # ---------------------------------------------------------------------------
+  # Redis Metrics (via redis-exporter)
+  # ---------------------------------------------------------------------------
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis-exporter:9121']
+    metrics_path: /metrics
+    scrape_interval: 15s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'redis'
+
+  # ---------------------------------------------------------------------------
+  # Neo4j Metrics
+  # ---------------------------------------------------------------------------
+  - job_name: 'neo4j'
+    static_configs:
+      - targets: ['neo4j:2004']
+    metrics_path: /metrics
+    scrape_interval: 15s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'neo4j'
+
+  # ---------------------------------------------------------------------------
+  # Qdrant Metrics
+  # ---------------------------------------------------------------------------
+  - job_name: 'qdrant'
+    static_configs:
+      - targets: ['qdrant:6333']
+    metrics_path: /metrics
+    scrape_interval: 15s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'qdrant'
+
+  # ---------------------------------------------------------------------------
+  # MLflow Metrics
+  # ---------------------------------------------------------------------------
+  - job_name: 'mlflow'
+    static_configs:
+      - targets: ['mlflow:5000']
+    metrics_path: /metrics
+    scrape_interval: 30s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'mlflow'
+
+  # ---------------------------------------------------------------------------
+  # Node Exporter (Host Metrics)
+  # ---------------------------------------------------------------------------
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    metrics_path: /metrics
+    scrape_interval: 15s
+
+  # ---------------------------------------------------------------------------
+  # cAdvisor (Container Metrics)
+  # ---------------------------------------------------------------------------
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+    metrics_path: /metrics
+    scrape_interval: 15s
+    metric_relabel_configs:
+      # Drop high-cardinality metrics to reduce storage
+      - source_labels: [__name__]
+        regex: 'container_tasks_state'
+        action: drop
+
+  # ---------------------------------------------------------------------------
+  # Jaeger Metrics
+  # ---------------------------------------------------------------------------
+  - job_name: 'jaeger'
+    static_configs:
+      - targets: ['jaeger:14269']
+    metrics_path: /metrics
+    scrape_interval: 15s
+
+  # ---------------------------------------------------------------------------
+  # Loki Metrics
+  # ---------------------------------------------------------------------------
+  - job_name: 'loki'
+    static_configs:
+      - targets: ['loki:3100']
+    metrics_path: /metrics
+    scrape_interval: 15s
+
+  # ---------------------------------------------------------------------------
+  # Grafana Metrics
+  # ---------------------------------------------------------------------------
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['grafana:3000']
+    metrics_path: /metrics
+    scrape_interval: 30s
+
+  # ---------------------------------------------------------------------------
+  # Docker Service Discovery (alternative to static configs)
+  # ---------------------------------------------------------------------------
+  - job_name: 'docker-containers'
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 30s
+        filters:
+          - name: label
+            values: ['prometheus.scrape=true']
+    relabel_configs:
+      # Use container name as instance
+      - source_labels: ['__meta_docker_container_name']
+        regex: '/(.*)'
+        target_label: 'container'
+      # Extract port from label
+      - source_labels: ['__meta_docker_container_label_prometheus_port']
+        target_label: '__address__'
+        regex: '(.+)'
+        replacement: '${1}'
+      # Extract metrics path from label
+      - source_labels: ['__meta_docker_container_label_prometheus_path']
+        target_label: '__metrics_path__'
+        regex: '(.+)'

@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\tokenizers\implementations\byte_level_bpe.py
+# hypothesis_version: 6.150.2
+
+[30000, 'ByteLevelBPE', 'add_prefix_space', 'dropout', 'end_of_word_suffix', 'lowercase', 'model', 'trim_offsets', 'unicode_normalizer']

@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\langchain_core\utils\function_calling.py
+# hypothesis_version: 6.150.2
+
+['$defs', '(', ')', ':', 'Args:', 'Example:', 'Returns:', 'UnionType', '__arg1', 'additionalProperties', 'anyOf', 'arguments', 'bool', 'boolean', 'callbacks', 'code_interpreter', 'computer_use_preview', 'custom', 'custom_tool', 'default', 'definitions', 'description', 'dict', 'file_search', 'float', 'format', 'function', 'id', 'image_generation', 'inputSchema', 'input_schema', 'int', 'integer', 'items', 'json', 'mcp', 'model_json_schema', 'name', 'number', 'object', 'parameters', 'properties', 'required', 'return', 'run_manager', 'schema', 'str', 'strict', 'string', 'title', 'toolSpec', 'tool_calls', 'type', 'type[BaseModel]', 'web_search', 'web_search_preview']

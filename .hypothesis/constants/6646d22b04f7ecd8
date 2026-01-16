@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\core\config_validator.py
+# hypothesis_version: 6.150.2
+
+[0.0, 0.5, 1.0, 100, 1024, 5432, 8000, 65535, '*', '0.0.0.0', '1', 'APIConfig', 'ConfigValidator', 'DB_HOST', 'DB_NAME', 'DB_PASSWORD', 'DB_PORT', 'DB_USER', 'DatabaseConfig', 'MLConfig', 'T', 'ValidationResult', 'actual', 'batch_size', 'cache_embeddings', 'config', 'config_name', 'config_validation', 'cors_origins', 'cpu', 'critical', 'cuda', 'database', 'device', 'embedding_model', 'enable_docs', 'error', 'expected', 'field', 'host', 'info', 'issues', 'level', 'localhost', 'max_overflow', 'message', 'min_confidence', 'mps', 'on', 'password', 'pool_size', 'port', 'rate_limit', 'suggestion', 'true', 'user', 'valid', 'warning', 'warnings', 'workers', 'yes']

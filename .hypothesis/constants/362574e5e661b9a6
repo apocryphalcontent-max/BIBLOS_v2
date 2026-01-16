@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\parso\python\token.py
+# hypothesis_version: 6.150.2
+
+['%s(%s)', 'DEDENT', 'ENDMARKER', 'ERRORTOKEN', 'ERROR_DEDENT', 'FSTRING_END', 'FSTRING_START', 'FSTRING_STRING', 'INDENT', 'NAME', 'NEWLINE', 'NUMBER', 'OP', 'STRING']

@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sentence_transformers\evaluation\ParaphraseMiningEvaluator.py
+# hypothesis_version: 6.150.2
+
+[100, 5000, 100000, 500000, ' dataset', ':', 'F1: {:.2f}\n', 'Precision: {:.2f}', 'Recall: {:.2f}', '_', '_results.csv', 'a', 'average_precision', 'epoch', 'f1', 'precision', 'recall', 'steps', 'threshold', 'utf-8', 'w']

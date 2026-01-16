@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\ml\inference\ensemble.py
+# hypothesis_version: 6.150.2
+
+[0.0, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 1.0, '.', '1CH', '1KI', '1SA', '2CH', '2KI', '2SA', 'AMO', 'DAN', 'DEU', 'ECC', 'EST', 'EXO', 'EZK', 'EZR', 'GEN', 'HAB', 'HAG', 'HOS', 'ISA', 'JDG', 'JER', 'JOB', 'JOL', 'JON', 'JOS', 'LAM', 'LEV', 'MAL', 'MIC', 'NAH', 'NEH', 'NUM', 'OBA', 'PRO', 'PSA', 'RUT', 'SNG', 'ZEC', 'ZEP', 'agreement', 'average', 'best_model', 'confidence', 'connection_type', 'embedding_similarity', 'gnn_discovery', 'max', 'max_confidence', 'model_scores', 'negative', 'positive', 'predict', 'rule_based', 'score', 'semantic_classifier', 'stacking', 'strategy', 'target', 'target_verse', 'text', 'thematic', 'type', 'typological', 'verbal', 'verse_id', 'votes', 'voting', 'weighted', 'weighted_average']

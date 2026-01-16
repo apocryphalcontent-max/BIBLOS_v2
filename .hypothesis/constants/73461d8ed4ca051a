@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\langchain_core\prompts\chat.py
+# hypothesis_version: 6.150.2
+
+[' Message', 'Messages Placeholder', '_ImageTemplateParam', '_TextTemplateParam', 'ai', 'assistant', 'before', 'chat', 'content', 'detail', 'dict[str, Any]', 'f-string', 'human', 'image_url', 'input_types', 'input_variables', 'jinja2', 'langchain', 'messages', 'optional_variables', 'partial_variables', 'path', 'placeholder', 'prompts', 'role', 'str', 'system', 'text', 'type', 'url', 'user', 'utf-8', 'validate_template', 'yellow', '{', '}']

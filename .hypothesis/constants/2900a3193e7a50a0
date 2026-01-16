@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\transformers\models\gpt2\tokenization_gpt2_fast.py
+# hypothesis_version: 6.150.2
+
+['<|endoftext|>', 'GPT2TokenizerFast', 'add_bos_token', 'attention_mask', 'input_ids', 'is_split_into_words', 'merges.txt', 'merges_file', 'tokenizer.json', 'tokenizer_file', 'vocab.json', 'vocab_file']

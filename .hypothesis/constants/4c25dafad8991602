@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\prompt_toolkit\formatted_text\html.py
+# hypothesis_version: 6.150.2
+
+['"', '#document', '&', '&amp;', '&gt;', '&lt;', '&quot;', ',', '<', '>', 'HTML', 'bg', 'bg:', 'class:', 'color', 'fg', 'fg:', 'html-root', 'style']

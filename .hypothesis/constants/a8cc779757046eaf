@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\data\loaders.py
+# hypothesis_version: 6.150.2
+
+[0.0, 0.8, 1.0, 100, 512, 1000, '**/*.arrow', '**/*.ipc', '**/*.json', '**/*.parquet', 'DataLoaderFactory', 'PolarsCrossRefLoader', 'PolarsVerseLoader', 'author', 'auto', 'book', 'books', 'chapter', 'chapters', 'confidence', 'confidences', 'connection_type', 'connection_types', 'content_clean', 'create_verse_loader', 'crossref_collate_fn', 'index', 'label', 'labels', 'language', 'languages', 'min_confidence', 'moderate', 'num_workers', 'pl.DataFrame', 'pl.LazyFrame', 'polars', 'pytorch', 'scan_crossrefs', 'scan_verses', 'shuffle', 'source_ref', 'source_refs', 'split_by_book', 'strength', 'strengths', 'target_ref', 'target_refs', 'text', 'texts', 'thematic', 'transform', 'verse', 'verse_collate_fn', 'verse_id', 'verse_ids', 'verse_references', 'verses']

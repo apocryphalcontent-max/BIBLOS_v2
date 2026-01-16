@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\observability\logging.py
+# hypothesis_version: 6.150.2
+
+[1024, '%Y-%m-%d %H:%M:%S', './logs/biblos.log', '016x', '032x', 'ENVIRONMENT', 'Extraction completed', 'Extraction failed', 'Extraction started', 'INFO', 'LOG_FILE', 'LOG_FORMAT', 'LOG_LEVEL', 'LOG_TO_FILE', 'LogContext', 'ML inference started', 'Model loaded', 'Phase completed', 'Phase started', 'Pipeline completed', 'Pipeline started', '_record', 'agent', 'asyncio', 'biblos-v2', 'biblos.ml', 'biblos.pipeline', 'development', 'environment', 'exc_info', 'exception', 'false', 'function', 'httpcore', 'httpx', 'json', 'level', 'line', 'logger', 'message', 'ml', 'module', 'opentelemetry', 'phase', 'pipeline', 'service', 'span_id', 'timestamp', 'trace_flags', 'trace_id', 'traceback', 'true', 'type', 'urllib3']

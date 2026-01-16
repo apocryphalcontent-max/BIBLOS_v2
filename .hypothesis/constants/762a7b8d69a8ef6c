@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\agents\intertextual\__init__.py
+# hypothesis_version: 6.150.2
+
+['AllographosAgent', 'HarmonikosAgent', 'ParadeigmaAgent', 'SyndesmosAgent', 'ToposAgent']

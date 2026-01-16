@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sentence_transformers\readers\NLIDataReader.py
+# hypothesis_version: 6.150.2
+
+['%s-%d', 'contradiction', 'entailment', 'labels.', 'neutral', 'rt', 's1.', 's2.', 'utf-8']

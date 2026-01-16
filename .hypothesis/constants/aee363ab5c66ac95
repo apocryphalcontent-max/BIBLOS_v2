@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\tf\search\syntax.py
+# hypothesis_version: 6.150.2
+
+['-', '.', '..', '/-/', '/have/', '/or/', '/where/', '/with/', '/without/', ':', '<', '=', '>', '[A-Za-z0-9_.-]+', '\\ ', '\\=', '\\\\', '\\n', '\\t', '\\|', '^(\\s*)(.*)', '^(\\s*)({op})\\s*$', '^(\\s*)({qu})\\s*$', '^-?[0-9]+$', '^\\s*(%|$)', '^\\s*{op}\\s+(.*)$', 'atom', 'feat', 'indent', 'kind', 'op', 'otype', 'parent', 'quantifiers', 'rel', 'x', '|']

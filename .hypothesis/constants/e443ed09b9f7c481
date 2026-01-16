@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\transformers\quantizers\quantizer_auto_round.py
+# hypothesis_version: 6.150.2
+
+['PreTrainedModel', 'auto_round', 'device_map', 'input_ids', 'torch.dtype']

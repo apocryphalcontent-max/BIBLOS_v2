@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sentence_transformers\cross_encoder\CrossEncoder.py
+# hypothesis_version: 6.150.2
+
+[0.0, 2e-05, 0.01, 0.05, -9999999, 10000, 'Batches', 'Epoch', 'Iteration', 'LayerNorm.bias', 'LayerNorm.weight', 'Save model to {}', 'WarmupLinear', 'bias', 'corpus_id', 'longest_first', 'lr', 'params', 'pt', 'score', 'text', 'weight_decay']

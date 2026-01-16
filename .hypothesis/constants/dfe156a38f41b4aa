@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\pipeline\validation.py
+# hypothesis_version: 6.150.2
+
+[0.7, 300, 'agent_results', 'agents_executed', 'challenges', 'challenges_count', 'confidence', 'conflicts_resolved', 'consistency_report', 'data', 'elenktikos', 'harmonized', 'harmonizer', 'intertextual', 'kritikos', 'linguistic', 'phase_confidence', 'prosecutor', 'quality_passed', 'quality_report', 'theological', 'validation', 'validation_passed', 'witness']

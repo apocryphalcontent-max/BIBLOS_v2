@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sympy\printing\tree.py
+# hypothesis_version: 6.150.2
+
+['  %s\n', '%s: %s\n', '+-%s\n', '| %s\n']

@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\jedi\inference\sys_path.py
+# hypothesis_version: 6.150.2
+
+['#!', '(', '+=', '-stubs$', '.', '.pyi', '/', '=', '__init__', 'append', 'atom_expr', 'bin', 'buildout.cfg', 'expr_stmt', 'insert', 'name', 'path', 'power', 'python', 'r', 'sys', 'trailer']

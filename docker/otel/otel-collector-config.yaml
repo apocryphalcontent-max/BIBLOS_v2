@@ -1,0 +1,299 @@
+# OpenTelemetry Collector Configuration for BIBLOS v2
+# =============================================================================
+# This collector receives telemetry from all BIBLOS services and routes it to
+# the appropriate backends (Jaeger, Prometheus, Loki).
+
+# -----------------------------------------------------------------------------
+# Receivers - Collect telemetry data from various sources
+# -----------------------------------------------------------------------------
+receivers:
+  # OTLP receiver for traces, metrics, and logs
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+        max_recv_msg_size_mib: 16
+      http:
+        endpoint: 0.0.0.0:4318
+        cors:
+          allowed_origins:
+            - "http://*"
+            - "https://*"
+
+  # Prometheus receiver for scraping metrics
+  prometheus:
+    config:
+      scrape_configs:
+        - job_name: 'otel-collector-internal'
+          scrape_interval: 10s
+          static_configs:
+            - targets: ['localhost:8888']
+
+  # Host metrics receiver
+  hostmetrics:
+    collection_interval: 30s
+    scrapers:
+      cpu:
+        metrics:
+          system.cpu.utilization:
+            enabled: true
+      memory:
+        metrics:
+          system.memory.utilization:
+            enabled: true
+      disk:
+      filesystem:
+      network:
+      process:
+        include:
+          match_type: regexp
+          names:
+            - "python.*"
+            - "uvicorn.*"
+
+  # Docker stats receiver
+  docker_stats:
+    endpoint: unix:///var/run/docker.sock
+    collection_interval: 30s
+    timeout: 20s
+    api_version: 1.24
+    container_labels_to_metric_labels:
+      com.docker.compose.service: service_name
+      com.docker.compose.project: project_name
+
+# -----------------------------------------------------------------------------
+# Processors - Transform and filter telemetry data
+# -----------------------------------------------------------------------------
+processors:
+  # Batch processor for efficient export
+  batch:
+    timeout: 5s
+    send_batch_size: 1000
+    send_batch_max_size: 1500
+
+  # Memory limiter to prevent OOM
+  memory_limiter:
+    check_interval: 1s
+    limit_percentage: 80
+    spike_limit_percentage: 25
+
+  # Resource processor to add common attributes
+  resource:
+    attributes:
+      - key: deployment.environment
+        value: development
+        action: upsert
+      - key: service.namespace
+        value: biblos-v2
+        action: upsert
+
+  # Resource detection for automatic metadata
+  resourcedetection:
+    detectors:
+      - env
+      - system
+      - docker
+    timeout: 5s
+    override: false
+
+  # Attributes processor for traces
+  attributes/traces:
+    actions:
+      - key: http.user_agent
+        action: delete
+      - key: http.request.header.authorization
+        action: delete
+      - key: db.statement
+        action: hash
+
+  # Filter processor to drop noisy spans
+  filter/traces:
+    error_mode: ignore
+    traces:
+      span:
+        - 'attributes["http.target"] == "/health"'
+        - 'attributes["http.target"] == "/metrics"'
+        - 'attributes["http.target"] == "/ready"'
+        - 'attributes["http.target"] == "/live"'
+
+  # Tail sampling for traces (keep errors and slow requests)
+  # tail_sampling:
+  #   decision_wait: 10s
+  #   num_traces: 100000
+  #   expected_new_traces_per_sec: 100
+  #   policies:
+  #     - name: errors
+  #       type: status_code
+  #       status_code:
+  #         status_codes: [ERROR]
+  #     - name: slow-traces
+  #       type: latency
+  #       latency:
+  #         threshold_ms: 1000
+  #     - name: probabilistic-sample
+  #       type: probabilistic
+  #       probabilistic:
+  #         sampling_percentage: 10
+
+  # Transform processor for metrics
+  transform/metrics:
+    metric_statements:
+      - context: datapoint
+        statements:
+          - set(attributes["service.namespace"], "biblos-v2")
+
+  # Metrics transform for renaming
+  metricstransform:
+    transforms:
+      - include: http_server_request_duration_seconds
+        action: update
+        new_name: http_request_duration_seconds
+
+# -----------------------------------------------------------------------------
+# Exporters - Send telemetry data to backends
+# -----------------------------------------------------------------------------
+exporters:
+  # Jaeger exporter for traces
+  otlp/jaeger:
+    endpoint: jaeger:4317
+    tls:
+      insecure: true
+
+  # Prometheus exporter for metrics
+  prometheus:
+    endpoint: 0.0.0.0:8889
+    namespace: biblos
+    const_labels:
+      environment: development
+    send_timestamps: true
+    metric_expiration: 180m
+    resource_to_telemetry_conversion:
+      enabled: true
+
+  # Prometheus remote write (alternative)
+  prometheusremotewrite:
+    endpoint: http://prometheus:9090/api/v1/write
+    tls:
+      insecure: true
+    resource_to_telemetry_conversion:
+      enabled: true
+
+  # Loki exporter for logs
+  loki:
+    endpoint: http://loki:3100/loki/api/v1/push
+    tls:
+      insecure: true
+    labels:
+      resource:
+        service.name: "service_name"
+        service.namespace: "service_namespace"
+        deployment.environment: "environment"
+      attributes:
+        level: ""
+        log.file.name: "filename"
+    default_labels_enabled:
+      exporter: true
+      job: true
+
+  # Debug exporter (for development)
+  debug:
+    verbosity: detailed
+    sampling_initial: 5
+    sampling_thereafter: 200
+
+  # OTLP exporter (for forwarding to other collectors)
+  # otlp/external:
+  #   endpoint: external-collector:4317
+  #   tls:
+  #     insecure: true
+
+# -----------------------------------------------------------------------------
+# Extensions - Additional capabilities
+# -----------------------------------------------------------------------------
+extensions:
+  # Health check extension
+  health_check:
+    endpoint: 0.0.0.0:13133
+    path: /health
+    tls:
+      insecure: true
+
+  # Performance profiler
+  pprof:
+    endpoint: 0.0.0.0:1777
+
+  # zPages for debugging
+  zpages:
+    endpoint: 0.0.0.0:55679
+
+  # Memory ballast for GC optimization
+  memory_ballast:
+    size_mib: 128
+
+# -----------------------------------------------------------------------------
+# Service - Pipeline definitions
+# -----------------------------------------------------------------------------
+service:
+  extensions:
+    - health_check
+    - pprof
+    - zpages
+    - memory_ballast
+
+  pipelines:
+    # Traces pipeline
+    traces:
+      receivers:
+        - otlp
+      processors:
+        - memory_limiter
+        - resourcedetection
+        - resource
+        - attributes/traces
+        - filter/traces
+        - batch
+      exporters:
+        - otlp/jaeger
+        # - debug  # Uncomment for debugging
+
+    # Metrics pipeline
+    metrics:
+      receivers:
+        - otlp
+        - prometheus
+        - hostmetrics
+        # - docker_stats  # Requires Docker socket access
+      processors:
+        - memory_limiter
+        - resourcedetection
+        - resource
+        - transform/metrics
+        - batch
+      exporters:
+        - prometheus
+        # - prometheusremotewrite  # Alternative
+        # - debug  # Uncomment for debugging
+
+    # Logs pipeline
+    logs:
+      receivers:
+        - otlp
+      processors:
+        - memory_limiter
+        - resourcedetection
+        - resource
+        - batch
+      exporters:
+        - loki
+        # - debug  # Uncomment for debugging
+
+  # Telemetry for the collector itself
+  telemetry:
+    logs:
+      level: info
+      encoding: json
+      output_paths:
+        - stdout
+    metrics:
+      level: detailed
+      address: 0.0.0.0:8888

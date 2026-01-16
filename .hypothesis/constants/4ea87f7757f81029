@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sentence_transformers\models\LSTM.py
+# hypothesis_version: 6.150.2
+
+['bidirectional', 'dropout', 'hidden_dim', 'lstm_config.json', 'num_layers', 'pytorch_model.bin', 'r', 'sentence_lengths', 'token_embeddings', 'w']

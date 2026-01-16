@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\grpc\_observability.py
+# hypothesis_version: 6.150.2
+
+[b'google.devtools.cloudtrace.v2.TraceService', b'google.monitoring.v3.MetricService', 1000, 'ObservabilityPlugin', '_channel._RPCState', 'utf8']

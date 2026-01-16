@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\observability\tracing.py
+# hypothesis_version: 6.150.2
+
+[0.0, 1.0, 100, 200, 500, 512, 2048, 5000, 30000, '1.0', '1.0.0', '2.0.0', 'ENVIRONMENT', 'OTEL_CONSOLE_EXPORT', 'OTEL_SAMPLE_RATE', 'OTEL_TRACING_ENABLED', 'P', 'T', 'agent', 'agent.name', 'biblos', 'biblos-v2', 'biblos.agents', 'biblos.ml', 'biblos.observability', 'biblos.pipeline', 'component', 'data', 'development', 'embeddings', 'false', 'health,metrics,ready', 'ml', 'ml.batch_size', 'ml.model', 'ml.operation', 'opentelemetry', 'phase', 'phase.agent_count', 'phase.name', 'pipeline', 'pipeline.execute', 'python', 'result.value', 'service.namespace', 'shutdown', 'telemetry.sdk.name', 'to_dict', 'true', 'verse.id']

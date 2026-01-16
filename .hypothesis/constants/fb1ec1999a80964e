@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\pipeline\theological.py
+# hypothesis_version: 6.150.2
+
+[0.6, 300, 'agent_results', 'agents_executed', 'confidence', 'connections', 'data', 'dogmatikos', 'linguistic', 'linguistic_results', 'liturgikos', 'patrologos', 'phase_confidence', 'themes', 'themes_identified', 'theological', 'theologos', 'typologos']

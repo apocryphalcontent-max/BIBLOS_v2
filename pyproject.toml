@@ -1,0 +1,162 @@
+[project]
+name = "biblos-v2"
+version = "2.0.0"
+description = "BIBLOS Revolutionary Database - Biblical Scholarship ML System"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [
+    {name = "Edwin Boston", email = "biblos@example.com"}
+]
+keywords = ["biblical", "ml", "nlp", "orthodox", "patristics", "cross-reference"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    # Core ML
+    "torch>=2.1.0",
+    "transformers>=4.36.0",
+    "sentence-transformers>=2.2.2",
+    "numpy>=1.26.0",
+    "scipy>=1.11.0",
+    "scikit-learn>=1.3.0",
+
+    # High-Performance Data Processing (Arrow/Polars)
+    "polars>=0.20.0",
+    "pyarrow>=14.0.0",
+
+    # LangChain Agent Framework
+    "langchain>=0.1.0",
+    "langchain-core>=0.1.0",
+    "langchain-community>=0.0.10",
+    "langgraph>=0.0.20",
+
+    # Graph & Vector Databases
+    "neo4j>=5.14.0",
+    "qdrant-client>=1.7.0",
+    "pgvector>=0.2.4",
+
+    # Database & ORM
+    "sqlalchemy>=2.0.23",
+    "asyncpg>=0.29.0",
+    "alembic>=1.13.0",
+    "psycopg2-binary>=2.9.9",
+
+    # API Framework
+    "fastapi>=0.108.0",
+    "uvicorn[standard]>=0.25.0",
+    "pydantic>=2.5.0",
+    "pydantic-settings>=2.1.0",
+
+    # Async & Performance
+    "aiohttp>=3.9.0",
+    "httpx>=0.26.0",
+    "aiocache>=0.12.2",
+    "redis>=5.0.0",
+
+    # ML Pipeline & Experiment Tracking
+    "mlflow>=2.9.0",
+    "optuna>=3.5.0",
+    "dvc>=3.38.0",
+
+    # Text Processing
+    "text-fabric>=12.0.0",
+    "cltk>=1.2.0",
+    "spacy>=3.7.0",
+
+    # Utilities
+    "python-dotenv>=1.0.0",
+    "pyyaml>=6.0.1",
+    "tqdm>=4.66.0",
+    "rich>=13.7.0",
+    "typer>=0.9.0",
+    "structlog>=24.1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.12.0",
+    "hypothesis>=6.92.0",
+    "mypy>=1.8.0",
+    "ruff>=0.1.9",
+    "black>=23.12.0",
+    "pre-commit>=3.6.0",
+]
+
+gpu = [
+    "torch[cuda]>=2.1.0",
+    "cupy-cuda12x>=12.3.0",
+]
+
+[project.scripts]
+biblos = "cli.main:app"
+biblos-train = "ml.training.trainer:main"
+biblos-serve = "api.main:run_server"
+
+[project.urls]
+Homepage = "https://github.com/biblos-team/biblos-v2"
+Documentation = "https://biblos-v2.readthedocs.io"
+
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["agents*", "ml*", "db*", "pipeline*", "api*", "integrations*", "cli*", "data*", "scripts*", "tests*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.yaml", "*.yml"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+select = ["E", "F", "I", "N", "W", "UP", "B", "C4", "SIM"]
+ignore = ["E501"]
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short --strict-markers --cov=agents --cov=ml --cov=db --cov=pipeline --cov=data --cov-report=term-missing"
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "requires_gpu: marks tests requiring GPU",
+    "requires_api: marks tests requiring external API",
+    "requires_db: marks tests requiring database connection"
+]
+
+[tool.coverage.run]
+source = ["agents", "api", "cli", "data", "db", "integrations", "ml", "pipeline"]
+omit = ["tests/*", "*/__pycache__/*", "*/__init__.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+    "@abstractmethod"
+]

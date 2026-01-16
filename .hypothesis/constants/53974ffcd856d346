@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\tf\core\api.py
+# hypothesis_version: 6.150.2
+
+['AllComputeds', 'AllEdges', 'AllFeatures', 'Computed', 'ComputedString', 'EdgeString', 'Fabric', 'FeatureString', 'Features', 'Locality', 'NOT LOADED', 'Nodes', 'Search', 'Text', '_', '__', 'all', 'computed', 'computed-data', 'computedall', 'computedstr', 'config', 'description', 'edge', 'edge-features', 'edgeValues', 'edgeall', 'edgestr', 'fabric', 'kind', 'loadLog', 'loading', 'locality', 'meta', 'nData', 'navigating-nodes', 'node', 'node-features', 'nodeall', 'nodes', 'nodestr', 'oslots', 'sData', 'search', 'sizes', 'source', 'support', 'text', 'type', 'valueType']

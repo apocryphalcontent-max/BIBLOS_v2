@@ -1,0 +1,221 @@
+# Promtail Configuration for BIBLOS v2
+# =============================================================================
+# Promtail ships logs from Docker containers to Loki
+
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+    tenant_id: biblos
+    batchwait: 1s
+    batchsize: 1048576
+    timeout: 10s
+
+scrape_configs:
+  # ---------------------------------------------------------------------------
+  # Docker Container Logs
+  # ---------------------------------------------------------------------------
+  - job_name: docker-containers
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+        filters:
+          - name: label
+            values: ["com.docker.compose.project=biblos"]
+    relabel_configs:
+      # Extract container name
+      - source_labels: ['__meta_docker_container_name']
+        regex: '/(.*)'
+        target_label: container
+
+      # Extract service name from compose label
+      - source_labels: ['__meta_docker_container_label_com_docker_compose_service']
+        target_label: service
+
+      # Extract project name
+      - source_labels: ['__meta_docker_container_label_com_docker_compose_project']
+        target_label: project
+
+      # Extract container ID
+      - source_labels: ['__meta_docker_container_id']
+        target_label: container_id
+
+      # Set job label
+      - replacement: docker
+        target_label: job
+
+      # Set environment label
+      - replacement: development
+        target_label: environment
+
+    pipeline_stages:
+      # Detect JSON logs and parse them
+      - match:
+          selector: '{service=~"api|worker"}'
+          stages:
+            - json:
+                expressions:
+                  level: level
+                  message: message
+                  timestamp: timestamp
+                  trace_id: trace_id
+                  span_id: span_id
+                  logger: logger
+                  module: module
+                  function: function
+            - labels:
+                level:
+                trace_id:
+                span_id:
+                logger:
+            - timestamp:
+                source: timestamp
+                format: RFC3339Nano
+            - output:
+                source: message
+
+      # Parse Python tracebacks
+      - match:
+          selector: '{service=~"api|worker"} |~ "Traceback|Error|Exception"'
+          stages:
+            - multiline:
+                firstline: '^(?:Traceback|.*Error|.*Exception)'
+                max_wait_time: 3s
+            - labels:
+                level: error
+
+      # Drop health check logs
+      - match:
+          selector: '{service="api"}'
+          stages:
+            - drop:
+                expression: '.*GET /health.*'
+            - drop:
+                expression: '.*GET /metrics.*'
+            - drop:
+                expression: '.*GET /ready.*'
+
+      # Add static labels
+      - static_labels:
+          cluster: local
+          namespace: biblos-v2
+
+  # ---------------------------------------------------------------------------
+  # PostgreSQL Logs
+  # ---------------------------------------------------------------------------
+  - job_name: postgres
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+        filters:
+          - name: label
+            values: ["com.docker.compose.service=postgres"]
+    relabel_configs:
+      - replacement: postgres
+        target_label: service
+      - replacement: database
+        target_label: component
+    pipeline_stages:
+      - regex:
+          expression: '^(?P<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+) (?P<timezone>\w+) \[(?P<pid>\d+)\] (?P<level>\w+):  (?P<message>.*)$'
+      - labels:
+          level:
+          pid:
+      - timestamp:
+          source: timestamp
+          format: '2006-01-02 15:04:05.000'
+      - output:
+          source: message
+
+  # ---------------------------------------------------------------------------
+  # Redis Logs
+  # ---------------------------------------------------------------------------
+  - job_name: redis
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+        filters:
+          - name: label
+            values: ["com.docker.compose.service=redis"]
+    relabel_configs:
+      - replacement: redis
+        target_label: service
+      - replacement: cache
+        target_label: component
+    pipeline_stages:
+      - regex:
+          expression: '^(?P<pid>\d+):(?P<role>\w) (?P<timestamp>\d+ \w+ \d{4} \d{2}:\d{2}:\d{2}\.\d+) (?P<level>\*|#|-|\.) (?P<message>.*)$'
+      - labels:
+          level:
+          role:
+
+  # ---------------------------------------------------------------------------
+  # Neo4j Logs
+  # ---------------------------------------------------------------------------
+  - job_name: neo4j
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+        filters:
+          - name: label
+            values: ["com.docker.compose.service=neo4j"]
+    relabel_configs:
+      - replacement: neo4j
+        target_label: service
+      - replacement: graph-database
+        target_label: component
+
+  # ---------------------------------------------------------------------------
+  # Jaeger Logs
+  # ---------------------------------------------------------------------------
+  - job_name: jaeger
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+        filters:
+          - name: label
+            values: ["com.docker.compose.service=jaeger"]
+    relabel_configs:
+      - replacement: jaeger
+        target_label: service
+      - replacement: tracing
+        target_label: component
+    pipeline_stages:
+      - json:
+          expressions:
+            level: level
+            msg: msg
+            ts: ts
+      - labels:
+          level:
+      - output:
+          source: msg
+
+  # ---------------------------------------------------------------------------
+  # OTel Collector Logs
+  # ---------------------------------------------------------------------------
+  - job_name: otel-collector
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+        filters:
+          - name: label
+            values: ["com.docker.compose.service=otel-collector"]
+    relabel_configs:
+      - replacement: otel-collector
+        target_label: service
+      - replacement: observability
+        target_label: component
+    pipeline_stages:
+      - json:
+          expressions:
+            level: level
+            msg: msg
+            ts: ts
+      - labels:
+          level:

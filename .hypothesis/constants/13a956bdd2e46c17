@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\transformers\models\mpnet\tokenization_mpnet_fast.py
+# hypothesis_version: 6.150.2
+
+['</s>', '<mask>', '<pad>', '<s>', 'MPNetTokenizerFast', '[UNK]', 'attention_mask', 'input_ids', 'lowercase', 'strip_accents', 'tokenizer.json', 'tokenizer_file', 'type', 'vocab.txt', 'vocab_file']

@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\sentence_transformers\evaluation\EmbeddingSimilarityEvaluator.py
+# hypothesis_version: 6.150.2
+
+[' after epoch {}:', ' dataset', ':', '_', '_results.csv', 'a', 'cosine_pearson', 'cosine_spearman', 'dot_pearson', 'dot_spearman', 'epoch', 'euclidean_pearson', 'euclidean_spearman', 'manhattan_pearson', 'manhattan_spearman', 'steps', 'utf-8', 'w']

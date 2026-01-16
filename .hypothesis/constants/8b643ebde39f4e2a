@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\AppData\Roaming\Python\Python314\site-packages\huggingface_hub\utils\_git_credential.py
+# hypothesis_version: 6.150.2
+
+['git config --list', 'hf_user']

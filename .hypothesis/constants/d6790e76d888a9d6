@@ -1,0 +1,4 @@
+# file: C:\Users\Edwin Boston\Desktop\BIBLOS_v2\data\dataset.py
+# hypothesis_version: 6.150.2
+
+[0.0, 1.0, 512, '**/*.json', '.', '1CH', '1KI', '1SA', '2CH', '2KI', '2SA', ':', 'AMO', 'DAN', 'DEU', 'ECC', 'EST', 'EXO', 'EZK', 'EZR', 'GEN', 'HAB', 'HAG', 'HOS', 'ISA', 'JDG', 'JER', 'JOB', 'JOL', 'JON', 'JOS', 'LAM', 'LEV', 'MAL', 'MIC', 'NAH', 'NEH', 'NT', 'NUM', 'OBA', 'OT', 'PRO', 'PSA', 'RUT', 'SNG', 'ZEC', 'ZEP', 'attention_mask', 'book', 'chapter', 'confidence', 'connection_type', 'cross_references', 'input_ids', 'label', 'language', 'max_length', 'metadata', 'moderate', 'none', 'notes', 'pt', 'r', 'ref', 'source', 'source_ref', 'source_text', 'strength', 'target', 'target_ref', 'target_text', 'text', 'thematic', 'token_type_ids', 'unknown', 'utf-8', 'verse', 'verse_id', 'verses']
